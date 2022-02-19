@@ -1,0 +1,31 @@
+.dashboard-container {
+  padding-bottom: 45px;
+  padding-top: 45px;
+  display: flex;
+  justify-content: center;
+  mat-card {
+    padding-top: 45px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    .image-column {
+      display: block;
+      mat-icon {
+        width: 150px;
+        height: 60px;
+        img {
+          margin-bottom: 20px;
+          width: 150px;
+          height: 150px;
+          border: 2px solid rgb(208, 248, 208);
+          box-shadow: inset 0px 0px 0px 10px rgb(208, 248, 208);
+          border-radius: 9999px;
+          width: 100%;
+        }
+      }
+    }
+  }
+  .contents {
+    display: block;
+  }
+}

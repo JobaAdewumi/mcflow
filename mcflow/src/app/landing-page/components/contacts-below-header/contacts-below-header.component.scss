@@ -1,0 +1,41 @@
+.below-header-container {
+  padding: 80px 0;
+  background-image: url(../../../../assets/images/below-contacts.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: aliceblue;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  .header-container {
+    text-align: center;
+    margin: 0 135px;
+    width: 680px;
+
+    p {
+      color: white;
+    }
+    .header-text {
+      margin-bottom: 50px;
+      .text-big {
+        font-size: 48px;
+        padding: 10px 0;
+        color: white;
+      }
+    }
+
+    .searchbar-container {
+      height: 40px;
+      width: 100%;
+      input {
+        padding: 13px 145px 12px 25px;
+        // height: 100%;
+        border: 1px solid white;
+        border-radius: 6px;
+      }
+      button {
+        height: 100%;
+      }
+    }
+  }
+}

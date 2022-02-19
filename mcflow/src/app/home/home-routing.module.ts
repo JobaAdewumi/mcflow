@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LandingDashboardComponent } from './components/landing-dashboard/landing-dashboard.component';
+import { LandingPayoutComponent } from './components/landing-payout/landing-payout.component';
+import { LandingSponsoredPostsComponent } from './components/landing-sponsored-posts/landing-sponsored-posts.component';
+import { HomePageComponent } from './home-page.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HomePageComponent,
+    children: [
+      { path: '', component: LandingSponsoredPostsComponent },
+      { path: 'dashboard', component: LandingDashboardComponent },
+      { path: 'payout', component: LandingPayoutComponent },
+    ],
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class HomeRoutingModule {}

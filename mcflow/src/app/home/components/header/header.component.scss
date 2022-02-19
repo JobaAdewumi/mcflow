@@ -1,0 +1,18 @@
+.name-container {
+  .logo-container {
+    list-style: none;
+    .link-logo {
+      background: url(../../../../assets/images/logo-small.png);
+      display: block;
+      background-position: center;
+      width: 100px;
+      height: 47px;
+      background-repeat: no-repeat;
+    }
+  }
+}
+mat-toolbar {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(211, 226, 211);
+}

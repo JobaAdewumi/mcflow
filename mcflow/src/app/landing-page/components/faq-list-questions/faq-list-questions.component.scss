@@ -1,0 +1,28 @@
+.list-container {
+    padding-top: 30px;
+    padding-bottom: 80px;
+    text-align: center;
+    background-color: gainsboro;
+    .header {
+        h4 {
+            color: grey;
+        }
+        h3 {
+            font-size: 30px;
+            font-weight: 600;
+        }
+    }
+}
+
+p {
+    text-align: center;
+}
+
+mat-expansion-panel {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    mat-panel-title {
+        margin-left: 200px;
+        font-weight: 500;
+    }
+}

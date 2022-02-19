@@ -1,0 +1,35 @@
+<app-header></app-header>
+<div class="sidenav-container">
+  <mat-toolbar>
+    <div class="name-container">
+      <!-- TODO: Header should be dynamic -->
+      <h1 class="sidenav-name">{{ currentRoute }}</h1>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button (click)="openCreatePost()" >Create post</button>
+      <button mat-flat-button (click)="snav.toggle()">
+        hey
+        <i class="fas fa-list"></i>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #snav mode="over" position="end">
+      <div class="sidenav-header">
+        <h1>MCFLOW</h1>
+      </div>
+      <hr style="margin: 10px 0;" />
+      <div class="nav-items">
+        <a  [routerLink]="['/', 'home', 'dashboard']" routerLinkActive="active" (click)="dashboard()">Dashboard</a>
+        <a [routerLink]="['/', 'home', 'payout']" routerLinkActive="active" (click)="cashout()">Cashout</a>
+        <a [routerLink]="['/', 'home']" routerLinkActive="active" (click)="posts()">Sponsored Posts</a>
+        <p  (click)="onSignOut()">Log out</p>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<app-footer></app-footer>

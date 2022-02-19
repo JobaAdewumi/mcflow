@@ -1,0 +1,20 @@
+.below-header-container {
+  .header-container {
+    background-image: url(../../../../assets/images/faq.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: aliceblue;
+    background-size: cover;
+    padding: 220px 220px;
+    text-align: center;
+
+    p {
+      color: white;
+    }
+
+    .text-big {
+      font-size: 48px;
+      padding: 10px 0;
+    }
+  }
+}

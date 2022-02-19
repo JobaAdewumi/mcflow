@@ -1,0 +1,54 @@
+.container {
+  background-image: url(../../../../assets/images/below-header.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: aliceblue;
+  background-size: cover;
+  .inside-container {
+    padding: 200px 200px;
+    text-align: center;
+
+    p {
+      color: white;
+    }
+    .text-big {
+      font-size: 48px;
+      padding: 10px 0;
+    }
+    .text-small {
+      font-size: 17px;
+    }
+    .login-link-container {
+      background-color: green;
+      width: 180px;
+      height: 35px;
+      align-content: center;
+      display: inline-block;
+      border-radius: 15px;
+      a {
+        display: flex;
+        justify-content: space-between;
+        text-decoration: none;
+        p {
+          font-size: 12.5px;
+          margin: 0;
+          text-align: center;
+          padding-top: 8px;
+          padding-left: 15px;
+        }
+        span {
+          padding-top: 7px;
+          padding-right: 4px;
+          margin-right: 7px;
+          background-color: rgb(0, 80, 0);
+          border-radius: 9999px;
+          justify-content: center;
+          mat-icon {
+            text-align: center;
+            padding-left: 3px;
+          }
+        }
+      }
+    }
+  }
+}

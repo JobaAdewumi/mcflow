@@ -1,0 +1,107 @@
+<div class="help-container">
+  <div class="mat-card-container">
+    <mat-card>
+      <div class="mat-header">
+        <p>Fill out the form and we'll be in touch soon!</p>
+        <h3>How can we help you?</h3>
+      </div>
+      <!-- TODO:  Add functionality for submittion of form when you've created the api endpoint -->
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-container">
+          <div class="form-content">
+            <p>
+              <mat-form-field appearance="outline" class="mat-form form-input">
+                <mat-label>Your name</mat-label>
+                <input
+                  matNativeControl
+                  name="name"
+                  #name="ngModel"
+                  ngModel
+                  placeholder="James May"
+                  required="true"
+                  type="text"
+                />
+                <mat-hint>Full name</mat-hint>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field appearance="outline" class="mat-form form-input">
+                <mat-label>Your email address</mat-label>
+                <input
+                  name="email"
+                  #email="ngModel"
+                  ngModel
+                  matNativeControl
+                  placeholder="mcflow@email.com"
+                  required="true"
+                  type="email"
+                />
+                <mat-hint>Email address</mat-hint>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field appearance="outline" class="mat-form form-input">
+                <mat-label>Your Phone number</mat-label>
+                <input
+                  name="phoneNumber"
+                  #phoneNumber="ngModel"
+                  ngModel
+                  matNativeControl
+                  placeholder="07070707070"
+                  required="true"
+                  type="text"
+                  minlength="11"
+                  maxlength="11"
+                />
+                <mat-hint>Phone number</mat-hint>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="form-textarea">
+            <p>
+              <mat-form-field
+                appearance="outline"
+                class="mat-form form-textarea"
+              >
+                <mat-label>Your Message</mat-label>
+                <textarea
+                  name="message"
+                  #message="ngModel"
+                  ngModel
+                  matNativeControl
+                  cols="30"
+                  rows="10"
+                  placeholder="Type a message"
+                  required
+                ></textarea>
+                <mat-hint>Type your message</mat-hint>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <div class="terms">
+            <mat-checkbox
+              class="checkbox"
+              color="primary"
+              style="padding-bottom: 10px"
+            ></mat-checkbox>
+            <p style="max-width: inherit" class="checkbox-link">
+              I accept the terms & conditions and i understand that my data will
+              be held securely in accordance with the
+              <a href="" class="checkbox-link">privacy policy</a>
+            </p>
+          </div>
+          <div class="button">
+            <button mat-raised-button [disabled]="!form.valid" type="submit"><p>SEND MESSAGE</p></button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  <!-- TODO: Add functionality for this link -->
+  <div class="text-below">
+    <h3>Are you ready to earn now?</h3>
+    <a [routerLink]="['/', 'landing']">SELECT A PACKAGE</a>
+  </div>
+</div>

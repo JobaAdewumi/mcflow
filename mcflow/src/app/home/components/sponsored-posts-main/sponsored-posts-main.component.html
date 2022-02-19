@@ -1,0 +1,36 @@
+<div>
+  <div class="post-container">
+    <ul>
+      <li>
+        <mat-card class="post-container__card">
+          <mat-card-header>
+            <div
+              mat-card-avatar
+              class="post-container__card__header__image"
+            ></div>
+            <mat-card-title>The Mcflow Team</mat-card-title>
+            <mat-card-subtitle>Post date dynamic</mat-card-subtitle>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="./../../../../assets/images/quote20210202164519.jpg"
+          />
+          <mat-card-content>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+              dolores delectus quaerat harum illum corrupti, veritatis maxime,
+              impedit vitae ullam, voluptatibus ducimus molestiae. Alias ipsum
+              dolore eveniet voluptas pariatur nam!
+            </p>
+            <a #referral href="referral link">Will set display to none</a>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="referral.click()">
+              SHARE
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+  </div>
+</div>

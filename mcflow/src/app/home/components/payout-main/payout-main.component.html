@@ -1,0 +1,121 @@
+<div class="payout-container">
+  <mat-card  class="mat-card-container">
+    <div class="title-container">
+      <img src="../../../../assets/images/MCF_LOGO_white-11 - Copy.png" alt="" />
+    </div>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <mat-card >
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Referral or MCF points</mat-label>
+            <select
+              matNativeControl
+              name="referralOrMCFPoints"
+              placeholder="Click to select a package"
+              #referralOrMCFPointsInput="ngModel"
+              ngModel
+              required="true"
+            >
+              <option value="referral">
+                Referral Earnings-maybe add balance
+              </option>
+              <option value="mcfpoints">MCf Points-maybe add balance</option>
+            </select>
+            <mat-hint
+              color="warn"
+              *ngIf="
+                !referralOrMCFPointsInput.valid &&
+                referralOrMCFPointsInput.touched
+              "
+              >Please select your withdrawal method.</mat-hint
+            >
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Withdrawal Amount</mat-label>
+            <!-- TODO: Add limit for input -->
+            <input
+              matNativeControl
+              placeholder="100"
+              required="true"
+              name="withdrawalAmount"
+              #withdrawalAmountInput="ngModel"
+              ngModel
+              type="number"
+            />
+            <mat-hint
+              color="warn"
+              *ngIf="
+                !withdrawalAmountInput.valid && withdrawalAmountInput.touched
+              "
+              >Please enter your withdrawal amount.</mat-hint
+            >
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Account Name</mat-label>
+            <input
+              matNativeControl
+              required="true"
+              name="accountName"
+              #accountNameInput="ngModel"
+              ngModel
+              type="text"
+            />
+            <mat-hint
+              color="warn"
+              *ngIf="!accountNameInput.valid && accountNameInput.touched"
+              >Please enter your account name.</mat-hint
+            >
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Account Number</mat-label>
+            <!-- TODO: Add limit for input -->
+            <input
+              matNativeControl
+              placeholder="0122323422"
+              required="true"
+              name="accountNumber"
+              #accountNumberInput="ngModel"
+              ngModel
+              type="number"
+            />
+            <mat-hint
+              color="warn"
+              *ngIf="!accountNumberInput.valid && accountNumberInput.touched"
+              >Please enter your account number.</mat-hint
+            >
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Bank Name</mat-label>
+            <input
+              matNativeControl
+              required="true"
+              name="bankName"
+              #bankNameInput="ngModel"
+              ngModel
+              type="text"
+            />
+            <mat-hint
+              color="warn"
+              *ngIf="!bankNameInput.valid && bankNameInput.touched"
+              >Please enter your bank name.</mat-hint
+            >
+          </mat-form-field>
+        </p>
+
+        <button mat-raised-button [disabled]="!form.valid" type="submit">Proceed</button>
+      </mat-card>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Edit your Profile details</h1>
+<h3></h3>
+<div class="content-container" mat-dialog-content>
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Email</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="email"
+            #emailInput="ngModel"
+            ngModel
+            type="email"
+          />
+          <mat-hint color="warn" *ngIf="!emailInput.valid && emailInput.touched"
+            >Please enter your email</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Password</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="password"
+            #passwordInput="ngModel"
+            ngModel
+            type="password"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!passwordInput.valid && passwordInput.touched"
+            >Please enter your password.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <button [disabled]="!form.valid" mat-raised-button type="submit">
+        Submit
+      </button>
+    </mat-card>
+  </form>
+</div>

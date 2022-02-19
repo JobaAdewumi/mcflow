@@ -1,0 +1,163 @@
+.overview-container {
+  padding: 48px 24px;
+  left: 0;
+  right: 0;
+  width: 1150px;
+  .toprow-cards-container {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 30px;
+  }
+  .bottom-card-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+  }
+  .adjust {
+    display: flex;
+    justify-content: space-between;
+    padding: 125px 105px 0 105px;
+    .amount-of-users {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      .amount-of-users-align {
+        display: block;
+        text-align: right;
+        #seven-five {
+          color: green;
+          font-size: 58px;
+        }
+        #users {
+          padding-top: 10px;
+          font-size: 15px;
+          font-weight: 600;
+        }
+      }
+    }
+    .years-of-experience {
+      display: flex;
+      justify-content: center;
+      padding-top: 75px;
+      .years-of-exp-align {
+        display: block;
+        text-align: center;
+        #big-five {
+          font-family: Poppins, sans-serif;
+          font-size: 300px;
+          padding-top: 10px;
+          color: rgba(43, 190, 30, 0.61);
+        }
+        #five-subtitle {
+          padding-top: 70px;
+          margin-top: 70px;
+          font-weight: 600;
+          font-family: Poppins, sans-serif;
+          font-size: 21px;
+        }
+      }
+    }
+    .amount-paid-out {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      .amount-paid-out-align {
+        display: block;
+        text-align: left;
+        #money-naira {
+          color: green;
+          font-size: 58px;
+        }
+
+        #money-subtitle {
+          padding-top: 15px;
+          font-size: 15px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+mat-card {
+  height: 300px;
+  width: 560px;
+}
+mat-card-title {
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 20px;
+}
+mat-card-content {
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 20px;
+  color: grey;
+  line-height: 1.3;
+}
+
+mat-icon {
+  padding-top: 25px;
+  padding-bottom: 45px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+// Media
+
+@media (max-width: 1024px) {
+  .overview-container {
+    .bottom-card-container {
+      padding-bottom: 70px;
+    }
+
+    .adjust {
+      display: block;
+      justify-content: space-between;
+      padding: 0;
+
+      .amount-of-users {
+        padding-bottom: 150px;
+
+        .amount-of-users-align {
+          text-align: center;
+        }
+      }
+
+      .amount-paid-out {
+        padding-top: 70px;
+
+        .amount-paid-out-align {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  mat-card {
+    height: 300px;
+    width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-container {
+    width: 768px;
+  }
+  mat-card {
+    height: 300px;
+    width: 330px;
+  }
+}
+
+@media (max-width: 425px) {
+  .overview-container {
+    width: 425px;
+    .toprow-cards-container {
+      display: inline-block;
+      justify-content: center;
+      padding-bottom: 30px;
+    }
+  }
+}

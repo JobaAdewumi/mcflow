@@ -1,0 +1,52 @@
+.how-it-works-container {
+    padding: 48px 24px;
+    background-color: rgb(195, 202, 207);
+    .heading {
+      text-align: center;
+      h4 {
+        color: green;
+        font-weight: 500;
+      }
+      h3 {
+        font-size: 23px;
+        font-weight: 500;
+      }
+    }
+    .toprow-cards-container {
+      display: flex;
+      justify-content: space-around;
+      padding-bottom: 30px;
+    }
+    .bottom-card-container {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+    }
+}
+
+mat-card {
+  height: 200px;
+  width: 400px;
+  background-color: rgb(195, 202, 207);
+  text-align: center;
+}
+
+mat-card-title {
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 20px;
+}
+
+mat-card-content {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+mat-icon {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+

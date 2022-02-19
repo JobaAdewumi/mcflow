@@ -1,0 +1,72 @@
+.help-container {
+  background-image: url(../../../../assets/images/african-american-call-operator-in-headset-call-center-business-or-picture.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-color: aliceblue;
+  background-size: 100vw 600px;
+  padding: 80px 200px;
+  .mat-card-container {
+    padding-top: 200px;
+    mat-card {
+      .mat-header {
+        padding-top: 20px;
+        padding-bottom: 30px;
+        text-align: center;
+        p {
+            color: grey;
+        }
+        h3 {
+            font-weight: 600;
+            font-size: 30px;
+        }
+      }
+      .form-container {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+}
+
+.form-input {
+  width: 300px;
+}
+
+.form-textarea {
+  width: 450px;
+}
+
+.checkbox-link {
+  color: grey;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-around;
+  .terms {
+    width: 500px;
+    padding-right: 80px;
+  }
+  .button {
+    button {
+      height: 40px;
+      background-color: green;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    p {
+      color: white;
+      font-size: 12px;
+      padding: 4px 5px 5px 5px;
+    }
+  }
+}
+
+.text-below {
+  text-align: center;
+  padding-top: 20px;
+  a {
+      color: green;
+  }
+}
