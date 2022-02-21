@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ClipboardModule } from 'ngx-clipboard';
+import { NgHelmetModule } from 'ng-helmet';
 
 import { MaterialModule } from './material.module';
 
@@ -14,10 +15,11 @@ import { AppComponent } from './app.component';
 import { AuthInterceptorService } from './core/services/auth-interceptor.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
+    NgHelmetModule.forRoot({
+      baseTitle: '| Mcflow',
+    }),
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
@@ -30,8 +32,8 @@ import { AuthInterceptorService } from './core/services/auth-interceptor.service
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true,
-    }
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

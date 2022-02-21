@@ -13,11 +13,11 @@
         padding-bottom: 30px;
         text-align: center;
         p {
-            color: grey;
+          color: grey;
         }
         h3 {
-            font-weight: 600;
-            font-size: 30px;
+          font-weight: 600;
+          font-size: 30px;
         }
       }
       .form-container {
@@ -67,6 +67,10 @@
   text-align: center;
   padding-top: 20px;
   a {
-      color: green;
+    color: green;
   }
+}
+
+.text-area {
+  resize: none;
 }

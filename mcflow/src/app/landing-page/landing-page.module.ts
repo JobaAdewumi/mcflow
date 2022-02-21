@@ -11,7 +11,7 @@ import { AllLandingComponent } from './components/all-landing/all-landing.compon
 import { LandingPageComponent } from './landing-page.component';
 import { LandingFaqComponent } from './components/landing-faq/landing-faq.component';
 import { LandingContactsComponent } from './components/landing-contacts/landing-contacts.component';
-import { MaterialModule } from "../material.module";
+import { MaterialModule } from '../material.module';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { FaqBelowHeaderComponent } from './components/faq-below-header/faq-below-header.component';
 import { FaqListQuestionsComponent } from './components/faq-list-questions/faq-list-questions.component';
@@ -26,7 +26,7 @@ import { BelowTermsComponent } from './components/below-terms/below-terms.compon
 import { ListTermsComponent } from './components/list-terms/list-terms.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FormsModule } from '@angular/forms';
-
+import { NgHelmetModule } from 'ng-helmet';
 
 @NgModule({
   declarations: [
@@ -52,10 +52,16 @@ import { FormsModule } from '@angular/forms';
     LandingTermsComponent,
     BelowTermsComponent,
     ListTermsComponent,
-    SidenavComponent
+    SidenavComponent,
   ],
   imports: [
-    CommonModule, MaterialModule, FormsModule,LandingPageRoutingModule
-  ]
+    NgHelmetModule.forRoot({
+      baseTitle: '| Mcflow',
+    }),
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    LandingPageRoutingModule,
+  ],
 })
-export class LandingPageModule { }
+export class LandingPageModule {}

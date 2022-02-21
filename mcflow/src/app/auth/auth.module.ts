@@ -6,9 +6,18 @@ import { MaterialModule } from '../material.module';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthPageComponent } from './auth-page.component';
+import { NgHelmetModule } from 'ng-helmet';
 
 @NgModule({
   declarations: [AuthPageComponent],
-  imports: [CommonModule, AuthRoutingModule, MaterialModule, FormsModule],
+  imports: [
+    NgHelmetModule.forRoot({
+      baseTitle: '| Mcflow',
+    }),
+    CommonModule,
+    AuthRoutingModule,
+    MaterialModule,
+    FormsModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -140,6 +140,6 @@ export class PostController {
   // @UseGuards(JwtGuard)
   @Get('image/:fileName')
   findImageByName(@Param('fileName') fileName: string, @Res() res) {
-    return res.sendFile(fileName, { root: './images' });
+    return res.sendFile(fileName, { root: './post_images' });
   }
 }

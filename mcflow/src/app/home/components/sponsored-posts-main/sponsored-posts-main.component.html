@@ -1,32 +1,36 @@
-<div>
-  <div class="post-container">
+<div *ngIf="allLoadedPosts.length > 0" class="all-posts-container">
+  <div *ngIf="allLoadedPosts.length < 0" style="margin: auto auto;
+    padding: 200px 0;">
+    <h1>NO POSTS AT THIS CURRENT TIME</h1>
+  </div>
+  <div class="all-posts-container__post-container">
     <ul>
       <li>
-        <mat-card class="post-container__card">
+        <mat-card *ngFor="let post of allLoadedPosts" class="all-posts-container__post-container__card">
           <mat-card-header>
             <div
               mat-card-avatar
-              class="post-container__card__header__image"
+              class="all-posts-container__post-container__card__header__image"
             ></div>
             <mat-card-title>The Mcflow Team</mat-card-title>
             <mat-card-subtitle>Post date dynamic</mat-card-subtitle>
           </mat-card-header>
           <img
             mat-card-image
-            src="./../../../../assets/images/quote20210202164519.jpg"
+            [src]="$any(post).fullImagePath"
           />
           <mat-card-content>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              dolores delectus quaerat harum illum corrupti, veritatis maxime,
-              impedit vitae ullam, voluptatibus ducimus molestiae. Alias ipsum
-              dolore eveniet voluptas pariatur nam!
+              {{ post.body }}
             </p>
-            <a #referral href="referral link">Will set display to none</a>
+            <a #referral [href]="post.link">Will set display to none</a>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="referral.click()">
+          <mat-card-actions align="end">
+            <button class="share-button" mat-button (click)="referral.click()">
               SHARE
+            </button>
+            <button *ngIf="role === 'admin'" class="delete-button" mat-raised-button (click)="deletePost(post.id)">
+              DELETE
             </button>
           </mat-card-actions>
         </mat-card>

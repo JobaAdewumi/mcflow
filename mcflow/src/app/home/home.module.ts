@@ -23,6 +23,7 @@ import { DashboardEditProfileModalComponent } from './components/dashboard-edit-
 import { AuthModule } from '../auth/auth.module';
 import { SponsoredPostsMainComponent } from './components/sponsored-posts-main/sponsored-posts-main.component';
 import { SponsoredPostsCreatePostComponent } from './components/sponsored-posts-create-post/sponsored-posts-create-post.component';
+import { NgHelmetModule } from 'ng-helmet';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,9 @@ import { SponsoredPostsCreatePostComponent } from './components/sponsored-posts-
     SponsoredPostsCreatePostComponent,
   ],
   imports: [
+    NgHelmetModule.forRoot({
+      baseTitle: '| Mcflow',
+    }),
     CommonModule,
     HomeRoutingModule,
     MaterialModule,

@@ -14,8 +14,9 @@ import { userResponse } from '../models/userResponse.model';
 import { PackageName } from '../models/package.enum';
 import { Wallet } from '../models/wallet.model';
 import { NewWallet } from '../models/newWallet.model';
+import { UpdatedUser } from '../models/updatedUser.model';
+import { Role } from '../models/role.enum';
 
-import { UpdatedUser } from './../../../../../api/src/auth/models/updated-user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,14 @@ export class AuthService {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
         return of(user.packageName);
+      })
+    );
+  }
+
+  get userRole(): Observable<Role> {
+    return this.user$.asObservable().pipe(
+      switchMap((user: User) => {
+        return of(user.role);
       })
     );
   }

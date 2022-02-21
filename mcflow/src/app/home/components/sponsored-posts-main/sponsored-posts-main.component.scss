@@ -1,20 +1,43 @@
-.post-container {
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+.all-posts-container {
+  margin-left: 15%;
+  margin-right: 15%;
+  .empty_posts {
+    margin: auto auto;
+    padding: 200px 0;
+  }
+  &__post-container {
+    ul {
+      li {
+        list-style: none;
+      }
+    }
+
+    &__card {
+      margin-bottom: 20px;
     }
   }
-  &__card {
-    width: 70%;
-    // height: 100px;
+}
+
+.share-button {
+  color: green;
+  background-color: white;
+
+  &:hover {
+    color: white;
+    background-color: green;
+  }
+}
+
+.delete-button {
+  color: red;
+  background-color: white;
+
+  &:hover {
+    color: white;
+    background-color: red;
   }
 }
 
 img {
-  height: 400px;
+  height: 500px;
 }
