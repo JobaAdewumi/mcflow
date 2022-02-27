@@ -1,4 +1,4 @@
-import { PackageName } from './package.enum';
+import { UserPackage } from './package.enum';
 import {
   Column,
   CreateDateColumn,
@@ -37,11 +37,14 @@ export class UserEntity {
   @Column({ nullable: true })
   imagePath: string;
 
-  @Column({ type: 'enum', enum: PackageName })
-  packageName: PackageName;
+  @Column({ type: 'enum', enum: UserPackage })
+  userPackage: UserPackage;
 
   @Column({ type: 'enum', enum: Role, default: Role.USER })
   role: Role;
+
+  @Column({ unique: true })
+  referralLink: string;
 
   @CreateDateColumn({ nullable: true })
   lastLogin: Date;

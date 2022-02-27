@@ -1,9 +1,8 @@
-import { PackageName } from "./package.enum";
+import { UserPackage } from "./package.enum";
 
 export interface NewWallet {
   userName: string;
   mcfPoints?: number;
   referralBalance?: number;
-  balance?: number;
-  packageName: PackageName;
+  userPackage: UserPackage;
 }

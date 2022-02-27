@@ -1,5 +1,5 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { PackageName } from './package.enum';
+import { UserPackage } from './package.enum';
 
 @Entity('wallet')
 export class WalletEntity {
@@ -15,9 +15,9 @@ export class WalletEntity {
   @Column({ unsigned: true })
   referralBalance: number;
 
-  @Column({ unsigned: true })
-  balance: number;
+  @Column()
+  referred: number;
 
-  @Column({ type: 'enum', enum: PackageName })
-  userPackage: PackageName;
+  @Column({ type: 'enum', enum: UserPackage })
+  userPackage: UserPackage;
 }

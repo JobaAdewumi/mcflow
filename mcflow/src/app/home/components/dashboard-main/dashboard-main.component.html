@@ -12,7 +12,6 @@
         />
       </mat-icon>
       <div class="balances">
-        <h2>MCF Points balance:</h2>
         <p>{{ points }}  Mcf points</p>
         <h2>Referral Balance:</h2>
         <p>₦{{ referralBalance }}.00</p>
@@ -26,7 +25,7 @@
         Edit Profile
       </button>
       <mat-card-content (click)="onSignOut()" style="cursor: pointer;"
-        >Not -{{ userName }}-? Sign out</mat-card-content
+        >Not -{{ userName }}- ? Sign out</mat-card-content
       >
       <button mat-stroked-button (click)="openDialog()">
         List of vendors

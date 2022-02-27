@@ -25,7 +25,6 @@ export class AuthPageComponent implements OnInit {
 
   mcfPoints: number;
   referralBalance: number;
-  balance: number;
   userName: string;
   userPackage: string;
   email: string;
@@ -68,7 +67,7 @@ export class AuthPageComponent implements OnInit {
           }
         );
     } else if (this.submissionType === 'join') {
-      const { firstName, lastName, userName, phoneNumber, packageName } =
+      const { firstName, lastName, userName, phoneNumber, userPackage } =
         this.form.value;
       if (!firstName || !lastName) return null;
 
@@ -78,7 +77,7 @@ export class AuthPageComponent implements OnInit {
         userName,
         email,
         phoneNumber,
-        packageName,
+        userPackage,
         password,
       };
 
@@ -98,18 +97,16 @@ export class AuthPageComponent implements OnInit {
   }
 
   registerWallet() {
-    const { userName, packageName } = this.form.value;
+    const { userName, userPackage } = this.form.value;
 
     const mcfPoints = 0 as unknown as number;
     const referralBalance = 0 as unknown as number;
-    const balance = 0 as unknown as number;
 
     const newWallet: NewWallet = {
       userName,
-      packageName,
+      userPackage,
       mcfPoints: mcfPoints,
       referralBalance: referralBalance,
-      balance: balance,
     };
 
     return this.authService.registerWallet(newWallet).subscribe();

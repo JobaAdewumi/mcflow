@@ -5,6 +5,7 @@ import {
   OnDestroy,
   SimpleChanges,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription, throwError } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { User } from '../../../auth/models/user.model';
@@ -20,6 +21,7 @@ import { PostService } from '../../services/post.service';
   styleUrls: ['./sponsored-posts-main.component.scss'],
 })
 export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
+  form: FormGroup;
   @Input() postBody?: NewSponsoredPost;
 
   queryParams: string;
@@ -135,6 +137,38 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
         );
         this.errorHandlerService.openSuccessSnackBar('Deleted post successful');
       });
+  }
+
+  onFileSelect(event: Event, postId: number): void {
+    const file: File = (event.target as HTMLInputElement).files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    this.postService
+      .uploadPostImage(formData, postId)
+      .pipe(
+        catchError((err) => {
+          this.errorHandlerService.openSnackBar('Check your email or password');
+          console.log('error:', err);
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        // res =>
+        //   this.errorHandlerService.openSuccessSnackBar(`Login res successfully: ${res}`),
+        // err =>
+        //   this.errorHandlerService.handleError(
+        //     `wrong email or password: ${err}`,
+
+        //   ),
+
+        () => {
+          this.errorHandlerService.openSuccessSnackBar('Profile picture updated successfully');
+        }
+      );
+
+    this.form.reset();
   }
 
   ngOnDestroy(): void {

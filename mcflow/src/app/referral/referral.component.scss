@@ -1,0 +1,73 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+
+  img {
+    width: 200px;
+  }
+
+}
+
+
+
+form {
+  max-width: 400px;
+  margin: auto;
+
+  mat-card {
+    box-shadow: none;
+    border: 1px solid #e1e1e1;
+    padding: 24px;
+    margin-top: 20px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .terms-and-conditions {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 16px;
+
+      p {
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    button {
+      margin-top: 16px;
+      height: 48px;
+      width: 100%;
+      color: white;
+      background-color: green;
+      border: 1px solid green;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:focus {
+        background-color: rgb(165, 228, 165);
+        color: rgb(48, 47, 47);
+      }
+    }
+  }
+}
+
+.toggle-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 8px;
+    margin-top: 15px;
+    color: green;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

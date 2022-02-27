@@ -45,6 +45,13 @@ export class UserController {
     return this.userService.loginMcf(userName, userPackage, lastLogin, points);
   }
 
+  @Put('referral')
+  referral(
+    @Body() { userName, userPackage, ref, refB },
+  ): Observable<UpdateResult> {
+    return this.userService.referral(userName, userPackage, ref, refB);
+  }
+
   // @UseGuards(JwtGuard)
   @Get('last-login/:id')
   LastLogin(@Param('id') stringId: string): Observable<{ lastLogin: Date }> {
@@ -98,7 +105,7 @@ export class UserController {
     if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
 
     const imagesFolderPath = join(process.cwd(), 'images');
-    console.log('before return controller', imagesFolderPath); 
+    console.log('before return controller', imagesFolderPath);
     const fullImagePath = join(imagesFolderPath + '/' + file.filename);
 
     console.log('before return controller', fileName);

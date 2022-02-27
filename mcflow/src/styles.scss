@@ -39,10 +39,18 @@ $mcflow-theme: mat.define-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-y: scroll;}
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+}
+
+*::selection {
+  color: rgb(106, 209, 106);
+  background-color: rgb(103, 146, 103);
 }
 
 a.active {
@@ -53,4 +61,26 @@ a.active {
     background-color: green;
     color: white;
   }
+}
+
+.green-snackbar {
+  background-color: rgb(68, 122, 68);
+  color: white;
+}
+
+.green-snackbar button {
+  background-color: green;
+  color: white !important;
+  border: none;
+}
+
+.red-snackbar {
+  background-color: rgb(102, 53, 53);
+  color: white;
+}
+
+.red-snackbar button {
+  background-color: red;
+  color: white !important;
+  border: none;
 }

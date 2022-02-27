@@ -1,5 +1,5 @@
 import { Wallet } from './wallet.model';
-import { PackageName } from './package.enum';
+import { UserPackage } from './package.enum';
 import { Role } from './role.enum';
 
 export interface User {
@@ -12,7 +12,8 @@ export interface User {
   password: string;
   imagePath?: string;
   lastLogin: Date;
-  packageName: PackageName;
+  userPackage: UserPackage;
   role: Role;
+  referralLink: string;
   wallet?: Wallet;
 }

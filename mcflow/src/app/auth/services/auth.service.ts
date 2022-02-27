@@ -11,7 +11,7 @@ import { environment } from './../../../environments/environment';
 import { NewUser } from './../models/newUser.model';
 import { User } from '../models/user.model';
 import { userResponse } from '../models/userResponse.model';
-import { PackageName } from '../models/package.enum';
+import { UserPackage } from '../models/package.enum';
 import { Wallet } from '../models/wallet.model';
 import { NewWallet } from '../models/newWallet.model';
 import { UpdatedUser } from '../models/updatedUser.model';
@@ -41,10 +41,10 @@ export class AuthService {
     );
   }
 
-  get userPackage(): Observable<PackageName> {
+  get userPackage(): Observable<UserPackage> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
-        return of(user.packageName);
+        return of(user.userPackage);
       })
     );
   }
@@ -53,6 +53,14 @@ export class AuthService {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
         return of(user.role);
+      })
+    );
+  }
+
+  get userReferralLink(): Observable<string> {
+    return this.user$.asObservable().pipe(
+      switchMap((user: User) => {
+        return of(user.referralLink);
       })
     );
   }

@@ -22,6 +22,11 @@ export class WalletController {
     return this.walletService.getUserWallet(userName);
   }
 
+  @Get('referral/:userName')
+  referralWalletDetails(@Param('userName') userName: string): Observable<Wallet> {
+    return this.walletService.getUserReferralWallet(userName);
+  }
+
   @UseGuards(JwtGuard)
   @Post('withdrawal')
   requestWithdrawal(@Body() newWithdrawal: NewWithdrawal) {

@@ -34,7 +34,6 @@ export class PayoutMainComponent implements OnInit {
 
   mcfPoints: number;
   referralBalance: number;
-  balance: number;
   userName: string;
   userPackage: string;
   email: string;
@@ -52,7 +51,6 @@ export class PayoutMainComponent implements OnInit {
         tap((wallet: Wallet) => {
           this.mcfPoints = wallet.mcfPoints;
           this.referralBalance = wallet.referralBalance;
-          this.balance = wallet.balance;
         })
       )
       .subscribe();
@@ -89,7 +87,6 @@ export class PayoutMainComponent implements OnInit {
     console.log('hello', `${this.userPackage}`);
     console.log('points', `${this.mcfPoints}`);
     console.log('referral', `${this.referralBalance}`);
-    console.log('balance', `${this.balance}`);
     console.log('userName', `${this.userName}`);
     if (this.userPackage == 'bronze' && this.mcfPoints < 10000) {
       alert(`${this.userPackage}`);

@@ -24,6 +24,8 @@ export class HomePageComponent implements OnInit {
 
   timer: string;
 
+  role: string;
+
   currentRoute: 'Sponsored Posts' | 'Dashboard' | 'Cashout' = 'Sponsored Posts';
 
   constructor(
@@ -32,6 +34,12 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.userRole.pipe(take(1)).subscribe((role: string) => {
+      this.role = role;
+      console.log(role);
+      this.user$.next(role as any);
+    });
+
     // this.authService.userName.pipe(take(1)).subscribe((userName: string) => {
     //   this.userName = userName;
     //   this.user$.next(userName as any);

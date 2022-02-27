@@ -41,7 +41,6 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
   userPackage: string;
   points: number;
   referralBalance: number;
-  balance: number;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -67,7 +66,6 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
         tap((wallet: Wallet) => {
           this.points = wallet.mcfPoints;
           this.referralBalance = wallet.referralBalance;
-          this.balance = wallet.balance;
         })
       )
       .subscribe();

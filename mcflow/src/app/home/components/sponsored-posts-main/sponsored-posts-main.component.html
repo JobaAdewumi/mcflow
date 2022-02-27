@@ -1,40 +1,68 @@
-<div *ngIf="allLoadedPosts.length > 0" class="all-posts-container">
-  <div *ngIf="allLoadedPosts.length < 0" style="margin: auto auto;
-    padding: 200px 0;">
-    <h1>NO POSTS AT THIS CURRENT TIME</h1>
-  </div>
-  <div class="all-posts-container__post-container">
-    <ul>
-      <li>
-        <mat-card *ngFor="let post of allLoadedPosts" class="all-posts-container__post-container__card">
-          <mat-card-header>
-            <div
-              mat-card-avatar
-              class="all-posts-container__post-container__card__header__image"
-            ></div>
-            <mat-card-title>The Mcflow Team</mat-card-title>
-            <mat-card-subtitle>Post date dynamic</mat-card-subtitle>
-          </mat-card-header>
-          <img
-            mat-card-image
-            [src]="$any(post).fullImagePath"
-          />
-          <mat-card-content>
-            <p>
-              {{ post.body }}
-            </p>
-            <a #referral [href]="post.link">Will set display to none</a>
-          </mat-card-content>
-          <mat-card-actions align="end">
-            <button class="share-button" mat-button (click)="referral.click()">
-              SHARE
-            </button>
-            <button *ngIf="role === 'admin'" class="delete-button" mat-raised-button (click)="deletePost(post.id)">
-              DELETE
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </li>
-    </ul>
-  </div>
+<div class="all-posts-container">
+  <ng-container *ngIf="allLoadedPosts.length > 0">
+    <div class="all-posts-container__post-container">
+      <ul>
+        <li>
+          <mat-card
+            *ngFor="let post of allLoadedPosts"
+            class="all-posts-container__post-container__card"
+          >
+            <mat-card-header>
+              <div
+                mat-card-avatar
+                class="all-posts-container__post-container__card__header__image"
+              ></div>
+              <mat-card-title>The Mcflow Team</mat-card-title>
+              <mat-card-subtitle>{{ post.createdAt | date }}</mat-card-subtitle>
+            </mat-card-header>
+            <input
+              #fileUpload
+              (change)="onFileSelect($event, post.id)"
+              style="display: none"
+              type="file"
+            />
+            <img mat-card-image [src]="$any(post).fullImagePath" alt="" />
+            <mat-card-content>
+              <p>
+                {{ post.body }}
+              </p>
+              <a #referral [href]="post.link">Will set display to none</a>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button
+                class="share-button"
+                mat-button
+                (click)="referral.click()"
+              >
+                SHARE
+              </button>
+              <button
+                *ngIf="role === 'admin'"
+                class="delete-button"
+                mat-raised-button
+                (click)="deletePost(post.id)"
+              >
+                DELETE POST
+              </button>
+              <button
+                *ngIf="role === 'admin'"
+                class="upload-button"
+                mat-raised-button
+                (click)="fileUpload.click()"
+              >
+                UPLOAD IMAGE
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="allLoadedPosts.length <= 0">
+    <div class="no-posts">
+      <h1 style="font-size: 20px; color: darkgreen">
+        THERE ARE NO POSTS TO RETRIEVE!
+      </h1>
+    </div>
+  </ng-container>
 </div>

@@ -1,6 +1,6 @@
 import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { Role } from '../../post/models/role.enum';
-import { PackageName } from './package.enum';
+import { UserPackage } from './package.enum';
 import { Wallet } from './wallet.interface';
 
 export class User {
@@ -17,8 +17,9 @@ export class User {
   @IsString()
   password?: string;
   imagePath?: string;
-  packageName?: PackageName;
+  userPackage?: UserPackage;
   role?: Role;
+  referralLink?: string;
   lastLogin?: Date;
   // wallet?: Wallet;
 }

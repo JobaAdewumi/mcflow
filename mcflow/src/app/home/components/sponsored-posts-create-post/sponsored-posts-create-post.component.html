@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Create a post</h1>
-<h3>Quick brief, After you create a post and it shows on the feed below tap the image to add the post image.</h3>
+<h3>Quick brief, After you create a post and it shows on the feed below tap the upload image button to add the post image.</h3>
 <div class="content-container" mat-dialog-content>
   <form #form="ngForm" (ngSubmit)="onSubmit()">
     <mat-card>
@@ -16,6 +16,7 @@
             type="text"
             cols="30"
             rows="10"
+            placeholder="Your Post"
           ></textarea>
           <mat-hint color="warn" *ngIf="!bodyInput.valid && bodyInput.touched"
             >Please enter post body</mat-hint
@@ -33,6 +34,7 @@
             #linkInput="ngModel"
             ngModel
             type="text"
+            placeholder="Link you want people to share"
           />
           <mat-hint color="warn" *ngIf="!linkInput.valid && linkInput.touched"
             >Please enter the sharing link.</mat-hint

@@ -6,7 +6,13 @@
       <h1 class="sidenav-name">{{ currentRoute }}</h1>
     </div>
     <div class="button-container">
-      <button mat-raised-button (click)="openCreatePost()" >Create post</button>
+      <button
+        *ngIf="role === 'admin'"
+        mat-raised-button
+        (click)="openCreatePost()"
+      >
+        Create post
+      </button>
       <button mat-flat-button (click)="snav.toggle()">
         hey
         <i class="fas fa-list"></i>
@@ -19,12 +25,27 @@
       <div class="sidenav-header">
         <h1>MCFLOW</h1>
       </div>
-      <hr style="margin: 10px 0;" />
+      <hr style="margin: 10px 0" />
       <div class="nav-items">
-        <a  [routerLink]="['/', 'home', 'dashboard']" routerLinkActive="active" (click)="dashboard()">Dashboard</a>
-        <a [routerLink]="['/', 'home', 'payout']" routerLinkActive="active" (click)="cashout()">Cashout</a>
-        <a [routerLink]="['/', 'home']" routerLinkActive="active" (click)="posts()">Sponsored Posts</a>
-        <p  (click)="onSignOut()">Log out</p>
+        <a
+          [routerLink]="['/', 'home', 'dashboard']"
+          routerLinkActive="active"
+          (click)="dashboard()"
+          >Dashboard</a
+        >
+        <a
+          [routerLink]="['/', 'home', 'payout']"
+          routerLinkActive="active"
+          (click)="cashout()"
+          >Cashout</a
+        >
+        <a
+          [routerLink]="['/', 'home']"
+          routerLinkActive="active"
+          (click)="posts()"
+          >Sponsored Posts</a
+        >
+        <p (click)="onSignOut()">Log out</p>
       </div>
     </mat-sidenav>
     <mat-sidenav-content>

@@ -17,9 +17,10 @@ export class DashboardWalletComponent implements OnInit {
   private user$ = new BehaviorSubject<User>(null);
 
   referralBalance: number;
-  balance: number;
   userName: string;
   points: number;
+  referralLink: string;
+  referred: number;
 
   constructor(
     private clipboardService: ClipboardService,
@@ -34,6 +35,13 @@ export class DashboardWalletComponent implements OnInit {
       this.user$.next(userName as any);
     });
 
+    this.authService.userReferralLink
+      .pipe(take(1))
+      .subscribe((referralLink: string) => {
+        this.referralLink = referralLink;
+        this.user$.next(referralLink as any);
+      });
+
     this.homeService
       .getUserWallet(this.userName)
       .pipe(
@@ -41,14 +49,16 @@ export class DashboardWalletComponent implements OnInit {
         tap((wallet: Wallet) => {
           this.points = wallet.mcfPoints;
           this.referralBalance = wallet.referralBalance;
-          this.balance = wallet.balance;
+          this.referred = wallet.referred;
         })
       )
       .subscribe();
   }
 
   copyLink() {
-    this.errorHandlerService.openSuccessSnackBar('Referral link has been copied successfully');
+    this.errorHandlerService.openSuccessSnackBar(
+      'Referral link has been copied successfully'
+    );
     // alert('Referral link has been copied to your clipboard');
   }
 }

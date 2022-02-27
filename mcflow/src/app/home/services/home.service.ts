@@ -83,7 +83,6 @@ export class HomeService {
           console.log(this.userName);
           this.points = wallet.mcfPoints;
           // this.referralBalance = wallet.referralBalance;
-          // this.balance = wallet.balance;
           console.log(this.points);
         })
       )

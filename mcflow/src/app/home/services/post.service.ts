@@ -69,13 +69,14 @@ export class PostService {
   }
 
   uploadPostImage(
-    formData: FormData
+    formData: FormData,
+    postId: number
   ): Observable<{ modifiedFileName: string }> {
-    console.log(formData);
+    console.log(formData, postId);
     return this.http
       .post<{ modifiedFileName: string }>(
-        `${environment.baseApiUrl}/post/upload-image`,
-        formData
+        `${environment.baseApiUrl}/post/upload`,
+        { formData, postId }
       )
       .pipe(
         tap(({ modifiedFileName }) => {

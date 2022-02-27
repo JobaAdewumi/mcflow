@@ -13,7 +13,7 @@ import { UserEntity } from '../models/user.entity';
 import { WalletEntity } from '../models/wallet.entity';
 
 import { Wallet } from '../models/wallet.interface';
-import { PackageName } from './../models/package.enum';
+import { UserPackage } from './../models/package.enum';
 import { UpdatedUser } from '../models/updated-user.class';
 import { User } from '../models/user.class';
 
@@ -30,8 +30,7 @@ export class AuthService {
 
   mcfPoints: number = this.walletService.mcfPoints;
   referralBalance: number = this.walletService.referralBalance;
-  balance: number = this.walletService.balance;
-  userPackage: PackageName = this.walletService.userPackage;
+  userPackage: UserPackage = this.walletService.userPackage;
 
   hashPassword(password: string): Observable<string> {
     return from(bcrypt.hash(password, 12));
@@ -52,7 +51,6 @@ export class AuthService {
   registerWallet(wallet: Wallet): Observable<Wallet> {
     const { userName, userPackage } = wallet;
     const mcfTPoints = 0 as any;
-    const Tbalance = 0 as any;
     const TreferralBalance = 0 as any;
 
     return this.doesUserExistWallet(userName).pipe(
@@ -69,8 +67,8 @@ export class AuthService {
             userName,
             mcfPoints: mcfTPoints,
             referralBalance: TreferralBalance,
-            balance: Tbalance,
             userPackage,
+            referred: 0,
           }),
         ).pipe(
           map((wallet: Wallet) => {
@@ -92,7 +90,7 @@ export class AuthService {
       userName,
       email,
       phoneNumber,
-      packageName,
+      userPackage,
       password,
     } = user;
 
@@ -114,7 +112,8 @@ export class AuthService {
                 userName,
                 email,
                 phoneNumber,
-                packageName,
+                UserPackage,
+                referralLink: `http://localhost:4200/referral/${userName}`,
                 password: hashedPassword,
               }),
             ).pipe(
@@ -142,7 +141,8 @@ export class AuthService {
             'email',
             'phoneNumber',
             'password',
-            'packageName',
+            'userPackage',
+            'referralLink',
             'role',
           ],
         },

@@ -1,4 +1,4 @@
-import { PackageName } from "./package.enum";
+import { UserPackage } from "./package.enum";
 
 export interface NewUser {
   firstName: string;
@@ -6,6 +6,6 @@ export interface NewUser {
   userName: string;
   email: string;
   phoneNumber: string;
-  packageName: PackageName;
+  userPackage: UserPackage;
   password: string;
 }

@@ -8,7 +8,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { AuthService } from './auth.service';
 import { WalletService } from './wallet.service';
 
-import { PackageName } from './../models/package.enum';
+import { UserPackage } from './../models/package.enum';
 import { UpdatedUser } from '../models/updated-user.class';
 import { User } from '../models/user.class';
 import { UserEntity } from '../models/user.entity';
@@ -27,8 +27,7 @@ export class UserService {
 
   mcfPoints: number;
   referralBalance: number;
-  balance: number;
-  userPackage: PackageName;
+  userPackage: UserPackage;
 
   doesUserExistWallet(userName: string): Observable<boolean> {
     return from(this.walletRepository.findOne({ userName })).pipe(
@@ -38,7 +37,7 @@ export class UserService {
 
   loginMcf(
     userName: string,
-    userPackage: PackageName,
+    userPackage: UserPackage,
     lastLogin: Date,
     points: number,
   ) {
@@ -88,6 +87,63 @@ export class UserService {
         );
       }
       console.log('end fu', mcfPoints);
+      return null;
+    } catch (err) {
+      console.log(`${err}`);
+      throw new Error(err);
+    }
+  }
+
+  referral(
+    userName: string,
+    userPackage: UserPackage,
+    ref: number,
+    refB: number,
+  ): Observable<UpdateResult> {
+    console.log('heere');
+    try {
+      let referral = refB;
+      let noReferred = ref;
+
+      if (userPackage == 'bronze') {
+        console.log('heere');
+        referral = referral + 1000;
+        noReferred = noReferred + 1;
+        return from(
+          this.walletRepository.update(
+            { userName },
+            { referralBalance: referral, referred: noReferred },
+          ),
+        );
+      } else if (userPackage == 'silver') {
+        referral = referral + 2500;
+        noReferred = noReferred + 1;
+        return from(
+          this.walletRepository.update(
+            { userName },
+            { referralBalance: referral, referred: noReferred },
+          ),
+        );
+      } else if (userPackage == 'gold') {
+        referral = referral + 4000;
+        noReferred = noReferred + 1;
+        return from(
+          this.walletRepository.update(
+            { userName },
+            { referralBalance: referral, referred: noReferred },
+          ),
+        );
+      } else if (userPackage == 'pioneer') {
+        referral = referral + 8000;
+        noReferred = noReferred + 1;
+        return from(
+          this.walletRepository.update(
+            { userName },
+            { referralBalance: referral, referred: noReferred },
+          ),
+        );
+      }
+      console.log('end fu', refB, ref);
       return null;
     } catch (err) {
       console.log(`${err}`);

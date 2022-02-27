@@ -1,0 +1,220 @@
+<section>
+  <ng-helmet>
+    <title>Referral Form</title>
+    <meta name="description" content="sign in or sign up" />
+    <meta name="some-property" content="some-value" />
+  </ng-helmet>
+  <div class="title-container">
+    <img src="../../assets/images/logo.png" alt="" />
+  </div>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>First Name</mat-label>
+          <input
+            matNativeControl
+            placeholder="James"
+            required="true"
+            name="firstName"
+            #firstNameInput="ngModel"
+            ngModel
+            type="text"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!firstNameInput.valid && firstNameInput.touched"
+            >Please enter your first name.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Last Name</mat-label>
+          <input
+            matNativeControl
+            placeholder="May"
+            required="true"
+            name="lastName"
+            #lastNameInput="ngModel"
+            ngModel
+            type="text"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!lastNameInput.valid && lastNameInput.touched"
+            >Please enter your last name.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Username</mat-label>
+          <input
+            matNativeControl
+            placeholder="May01"
+            required="true"
+            name="userName"
+            #userNameInput="ngModel"
+            ngModel
+            type="text"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!userNameInput.valid && userNameInput.touched"
+            >Please enter your username.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Email</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="email"
+            #emailInput="ngModel"
+            ngModel
+            type="email"
+            placeholder="james@email.com"
+          />
+          <mat-hint color="warn" *ngIf="!emailInput.valid && emailInput.touched"
+            >Please enter your email</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <!-- TODO: Add functionality for logging in with email and userName -->
+      <!-- <ng-container *ngIf="submissionType === 'login'">
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Email or Username</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="email"
+            #emailInput="ngModel"
+            ngModel
+            type="text"
+          />
+          <mat-hint color="warn" *ngIf="!emailInput.valid && emailInput.touched"
+            >Please enter your email</mat-hint
+          >
+        </mat-form-field>
+      </p>
+      </ng-container> -->
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Phone Number</mat-label>
+          <!-- TODO: Add limit for input -->
+          <input
+            matNativeControl
+            placeholder="07007070070"
+            required="true"
+            name="phoneNumber"
+            #phoneNumberInput="ngModel"
+            ngModel
+            type="text"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!phoneNumberInput.valid && phoneNumberInput.touched"
+            >Please enter your phone number.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Package</mat-label>
+          <select
+            title="Select a package"
+            matNativeControl
+            name="userPackage"
+            #packageInput="ngModel"
+            ngModel
+            required="true"
+          >
+            <option value="bronze">Bronze</option>
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+            <option value="pioneer">Pioneer</option>
+          </select>
+          <mat-hint
+            color="warn"
+            *ngIf="!packageInput.valid && packageInput.touched"
+            >Please enter your package.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Password</mat-label>
+          <input
+            placeholder="Pick a secure password"
+            matNativeControl
+            required="true"
+            name="password"
+            #passwordInput="ngModel"
+            ngModel
+            type="password"
+          />
+          <mat-hint
+            color="warn"
+            *ngIf="!passwordInput.valid && passwordInput.touched"
+            >Please enter your password.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>{{ urlUsername }}</mat-label>
+          <input
+            placeholder="The person who referred you"
+            disabled
+            name="urlUsername"
+            #urlUsernameInput="ngModel"
+            matNativeControl
+            [value]="urlUsername"
+            ngModel
+            type="text"
+          />
+        </mat-form-field>
+      </p>
+
+      <div class="terms-and-conditions">
+        By clicking Agree & Join, you agree to the Mcflow
+        <a
+          [routerLink]="['/', 'landing', 'terms-and-conditions']"
+          style="color: green"
+          >Terms of service</a
+        >
+        and
+        <a
+          [routerLink]="['/', 'landing', 'privacy-policy']"
+          style="color: green"
+          >Privacy Policy</a
+        >
+      </div>
+      <button [disabled]="!form.valid" type="submit">
+        Sign in
+      </button>
+    </mat-card>
+  </form>
+
+  <div class="toggle-text">
+    <p [routerLink]="['/', 'auth']" style="cursor: pointer" color="primary">
+      Already on Mcflow?
+    </p>
+    <p [routerLink]="['/', 'landing']" style="cursor: pointer" color="primary">
+      | Back to Home Page
+    </p>
+  </div>
+</section>

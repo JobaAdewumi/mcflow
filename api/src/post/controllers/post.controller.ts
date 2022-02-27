@@ -88,14 +88,15 @@ export class PostController {
   //     })),
   //   );
   // }
-  @UseGuards(JwtGuard, RolesGuard)
-  @Post('upload-image')
+  @UseGuards(JwtGuard)
+  @Post('upload')
   @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
   uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @Request() req,
   ): Observable<{ modifiedFileName: string } | { error: string }> {
     console.log('saving', file.filename);
+    console.log('req', req);
     const fileName = file?.filename;
 
     if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });

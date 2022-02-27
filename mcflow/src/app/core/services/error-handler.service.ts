@@ -19,6 +19,7 @@ export class ErrorHandlerService {
     this._snackbar.openFromComponent(CoreComponent, {
       horizontalPosition: 'center',
       duration: 9000,
+      panelClass: ['red-snackbar'],
     });
   }
 
@@ -27,6 +28,7 @@ export class ErrorHandlerService {
     this._snackbar.open(successMessage, action, {
       duration: 3000,
       horizontalPosition: 'center',
+      panelClass: ['green-snackbar'],
     });
   }
 
