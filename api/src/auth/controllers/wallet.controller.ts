@@ -30,7 +30,6 @@ export class WalletController {
   @UseGuards(JwtGuard)
   @Post('withdrawal')
   requestWithdrawal(@Body() newWithdrawal: NewWithdrawal) {
-    console.log('hey', `${newWithdrawal}`);
     return this.mailService.sendWithdrawalRequest(newWithdrawal);
   }
 }

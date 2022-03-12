@@ -1,14 +1,14 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 // Plus imports for other components in your app.
-
-
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+
+// @import "sass/mixins";
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -21,13 +21,15 @@ $mcflow-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$mcflow-theme: mat.define-light-theme((
-  color: (
-    primary: $mcflow-primary,
-    accent: $mcflow-accent,
-    warn: $mcflow-warn,
+$mcflow-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $mcflow-primary,
+      accent: $mcflow-accent,
+      warn: $mcflow-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -36,8 +38,16 @@ $mcflow-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-y: scroll;}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: scroll;
+}
 
 *,
 *::after,
@@ -45,7 +55,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-y:
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  // border: 1px solid red;
 }
 
 *::selection {
@@ -83,4 +93,61 @@ a.active {
   background-color: red;
   color: white !important;
   border: none;
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint==small-phone {
+    @media only screen and (max-width: 300px) {
+      @content;
+    }
+
+    //? 600px
+  }
+
+  @if $breakpoint==med-phone {
+    @media only screen and (max-width: 450px) {
+      @content;
+    }
+
+    //? 600px
+  }
+
+  @if $breakpoint==phone {
+    @media only screen and (max-width: 600px) {
+      @content;
+    }
+
+    //? 600px
+  }
+
+  @if $breakpoint==tab-port {
+    @media only screen and (max-width: 900px) {
+      @content;
+    }
+
+    //? 900px
+  }
+
+  @if $breakpoint==tab-land {
+    @media only screen and (max-width: 1200px) {
+      @content;
+    }
+
+    //? 1200px
+  }
+
+  @if $breakpoint==big-desktop {
+    @media only screen and (min-width: 1800px) {
+      @content;
+    }
+
+    //? 1800px
+  }
 }

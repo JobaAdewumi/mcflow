@@ -112,9 +112,11 @@ export class AuthService {
                 userName,
                 email,
                 phoneNumber,
-                UserPackage,
+                userPackage,
                 referralLink: `http://localhost:4200/referral/${userName}`,
                 password: hashedPassword,
+                lastLogin: null,
+                lastSharedLogin: null,
               }),
             ).pipe(
               map((user: User) => {
@@ -144,7 +146,10 @@ export class AuthService {
             'userPackage',
             'referralLink',
             'role',
+            'lastLogin',
+            'lastSharedLogin',
           ],
+          relations: ['sponsoredPosts', 'wallet'],
         },
       ),
     ).pipe(
@@ -158,7 +163,7 @@ export class AuthService {
         return from(bcrypt.compare(password, user.password)).pipe(
           map((isValidPassword) => {
             if (isValidPassword) {
-              this.loginDate(user.id);
+              // this.loginDate(user.id);
               delete user.password;
               return user;
             }
@@ -168,10 +173,18 @@ export class AuthService {
     );
   }
 
-  loginDate(userId: number) {
+  loginDate(userId: number): Observable<UpdateResult> {
     return from(
       this.userRepository.update(userId, {
         lastLogin: new Date(),
+      }),
+    );
+  }
+
+  sharedDate(userId: number): Observable<UpdateResult> {
+    return from(
+      this.userRepository.update(userId, {
+        lastSharedLogin: new Date(),
       }),
     );
   }
@@ -191,7 +204,6 @@ export class AuthService {
     userId: number,
     updatedUser: UpdatedUser,
   ): Observable<UpdateResult> {
-    console.log('nest ser', `${updatedUser}`, `${userId}`);
     const { email, password } = updatedUser;
     return this.doesUserExist(email).pipe(
       tap((doesUserExist: boolean) => {

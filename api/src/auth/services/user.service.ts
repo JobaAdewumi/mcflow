@@ -43,56 +43,177 @@ export class UserService {
   ) {
     try {
       console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
-      const rawTime = new Date(lastLogin);
-      const day = rawTime.getDate();
-      const dateNow = new Date();
-      let rawDayNow = dateNow.getDate() - 1;
-      // const timeNow = 23 - rawTimeNow;
+
       let mcfPoints = points;
-      console.log(day, rawTime, rawDayNow);
       console.log('beg fu', points);
 
-      // if (this.doesUserExistWallet) {
-      //   throw new HttpException(
-      //     'A wallet cannot be found connected with the user',
-      //     HttpStatus.NOT_FOUND,
-      //   );
-      // }
-
-      if (userPackage == 'bronze' && day > rawDayNow) {
+      if (userPackage === 'bronze') {
         console.log('heere');
         mcfPoints = mcfPoints + 100;
-        rawDayNow = rawDayNow + 1;
-        console.log(rawDayNow);
-        return from(
-          this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-        );
-      } else if (userPackage == 'silver' && day > rawDayNow) {
+      } else if (userPackage === 'silver') {
         mcfPoints = mcfPoints + 300;
-        rawDayNow = rawDayNow + 1;
-        return from(
-          this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-        );
-      } else if (userPackage == 'gold' && day > rawDayNow) {
+      } else if (userPackage === 'gold') {
         mcfPoints = mcfPoints + 500;
-        rawDayNow = rawDayNow + 1;
-        return from(
-          this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-        );
-      } else if (userPackage == 'pioneer' && day > rawDayNow) {
+      } else if (userPackage === 'pioneer') {
         mcfPoints = mcfPoints + 1300;
-        rawDayNow = rawDayNow + 1;
-        return from(
-          this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-        );
+        console.log('there');
       }
       console.log('end fu', mcfPoints);
-      return null;
+      return from(
+        this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+      );
     } catch (err) {
       console.log(`${err}`);
       throw new Error(err);
     }
   }
+  // loginMcf(
+  //   userName: string,
+  //   userPackage: UserPackage,
+  //   lastLogin: Date,
+  //   points: number,
+  // ) {
+  //   try {
+  //     console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
+  //     const rawTime = new Date(lastLogin);
+  //     const day = rawTime.getDate();
+  //     const dateNow = new Date();
+  //     let rawDayNow = dateNow.getDate() - 1;
+  //     // const timeNow = 23 - rawTimeNow;
+  //     let mcfPoints = points;
+  //     console.log(day, rawTime, rawDayNow);
+  //     console.log('beg fu', points);
+
+  //     // if (this.doesUserExistWallet) {
+  //     //   throw new HttpException(
+  //     //     'A wallet cannot be found connected with the user',
+  //     //     HttpStatus.NOT_FOUND,
+  //     //   );
+  //     // }
+
+  //     if (userPackage == 'bronze' && day > rawDayNow) {
+  //       console.log('heere');
+  //       mcfPoints = mcfPoints + 100;
+  //       rawDayNow = rawDayNow + 1;
+  //       console.log(rawDayNow);
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage == 'silver' && day > rawDayNow) {
+  //       mcfPoints = mcfPoints + 300;
+  //       rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage == 'gold' && day > rawDayNow) {
+  //       mcfPoints = mcfPoints + 500;
+  //       rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage == 'pioneer' && day > rawDayNow) {
+  //       mcfPoints = mcfPoints + 1300;
+  //       rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     }
+  //     console.log('end fu', mcfPoints);
+  //     return null;
+  //   } catch (err) {
+  //     console.log(`${err}`);
+  //     throw new Error(err);
+  //   }
+  // }
+  shareMcf(
+    userName: string,
+    userPackage: string,
+    lastLogin: Date,
+    points: number,
+  ) {
+    try {
+      console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
+      let mcfPoints = points;
+      console.log('beg fu', points);
+
+      if (userPackage === 'bronze') {
+        console.log('heere');
+        mcfPoints = mcfPoints + 200;
+      } else if (userPackage === 'silver') {
+        mcfPoints = mcfPoints + 500;
+      } else if (userPackage === 'gold') {
+        mcfPoints = mcfPoints + 1000;
+      } else if (userPackage === 'pioneer') {
+        mcfPoints = mcfPoints + 2200;
+      }
+      console.log('end fu', mcfPoints);
+      return from(
+        this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+      );
+    } catch (err) {
+      console.log(`${err}`);
+      throw new Error(err);
+    }
+  }
+
+  // shareMcf(
+  //   userName: string,
+  //   userPackage: string,
+  //   lastLogin: Date,
+  //   points: number,
+  // ) {
+  //   try {
+  //     console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
+  //     // const rawTime = new Date(lastLogin);
+  //     // const day = rawTime.getDate();
+  //     // const dateNow = new Date();
+  //     // let rawDayNow = dateNow.getDate();
+  //     // const timeNow = 23 - rawTimeNow;
+  //     let mcfPoints = points;
+  //     // console.log(day, rawTime, rawDayNow);
+  //     console.log('beg fu', points);
+
+  //     // if (this.doesUserExistWallet) {
+  //     //   throw new HttpException(
+  //     //     'A wallet cannot be found connected with the user',
+  //     //     HttpStatus.NOT_FOUND,
+  //     //   );
+  //     // }
+
+  //     if (userPackage === 'bronze') {
+  //       console.log('heere');
+  //       mcfPoints = mcfPoints + 200;
+  //       // rawDayNow = rawDayNow + 1;
+  //       // console.log(rawDayNow);
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage === 'silver') {
+  //       mcfPoints = mcfPoints + 500;
+  //       // rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage === 'gold') {
+  //       mcfPoints = mcfPoints + 1000;
+  //       // rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     } else if (userPackage === 'pioneer') {
+  //       mcfPoints = mcfPoints + 2200;
+  //       // rawDayNow = rawDayNow + 1;
+  //       return from(
+  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
+  //       );
+  //     }
+  //     console.log('end fu', mcfPoints);
+  //     return null;
+  //   } catch (err) {
+  //     console.log(`${err}`);
+  //     throw new Error(err);
+  //   }
+  // }
 
   referral(
     userName: string,
@@ -151,11 +272,20 @@ export class UserService {
     }
   }
 
-  getLastLogin(id: number): Observable<Date> {
+  getLastLogin(id: number): Observable<Date> | null {
     return from(this.userRepository.findOne({ id })).pipe(
       map((user: User) => {
         delete user.password;
         return user.lastLogin;
+      }),
+    );
+  }
+
+  getLastSharedLogin(id: number): Observable<Date> | null {
+    return from(this.userRepository.findOne({ id })).pipe(
+      map((user: User) => {
+        delete user.password;
+        return user.lastSharedLogin;
       }),
     );
   }
@@ -179,7 +309,7 @@ export class UserService {
   }
 
   updateUserImageById(id: number, imagePath: string): Observable<UpdateResult> {
-    console.log('return', imagePath);
+    // console.log('return', imagePath);
     const user: User = new UserEntity();
     user.id = id;
     user.imagePath = imagePath;
@@ -187,11 +317,11 @@ export class UserService {
   }
 
   findImageNameByUserId(id: number): Observable<string> {
-    console.log('image-name-service', id);
+    // console.log('image-name-service', id);
     return from(this.userRepository.findOne({ id })).pipe(
       map((user: User) => {
         delete user.password;
-        console.log('image-name--return-service', user.imagePath);
+        // console.log('image-name--return-service', user.imagePath);
         return user.imagePath;
       }),
     );

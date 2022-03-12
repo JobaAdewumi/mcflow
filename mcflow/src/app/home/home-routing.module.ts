@@ -10,8 +10,8 @@ const routes: Routes = [
     path: '',
     component: HomePageComponent,
     children: [
-      { path: '', component: LandingSponsoredPostsComponent },
-      { path: 'dashboard', component: LandingDashboardComponent },
+      { path: '', component: LandingDashboardComponent },
+      { path: 'sponsored', component: LandingSponsoredPostsComponent },
       { path: 'payout', component: LandingPayoutComponent },
     ],
   },

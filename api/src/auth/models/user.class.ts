@@ -1,3 +1,4 @@
+import { SponsoredPost } from './../../../../mcflow/src/app/home/models/post';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { Role } from '../../post/models/role.enum';
 import { UserPackage } from './package.enum';
@@ -21,5 +22,7 @@ export class User {
   role?: Role;
   referralLink?: string;
   lastLogin?: Date;
-  // wallet?: Wallet;
+  lastSharedLogin?: Date;
+  wallet?: Wallet;
+  sponsoredPosts?: SponsoredPost[];
 }

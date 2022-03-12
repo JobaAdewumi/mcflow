@@ -41,8 +41,20 @@ export class UserController {
   loginMcf(
     @Body() { userName, userPackage, lastLogin, points },
   ): Observable<UpdateResult> {
-    // console.log('yo-login', `${userPackage}`, points);
     return this.userService.loginMcf(userName, userPackage, lastLogin, points);
+  }
+
+  @UseGuards(JwtGuard)
+  @Put('share/mcf')
+  shareMcf(
+    @Body() { userName, userPackage, lastSharedLogin, points },
+  ): Observable<UpdateResult> {
+    return this.userService.shareMcf(
+      userName,
+      userPackage,
+      lastSharedLogin,
+      points,
+    );
   }
 
   @Put('referral')
@@ -54,9 +66,10 @@ export class UserController {
 
   // @UseGuards(JwtGuard)
   @Get('last-login/:id')
-  LastLogin(@Param('id') stringId: string): Observable<{ lastLogin: Date }> {
+  LastLogin(
+    @Param('id') stringId: string,
+  ): Observable<{ lastLogin: Date | null }> {
     const id = parseInt(stringId);
-    // console.log('last-login');
     return this.userService.getLastLogin(id).pipe(
       switchMap((lastLogin: Date) => {
         return of({ lastLogin });
@@ -64,17 +77,27 @@ export class UserController {
     );
   }
 
+  @Get('last-shared-login/:id')
+  LastSharedLogin(
+    @Param('id') stringId: string,
+  ): Observable<{ lastSharedLogin: Date | null }> {
+    const id = parseInt(stringId);
+    return this.userService.getLastSharedLogin(id).pipe(
+      switchMap((lastSharedLogin: Date) => {
+        return of({ lastSharedLogin });
+      }),
+    );
+  }
+
   // @UseGuards(JwtGuard)
   @Get(':userName')
   getUser(@Param('userName') userName: string): Observable<User> {
-    console.log('user');
     return this.userService.getUser(userName);
   }
 
   // @UseGuards(JwtGuard)
   @Get('login/:email')
   getLoginUser(@Param('email') email: string): Observable<User> {
-    console.log('user');
     return this.userService.getLoginUser(email);
   }
 
@@ -99,16 +122,13 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
     @Request() req,
   ): Observable<{ modifiedFileName: string } | { error: string }> {
-    console.log('saving', file.filename);
     const fileName = file?.filename;
 
     if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
 
     const imagesFolderPath = join(process.cwd(), 'images');
-    console.log('before return controller', imagesFolderPath);
     const fullImagePath = join(imagesFolderPath + '/' + file.filename);
 
-    console.log('before return controller', fileName);
     const userId = req.user.id;
 
     return this.userService.updateUserImageById(userId, fileName).pipe(
@@ -133,10 +153,8 @@ export class UserController {
   @Get('images/image-name')
   findUserImageName(@Request() req): Observable<{ imageName: string }> {
     const userId = req.user.id;
-    console.log('image-name-conn', userId);
     return this.userService.findImageNameByUserId(userId).pipe(
       switchMap((imageName: string) => {
-        console.log('image-name-return-conn', imageName);
         return of({ imageName });
       }),
     );

@@ -136,7 +136,7 @@
             title="Select a package"
             matNativeControl
             name="userPackage"
-            #packageInput="ngModel"
+            #userPackageInput="ngModel"
             ngModel
             required="true"
           >
@@ -147,7 +147,7 @@
           </select>
           <mat-hint
             color="warn"
-            *ngIf="!packageInput.valid && packageInput.touched"
+            *ngIf="!userPackageInput.valid && userPackageInput.touched"
             >Please enter your package.</mat-hint
           >
         </mat-form-field>

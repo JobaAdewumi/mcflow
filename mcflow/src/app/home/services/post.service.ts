@@ -129,4 +129,10 @@ export class PostService {
       .delete(`${environment.baseApiUrl}/post/${postId}`)
       .pipe(take(1));
   }
+
+  changePostStatus(postId: number) {
+    return this.http
+      .put(`${environment.baseApiUrl}/post/status/${postId}`, { postId })
+      .pipe(take(1));
+  }
 }

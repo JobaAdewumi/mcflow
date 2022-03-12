@@ -4,6 +4,9 @@
   background-position: center;
   background-color: aliceblue;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   .inside-container {
     padding: 200px 200px;
     text-align: center;
@@ -20,7 +23,7 @@
     }
     .login-link-container {
       background-color: green;
-      width: 180px;
+      width: 20%;
       height: 35px;
       align-content: center;
       display: inline-block;

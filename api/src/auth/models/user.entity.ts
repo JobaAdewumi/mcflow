@@ -1,9 +1,9 @@
+import { SponsoredPostEntity } from './../../post/models/post.entity';
 import { UserPackage } from './package.enum';
 import {
   Column,
-  CreateDateColumn,
   Entity,
-  JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -46,10 +46,18 @@ export class UserEntity {
   @Column({ unique: true })
   referralLink: string;
 
-  @CreateDateColumn({ nullable: true })
+  @Column({ nullable: true, default: null })
   lastLogin: Date;
 
-  // @OneToOne(() => WalletEntity)
-  // @JoinColumn()
-  // wallet: Wallet;
+  @Column({ nullable: true, default: null })
+  lastSharedLogin: Date;
+
+  @OneToOne(() => WalletEntity, (wallet) => wallet.user)
+  wallet: Wallet;
+
+  @OneToMany(
+    () => SponsoredPostEntity,
+    (sponsoredPostEntity) => sponsoredPostEntity.author
+  )
+  sponsoredPosts: SponsoredPostEntity[];
 }

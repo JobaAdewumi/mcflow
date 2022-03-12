@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from './../../auth/models/user.entity';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 @Entity('sponsored-post')
 export class SponsoredPostEntity {
@@ -16,4 +17,10 @@ export class SponsoredPostEntity {
 
     @CreateDateColumn()
     createdAt: Date;
+
+    @Column({ default: true })
+    isActive: boolean;
+
+    @ManyToOne(() => UserEntity, (userEntity) => userEntity.sponsoredPosts)
+    author: UserEntity;
 }

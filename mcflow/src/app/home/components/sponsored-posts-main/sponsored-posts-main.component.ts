@@ -13,6 +13,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { ErrorHandlerService } from '../../../core/services/error-handler.service';
 import { NewSponsoredPost } from '../../models/newPost.model';
 import { SponsoredPost } from '../../models/post';
+import { HomeService } from '../../services/home.service';
 import { PostService } from '../../services/post.service';
 
 @Component({
@@ -21,8 +22,16 @@ import { PostService } from '../../services/post.service';
   styleUrls: ['./sponsored-posts-main.component.scss'],
 })
 export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
+  constructor(
+    private postService: PostService,
+    private authService: AuthService,
+    private homeService: HomeService,
+    private errorHandlerService: ErrorHandlerService
+  ) {}
   form: FormGroup;
   @Input() postBody?: NewSponsoredPost;
+
+  submissionType: 'free' | 'shared' = 'free';
 
   queryParams: string;
   allLoadedPosts: SponsoredPost[] = [];
@@ -37,13 +46,20 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
   postFullImagePath: string;
   private postSubscription: Subscription;
 
-  constructor(
-    private postService: PostService,
-    private authService: AuthService,
-    private errorHandlerService: ErrorHandlerService
-  ) {}
+  counter: number = 0;
+
+  userName: string = this.homeService.userName;
+  userPackage: string = this.homeService.userPackage;
+  lastSharedLogin: Date = this.homeService.lastSharedLogin;
+  points: number = this.homeService.points;
+
+  userId: number;
 
   ngOnInit(): void {
+    this.userName = this.homeService.userName;
+    this.userPackage = this.homeService.userPackage;
+    this.lastSharedLogin = this.homeService.lastSharedLogin;
+    this.points = this.homeService.points;
     this.getPosts(true, event);
 
     // if (window.scrollTo(0,0)) {
@@ -53,6 +69,12 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
       this.role = role;
       console.log(role);
       this.user$.next(role as any);
+    });
+
+    this.authService.userId.pipe(take(1)).subscribe((userId: number) => {
+      this.userId = userId;
+      console.log(userId);
+      this.user$.next(userId as any);
     });
 
     this.postSubscription = this.postService.postStream.subscribe(() => {
@@ -126,7 +148,7 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
       .deletePost(postId)
       .pipe(
         catchError((err) => {
-          this.errorHandlerService.openSnackBar('Check your email or password');
+          this.errorHandlerService.openSnackBar('Error deleting post');
           console.log('error:', err);
           return throwError(err);
         })
@@ -136,6 +158,21 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
           (post: SponsoredPost) => post.id !== postId
         );
         this.errorHandlerService.openSuccessSnackBar('Deleted post successful');
+      });
+  }
+
+  changePostStatus(postId: number) {
+    this.postService
+      .changePostStatus(postId)
+      .pipe(
+        catchError((err) => {
+          this.errorHandlerService.openSnackBar('Check your email or password');
+          console.log('error:', err);
+          return throwError(err);
+        })
+      )
+      .subscribe(() => {
+        this.errorHandlerService.openSuccessSnackBar('Post status change successful');
       });
   }
 
@@ -164,11 +201,50 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
         //   ),
 
         () => {
-          this.errorHandlerService.openSuccessSnackBar('Profile picture updated successfully');
+          this.errorHandlerService.openSuccessSnackBar(
+            'Profile picture updated successfully'
+          );
         }
       );
 
     this.form.reset();
+  }
+
+  // startCountdown(seconds: number) {
+  //   this.counter = seconds;
+
+  //   const interval = setInterval(() => {
+  //     console.log(this.counter);
+  //     this.counter--;
+
+  //     if (this.counter <= 0) {
+  //       this.shareMcf();
+  //       clearInterval(interval);
+  //       console.log('Ding!');
+  //     }
+  //   }, 1000);
+  // }
+
+  shareMcf() {
+    console.log(
+      'going',
+      this.lastSharedLogin,
+      this.userName,
+      this.points,
+      this.userPackage
+    );
+    if (!this.lastSharedLogin || this.lastSharedLogin == null) {
+      this.homeService.addSharedDate(this.userId).subscribe();
+      console.log('compo');
+      return null;
+    }
+    return this.homeService
+      .shareCheckMcf(
+        this.userName,
+        this.userPackage,
+        this.lastSharedLogin,
+        this.points
+      );
   }
 
   ngOnDestroy(): void {

@@ -12,6 +12,7 @@ export interface User {
   password: string;
   imagePath?: string;
   lastLogin: Date;
+  lastSharedLogin?: Date;
   userPackage: UserPackage;
   role: Role;
   referralLink: string;

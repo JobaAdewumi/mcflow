@@ -46,6 +46,10 @@ export class PostService {
     return from(this.sponsoredPostRepository.findOne(id));
   }
 
+  changePostStatus(id: number): Observable<UpdateResult> {
+    return from(this.sponsoredPostRepository.update(id, { isActive: false }));
+  }
+
   updatePostImageById(
     id: number,
     postImagePath: string,

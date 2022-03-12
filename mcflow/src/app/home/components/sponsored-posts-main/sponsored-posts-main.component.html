@@ -30,11 +30,20 @@
             </mat-card-content>
             <mat-card-actions align="end">
               <button
+                *ngIf="post.isActive"
                 class="share-button"
                 mat-button
-                (click)="referral.click()"
+                (click)="[shareMcf()]"
               >
                 SHARE
+              </button>
+              <button
+                *ngIf="role === 'admin' && post.isActive"
+                class="change-button"
+                mat-raised-button
+                (click)="changePostStatus(post.id)"
+              >
+                DEACTIVATE POST
               </button>
               <button
                 *ngIf="role === 'admin'"

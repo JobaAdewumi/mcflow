@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm';
 import {
   Body,
   Controller,
@@ -30,6 +31,20 @@ export class AuthController {
   @Post('register/wallet')
   registerWallet(@Body() wallet: Wallet): Observable<Wallet> {
     return this.authService.registerWallet(wallet);
+  }
+
+  @UseGuards(JwtGuard)
+  @Put('login/date')
+  loginDate(@Request() req): Observable<UpdateResult> {
+    const userId = req.user.id;
+    return this.authService.loginDate(userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Put('shared/date')
+  sharedDate(@Request() req): Observable<UpdateResult> {
+    const userId = req.user.id;
+    return this.authService.sharedDate(userId);
   }
 
   @Post('login')

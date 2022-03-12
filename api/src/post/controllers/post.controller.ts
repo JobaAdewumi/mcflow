@@ -63,6 +63,12 @@ export class PostController {
     return this.postService.deletePost(id);
   }
 
+  @UseGuards(JwtGuard, RolesGuard)
+  @Put('status/:id')
+  changePostStatus(@Param('id') id: number): Observable<UpdateResult> {
+    return this.postService.changePostStatus(id);
+  }
+
   // @UseGuards(JwtGuard, RolesGuard)
   // @Post('upload-image')
   // @UseInterceptors(FileInterceptor('file', savePostImageToStorage))

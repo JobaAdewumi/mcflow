@@ -73,6 +73,14 @@ export class AuthService {
     );
   }
 
+  get lastSharedLogin(): Observable<Date> {
+    return this.user$.asObservable().pipe(
+      switchMap((user: User) => {
+        return of(user.lastSharedLogin);
+      })
+    );
+  }
+
   get userId(): Observable<number> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
@@ -168,10 +176,18 @@ export class AuthService {
       );
   }
 
-  getUserLastLogin(id: number): Observable<{ lastLogin: Date }> {
+  getUserLastLogin(id: number): Observable<{ lastLogin: Date | null }> {
     return this.http
       .get<{ lastLogin: Date }>(
         `${environment.baseApiUrl}/user/last-login/${id}`
+      )
+      .pipe(take(1));
+  }
+
+  getUserLastSharedLogin(id: number): Observable<{ lastSharedLogin: Date | null }> {
+    return this.http
+      .get<{ lastSharedLogin: Date }>(
+        `${environment.baseApiUrl}/user/last-shared-login/${id}`
       )
       .pipe(take(1));
   }

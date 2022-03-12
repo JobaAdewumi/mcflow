@@ -26,6 +26,7 @@ export class HomeService {
   userName: string;
   userPackage: string;
   lastLogin: Date;
+  lastSharedLogin: Date;
   userId: number;
   points: number;
 
@@ -76,6 +77,17 @@ export class HomeService {
       )
       .subscribe();
 
+    this.authService
+      .getUserLastSharedLogin(this.userId)
+      .pipe(
+        take(1),
+        tap(({ lastSharedLogin }) => {
+          console.log('last-login', lastSharedLogin);
+          this.lastSharedLogin = lastSharedLogin;
+        })
+      )
+      .subscribe();
+
     this.getUserWallet(this.userName)
       .pipe(
         take(1),
@@ -101,6 +113,54 @@ export class HomeService {
     ).subscribe();
   }
 
+  loginCheckMcf() {
+    const rawTime = new Date(this.lastLogin);
+    const currentTime = new Date();
+    const day = rawTime.getDate();
+    const day2 = currentTime.getDate();
+    console.log(day, day2);
+
+    if (!this.lastLogin || this.lastLogin == null) {
+      this.addLoginDate(this.userId).subscribe();;
+      console.log('first');
+      return null;
+    } else if (day >= day2) {
+      console.log('second');
+      return null;
+    } else if (day < day2) {
+      console.log('third');
+      this.loginMcf();
+      this.addLoginDate(this.userId).subscribe();
+    }
+    return null;
+  }
+
+  shareCheckMcf(
+    userName: string,
+    userPackage: string,
+    lastSharedLogin: Date,
+    points: number
+  ) {
+    const rawTime = new Date(this.lastSharedLogin);
+    const currentTime = new Date();
+    const day = rawTime.getDay();
+    const day2 = currentTime.getDay();
+
+    if (!this.lastSharedLogin || this.lastSharedLogin == null) {
+      this.addSharedDate(this.userId).subscribe();
+      console.log('first');
+      return null;
+    } else if (day >= day2) {
+      console.log('second');
+      return null;
+    } else if (day < day2) {
+      console.log('third');
+      this.shareMcf(userName, userPackage, lastSharedLogin, points).subscribe();
+      this.addSharedDate(this.userId).subscribe();
+    }
+    return null;
+  }
+
   startCountdown(seconds: number) {
     let counter = seconds;
 
@@ -109,7 +169,8 @@ export class HomeService {
       counter--;
 
       if (counter < 0) {
-        this.loginMcf();
+        this.loginCheckMcf();
+        // this.testing();
         clearInterval(interval);
         console.log('Ding!');
       }
@@ -154,5 +215,52 @@ export class HomeService {
       { userName, userPackage, lastLogin, points },
       this.httpOptions
     );
+  }
+
+  shareMcf(
+    userName: string,
+    userPackage: string,
+    lastSharedLogin: Date,
+    points: number
+  ) {
+    console.log(
+      `${userName}`,
+      `${userPackage}`,
+      `${lastSharedLogin}`,
+      `${points}`
+    );
+    return this.http.put(
+      `${environment.baseApiUrl}/user/share/mcf`,
+      { userName, userPackage, lastSharedLogin, points },
+      this.httpOptions
+    );
+  }
+
+  // testing() {
+  //   let lastloginPiped = this.lastLogin.toDateString;
+  //   let lastloginPipedDate = this.lastLogin.getDate;
+  //   const rawTime = new Date(this.lastLogin);
+  //   const rawTime2 = new Date('2022-03-02T09:26:24.461Z');
+  //   const day = rawTime.getHours();
+  //   const day2 = rawTime2.getDate() + 1;
+
+  //   console.log(
+  //     lastloginPiped,
+  //     lastloginPipedDate,
+  //     this.lastLogin,
+  //     day,
+  //     day2,
+  //     rawTime2
+  //   );
+  // }
+
+  addLoginDate(userId: number) {
+    console.log('login date func', userId);
+    return this.http.put(`${environment.baseApiUrl}/auth/login/date`, { userId });
+  }
+
+  addSharedDate(userId: number) {
+    console.log('shared date func ser', userId);
+    return this.http.put(`${environment.baseApiUrl}/auth/shared/date`, { userId });
   }
 }
