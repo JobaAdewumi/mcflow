@@ -29,6 +29,7 @@ export class HomeService {
   lastSharedLogin: Date;
   userId: number;
   points: number;
+  referralB: number;
 
   constructor(
     private http: HttpClient,
@@ -94,7 +95,7 @@ export class HomeService {
         tap((wallet: Wallet) => {
           console.log(this.userName);
           this.points = wallet.mcfPoints;
-          // this.referralBalance = wallet.referralBalance;
+          this.referralB = wallet.referralBalance;
           console.log(this.points);
         })
       )
@@ -121,7 +122,7 @@ export class HomeService {
     console.log(day, day2);
 
     if (!this.lastLogin || this.lastLogin == null) {
-      this.addLoginDate(this.userId).subscribe();;
+      this.addLoginDate(this.userId).subscribe();
       console.log('first');
       return null;
     } else if (day >= day2) {
@@ -170,7 +171,6 @@ export class HomeService {
 
       if (counter < 0) {
         this.loginCheckMcf();
-        // this.testing();
         clearInterval(interval);
         console.log('Ding!');
       }
@@ -236,31 +236,35 @@ export class HomeService {
     );
   }
 
-  // testing() {
-  //   let lastloginPiped = this.lastLogin.toDateString;
-  //   let lastloginPipedDate = this.lastLogin.getDate;
-  //   const rawTime = new Date(this.lastLogin);
-  //   const rawTime2 = new Date('2022-03-02T09:26:24.461Z');
-  //   const day = rawTime.getHours();
-  //   const day2 = rawTime2.getDate() + 1;
-
-  //   console.log(
-  //     lastloginPiped,
-  //     lastloginPipedDate,
-  //     this.lastLogin,
-  //     day,
-  //     day2,
-  //     rawTime2
-  //   );
-  // }
-
   addLoginDate(userId: number) {
     console.log('login date func', userId);
-    return this.http.put(`${environment.baseApiUrl}/auth/login/date`, { userId });
+    return this.http.put(`${environment.baseApiUrl}/auth/login/date`, {
+      userId,
+    });
   }
 
   addSharedDate(userId: number) {
     console.log('shared date func ser', userId);
-    return this.http.put(`${environment.baseApiUrl}/auth/shared/date`, { userId });
+    return this.http.put(`${environment.baseApiUrl}/auth/shared/date`, {
+      userId,
+    });
+  }
+
+  checkDeductMcf() {}
+
+  deductMcf(userName: string, points: number) {
+    return this.http.put(
+      `${environment.baseApiUrl}/wallet/confirm/mcf`,
+      { userName, points },
+      this.httpOptions
+    );
+  }
+
+  deductRef(userName: string, referralB: number) {
+    return this.http.put(
+      `${environment.baseApiUrl}/wallet/confirm/ref`,
+      { userName, referralB },
+      this.httpOptions
+    );
   }
 }

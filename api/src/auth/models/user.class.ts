@@ -1,5 +1,5 @@
-import { SponsoredPost } from './../../../../mcflow/src/app/home/models/post';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { SponsoredPost } from '../../post/models/post.interface';
 import { Role } from '../../post/models/role.enum';
 import { UserPackage } from './package.enum';
 import { Wallet } from './wallet.interface';

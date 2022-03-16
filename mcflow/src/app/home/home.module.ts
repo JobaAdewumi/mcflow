@@ -24,6 +24,7 @@ import { AuthModule } from '../auth/auth.module';
 import { SponsoredPostsMainComponent } from './components/sponsored-posts-main/sponsored-posts-main.component';
 import { SponsoredPostsCreatePostComponent } from './components/sponsored-posts-create-post/sponsored-posts-create-post.component';
 import { NgHelmetModule } from 'ng-helmet';
+import { ConfirmWithdrawalComponent } from './components/confirm-withdrawal/confirm-withdrawal.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgHelmetModule } from 'ng-helmet';
     DashboardEditProfileModalComponent,
     SponsoredPostsMainComponent,
     SponsoredPostsCreatePostComponent,
+    ConfirmWithdrawalComponent,
   ],
   imports: [
     NgHelmetModule.forRoot({

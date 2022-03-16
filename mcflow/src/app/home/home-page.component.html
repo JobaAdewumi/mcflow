@@ -13,7 +13,11 @@
       >
         Create post
       </button>
-      <button mat-flat-button (click)="snav.toggle()">
+      <button
+        style="margin-left: 10px"
+        mat-flat-button
+        (click)="snav.toggle()"
+      >
         hey
         <i class="fas fa-list"></i>
       </button>
@@ -27,24 +31,39 @@
       </div>
       <hr style="margin: 10px 0" />
       <div class="nav-items">
-        <a
+        <!-- TODO: Do something about the router link active -->
+        <button
           [routerLink]="['/', 'home']"
           routerLinkActive="active"
           (click)="dashboard()"
-          >Dashboard</a
+          mat-flat-button
         >
-        <a
+          Dashboard
+        </button>
+        <button
           [routerLink]="['/', 'home', 'payout']"
           routerLinkActive="active"
           (click)="cashout()"
-          >Cashout</a
+          mat-flat-button
         >
-        <a
+          Cashout
+        </button>
+        <button
           [routerLink]="['/', 'home', 'sponsored']"
           routerLinkActive="active"
           (click)="posts()"
-          >Sponsored Posts</a
+          mat-flat-button
         >
+          Sponsored Posts
+        </button>
+        <button
+          *ngIf="role === 'admin'"
+          routerLinkActive="active"
+          (click)="openConfirmWithdrawal()"
+          mat-flat-button
+        >
+          Confirm Withdrawal
+        </button>
         <p (click)="onSignOut()">Log out</p>
       </div>
     </mat-sidenav>

@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>Create a post</h1>
+<h3>Quick brief, After you have confirmed the payment you can proceed to deduct the amount and the type the user withdrew.</h3>
+<div class="content-container" mat-dialog-content>
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <p>
+        <mat-form-field appearance="outline" class="mat-form form-textarea">
+          <mat-label>Username</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="userName"
+            class="textarea"
+            #userNameInput="ngModel"
+            ngModel
+            type="text"
+            placeholder="The username"
+          />
+          <mat-hint color="warn" *ngIf="!userNameInput.valid && userNameInput.touched"
+            >Please enter the username</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="mode === 'mcf'">
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Mcf Points</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="points"
+            #pointsInput="ngModel"
+            ngModel
+            type="number"
+            placeholder="The Mcf Points the user withdrew"
+          />
+          <mat-hint color="warn" *ngIf="!pointsInput.valid && pointsInput.touched"
+            >Please enter the Mcf Points.</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="mode === 'ref'">
+        <mat-form-field appearance="outline" class="mat-form form-input">
+          <mat-label>Referral Balance</mat-label>
+          <input
+            matNativeControl
+            required="true"
+            name="referralB"
+            #referralBInput="ngModel"
+            ngModel
+            type="number"
+            placeholder="The Referral amount the person withdrew"
+          />
+          <mat-hint color="warn" *ngIf="!referralBInput.valid && referralBInput.touched"
+            >Please enter the Referral Amount</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <div class="toggle-text">
+        {{ mode === "mcf" ? "Withdrew Referral?" : "Withdrew Mcf Points?" }}
+        <p class="toggle" (click)="toggleText()" color="primary">
+          {{ mode === "mcf" ? "Referral" : "Mcf" }}
+        </p>
+      </div>
+
+      <button [disabled]="!form.valid" mat-raised-button type="submit">
+        Submit
+      </button>
+    </mat-card>
+  </form>
+</div>

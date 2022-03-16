@@ -42,13 +42,9 @@ export class UserService {
     points: number,
   ) {
     try {
-      console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
-
       let mcfPoints = points;
-      console.log('beg fu', points);
 
       if (userPackage === 'bronze') {
-        console.log('heere');
         mcfPoints = mcfPoints + 100;
       } else if (userPackage === 'silver') {
         mcfPoints = mcfPoints + 300;
@@ -58,7 +54,6 @@ export class UserService {
         mcfPoints = mcfPoints + 1300;
         console.log('there');
       }
-      console.log('end fu', mcfPoints);
       return from(
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
@@ -67,64 +62,7 @@ export class UserService {
       throw new Error(err);
     }
   }
-  // loginMcf(
-  //   userName: string,
-  //   userPackage: UserPackage,
-  //   lastLogin: Date,
-  //   points: number,
-  // ) {
-  //   try {
-  //     console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
-  //     const rawTime = new Date(lastLogin);
-  //     const day = rawTime.getDate();
-  //     const dateNow = new Date();
-  //     let rawDayNow = dateNow.getDate() - 1;
-  //     // const timeNow = 23 - rawTimeNow;
-  //     let mcfPoints = points;
-  //     console.log(day, rawTime, rawDayNow);
-  //     console.log('beg fu', points);
 
-  //     // if (this.doesUserExistWallet) {
-  //     //   throw new HttpException(
-  //     //     'A wallet cannot be found connected with the user',
-  //     //     HttpStatus.NOT_FOUND,
-  //     //   );
-  //     // }
-
-  //     if (userPackage == 'bronze' && day > rawDayNow) {
-  //       console.log('heere');
-  //       mcfPoints = mcfPoints + 100;
-  //       rawDayNow = rawDayNow + 1;
-  //       console.log(rawDayNow);
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage == 'silver' && day > rawDayNow) {
-  //       mcfPoints = mcfPoints + 300;
-  //       rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage == 'gold' && day > rawDayNow) {
-  //       mcfPoints = mcfPoints + 500;
-  //       rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage == 'pioneer' && day > rawDayNow) {
-  //       mcfPoints = mcfPoints + 1300;
-  //       rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     }
-  //     console.log('end fu', mcfPoints);
-  //     return null;
-  //   } catch (err) {
-  //     console.log(`${err}`);
-  //     throw new Error(err);
-  //   }
-  // }
   shareMcf(
     userName: string,
     userPackage: string,
@@ -132,9 +70,7 @@ export class UserService {
     points: number,
   ) {
     try {
-      console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
       let mcfPoints = points;
-      console.log('beg fu', points);
 
       if (userPackage === 'bronze') {
         console.log('heere');
@@ -146,7 +82,6 @@ export class UserService {
       } else if (userPackage === 'pioneer') {
         mcfPoints = mcfPoints + 2200;
       }
-      console.log('end fu', mcfPoints);
       return from(
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
@@ -156,78 +91,17 @@ export class UserService {
     }
   }
 
-  // shareMcf(
-  //   userName: string,
-  //   userPackage: string,
-  //   lastLogin: Date,
-  //   points: number,
-  // ) {
-  //   try {
-  //     console.log(`${lastLogin}`, `${userName}`, `${userPackage}`);
-  //     // const rawTime = new Date(lastLogin);
-  //     // const day = rawTime.getDate();
-  //     // const dateNow = new Date();
-  //     // let rawDayNow = dateNow.getDate();
-  //     // const timeNow = 23 - rawTimeNow;
-  //     let mcfPoints = points;
-  //     // console.log(day, rawTime, rawDayNow);
-  //     console.log('beg fu', points);
-
-  //     // if (this.doesUserExistWallet) {
-  //     //   throw new HttpException(
-  //     //     'A wallet cannot be found connected with the user',
-  //     //     HttpStatus.NOT_FOUND,
-  //     //   );
-  //     // }
-
-  //     if (userPackage === 'bronze') {
-  //       console.log('heere');
-  //       mcfPoints = mcfPoints + 200;
-  //       // rawDayNow = rawDayNow + 1;
-  //       // console.log(rawDayNow);
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage === 'silver') {
-  //       mcfPoints = mcfPoints + 500;
-  //       // rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage === 'gold') {
-  //       mcfPoints = mcfPoints + 1000;
-  //       // rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     } else if (userPackage === 'pioneer') {
-  //       mcfPoints = mcfPoints + 2200;
-  //       // rawDayNow = rawDayNow + 1;
-  //       return from(
-  //         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
-  //       );
-  //     }
-  //     console.log('end fu', mcfPoints);
-  //     return null;
-  //   } catch (err) {
-  //     console.log(`${err}`);
-  //     throw new Error(err);
-  //   }
-  // }
-
   referral(
     userName: string,
     userPackage: UserPackage,
     ref: number,
     refB: number,
   ): Observable<UpdateResult> {
-    console.log('heere');
     try {
       let referral = refB;
       let noReferred = ref;
 
       if (userPackage == 'bronze') {
-        console.log('heere');
         referral = referral + 1000;
         noReferred = noReferred + 1;
         return from(
@@ -264,7 +138,6 @@ export class UserService {
           ),
         );
       }
-      console.log('end fu', refB, ref);
       return null;
     } catch (err) {
       console.log(`${err}`);

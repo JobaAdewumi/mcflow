@@ -1,3 +1,4 @@
+import { ConfirmWithdrawalComponent } from './components/confirm-withdrawal/confirm-withdrawal.component';
 import { SponsoredPostsCreatePostComponent } from './components/sponsored-posts-create-post/sponsored-posts-create-post.component';
 import { HomeService } from './services/home.service';
 import { Component, OnInit } from '@angular/core';
@@ -122,21 +123,14 @@ export class HomePageComponent implements OnInit {
     });
   }
 
+  openConfirmWithdrawal() {
+    this.dialog.open(ConfirmWithdrawalComponent, {
+      width: '50%',
+    });
+  }
+
   dashboard() {
     this.currentRoute = 'Dashboard';
-    // this.homeService
-    //   .getUserWallet(this.userName)
-    //   .pipe(
-    //     take(1),
-    //     tap((wallet: Wallet) => {
-    //       console.log(this.userName);
-    //       this.points = wallet.mcfPoints;
-    //       // this.referralBalance = wallet.referralBalance;
-    //       // this.balance = wallet.balance;
-    //       console.log(this.points);
-    //     })
-    //   )
-    //   .subscribe();
   }
 
   cashout() {
@@ -151,49 +145,5 @@ export class HomePageComponent implements OnInit {
     this.authService.logout();
   }
 
-  // loginMcf() {
-  //   console.log('going', this.lastLogin);
-  //   return this.homeService
-  //     .loginMcf(this.userName, this.userPackage, this.lastLogin, this.points)
-  //     .subscribe();
-  // }
 
-  // startCountdown(seconds: number) {
-  //   let counter = seconds;
-
-  //   const interval = setInterval(() => {
-  //     console.log(counter);
-  //     counter--;
-
-  //     if (counter < 0) {
-  //       this.loginMcf();
-  //       clearInterval(interval);
-  //       console.log('Ding!');
-  //     }
-  //   }, 1000);
-  // }
-
-
-
-  //   timeLeft: number = 60;
-  //   interval;
-
-  // startTimer() {
-  //     this.interval = setInterval(() => {
-  //       if(this.timeLeft > 0) {
-  //         this.timeLeft--;
-  //       } else {
-  //         this.timeLeft = 60;
-  //       }
-  //     },1000)
-  //   }
-
-  //   pauseTimer() {
-  //     clearInterval(this.interval);
-  //   }
-
-  // <button (click)='startTimer()'>Start Timer</button>
-  // <button (click)='pauseTimer()'>Pause</button>
-
-  // <p>{{timeLeft}} Seconds Left....</p>
 }
