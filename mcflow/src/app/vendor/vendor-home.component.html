@@ -1,0 +1,54 @@
+<section>
+  <mat-card class="container">
+    <mat-card-title>Generate a Coupon Code</mat-card-title>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Package</mat-label>
+            <select
+              title="Select a package"
+              matNativeControl
+              name="userPackage"
+              #userPackageInput="ngModel"
+              ngModel
+              required="true"
+            >
+              <option value="bronzemcf">Bronze</option>
+              <option value="silvermcf">Silver</option>
+              <option value="goldmcf">Gold</option>
+              <option value="pioneermcf">Pioneer</option>
+            </select>
+            <mat-hint
+              color="warn"
+              *ngIf="!userPackageInput.valid && userPackageInput.touched"
+              >Please enter your package.
+            </mat-hint>
+          </mat-form-field>
+        </p>
+
+        <button [disabled]="!form.valid" mat-raised-button type="submit">
+          Generate Code
+        </button>
+      </mat-card>
+    </form>
+
+    <div class="referral-link">
+      <input
+        placeholder="referral link"
+        type="text"
+        [value]="couponCode ? couponCode : 'Tap Generate Code'"
+        #referralText
+        readonly
+      />
+    </div>
+    <button
+      mat-raised-button
+      [ngxClipboard]="referralText"
+      (click)="copyLink()"
+      class="copy-button"
+    >
+      Copy
+    </button>
+  </mat-card>
+</section>

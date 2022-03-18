@@ -9,9 +9,10 @@ import { NewWallet } from './models/newWallet.model';
 import { AuthService } from './services/auth.service';
 
 import { HomeService } from '../home/services/home.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { ErrorHandlerService } from '../core/services/error-handler.service';
 import { throwError } from 'rxjs';
+import { UserPackage } from './models/package.enum';
 
 @Component({
   selector: 'app-auth-page',
@@ -21,12 +22,12 @@ import { throwError } from 'rxjs';
 export class AuthPageComponent implements OnInit {
   @ViewChild('form') form: NgForm;
 
-  submissionType: 'login' | 'join' = 'login';
+  submissionType: 'login' | 'join' | 'pending' = 'login';
 
   mcfPoints: number;
   referralBalance: number;
   userName: string;
-  userPackage: string;
+  userPackage: UserPackage;
   email: string;
 
   constructor(
@@ -42,12 +43,13 @@ export class AuthPageComponent implements OnInit {
     if (!email || !password) return null;
 
     if (this.submissionType === 'login') {
-
       return this.authService
         .login(email, password)
         .pipe(
           catchError((err) => {
-            this.errorHandlerService.openSnackBar('Check your email or password');
+            this.errorHandlerService.openSnackBar(
+              'Check your email or password'
+            );
             console.log('error:', err);
             return throwError(err);
           })
@@ -67,9 +69,11 @@ export class AuthPageComponent implements OnInit {
           }
         );
     } else if (this.submissionType === 'join') {
-      const { firstName, lastName, userName, phoneNumber, userPackage } =
+      const { firstName, lastName, userName, phoneNumber, couponCode } =
         this.form.value;
-      if (!firstName || !lastName) return null;
+      if (!firstName || !lastName || !couponCode) return null;
+
+      let userPackage = this.userPackage;
 
       const newUser: NewUser = {
         firstName,
@@ -81,23 +85,56 @@ export class AuthPageComponent implements OnInit {
         password,
       };
 
-      return this.authService.register(newUser).pipe(
+      return this.authService
+        .checkCouponCode(couponCode)
+        .pipe(
           catchError((err) => {
-            this.errorHandlerService.openSnackBar('Check the values you input in the form');
+            this.errorHandlerService.openSnackBar(
+              'The coupon code is not valid'
+            );
             console.log('error:', err);
             return throwError(err);
-          })
-        ).subscribe(() => {
-          this.registerWallet();
-        this.errorHandlerService.openSuccessSnackBar('Registered successfully');
-        this.toggleText();
-      });
+          }),
+          tap(({ userPackage }) => {
+            this.userPackage = userPackage;
+          }),
+          retry(1)
+        )
+        .subscribe(() => {
+          return this.authService
+            .register(newUser)
+            .pipe(
+              catchError((err) => {
+                this.errorHandlerService.openSnackBar(
+                  'Check the values you input in the form'
+                );
+                console.log('error:', err);
+                return throwError(err);
+              })
+            )
+            .subscribe(() => {
+              this.registerWallet();
+              console.log(
+                '🚀 ~ file: auth-page.component.ts ~ line 118 ~ AuthPageComponent ~ .subscribe ~ this.userPackage',
+                this.userPackage
+              );
+              this.authService
+                .updatePackage(userName, this.userPackage)
+                .subscribe();
+              this.errorHandlerService.openSuccessSnackBar(
+                'Registered successfully'
+              );
+              this.toggleText();
+            });
+        });
     }
     return null;
   }
 
   registerWallet() {
-    const { userName, userPackage } = this.form.value;
+    const { userName } = this.form.value;
+
+    let userPackage = this.userPackage;
 
     const mcfPoints = 0 as unknown as number;
     const referralBalance = 0 as unknown as number;

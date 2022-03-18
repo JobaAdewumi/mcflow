@@ -11,6 +11,7 @@ import { WalletController } from './controllers/wallet.controller';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { AuthController } from './controllers/auth.controller';
+import { VendorEntity } from './models/vendor.entity';
 
 @Module({
   imports: [
@@ -20,10 +21,10 @@ import { AuthController } from './controllers/auth.controller';
         signOptions: { expiresIn: '3600s' },
       }),
     }),
-    TypeOrmModule.forFeature([UserEntity, WalletEntity]),
+    TypeOrmModule.forFeature([UserEntity, WalletEntity, VendorEntity]),
   ],
   controllers: [AuthController, WalletController, UserController],
   providers: [AuthService, JwtStrategy, JwtGuard, WalletService, UserService],
-  exports: [AuthService, WalletService, UserService], 
+  exports: [AuthService, WalletService, UserService],
 })
 export class AuthModule {}

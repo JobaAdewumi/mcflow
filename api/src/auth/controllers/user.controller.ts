@@ -110,6 +110,14 @@ export class UserController {
     return this.authService.updateUser(id, updatedUser);
   }
 
+  @Put('package/:userName')
+  updateUserPackage(
+    @Param('userName') userName: string,
+    @Body() { userPackage },
+  ): Observable<UpdateResult> {
+    return this.userService.updatePackage(userName, userPackage);
+  }
+
   @Post('contact')
   requestWithdrawal(@Body() contactUs: ContactUs) {
     return this.mailService.sendContactUsInfo(contactUs);

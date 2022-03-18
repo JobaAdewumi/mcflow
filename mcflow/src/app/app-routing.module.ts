@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { VendorGuard } from './vendor/guards/vendor.guard';
 
 const routes: Routes = [
   {
@@ -25,9 +26,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'referral/:userName',
+    path: 'vendor',
     loadChildren: () =>
-      import('./referral/referral.module').then((m) => m.ReferralModule),
+      import('./vendor/vendor.module').then((m) => m.VendorModule),
+    canLoad: [VendorGuard],
   },
   {
     path: 'referral/:userName',

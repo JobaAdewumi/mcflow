@@ -1,3 +1,4 @@
+import { Vendor } from './../../../../../api/src/auth/models/vendor.class';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,13 +17,15 @@ import { Wallet } from '../models/wallet.model';
 import { NewWallet } from '../models/newWallet.model';
 import { UpdatedUser } from '../models/updatedUser.model';
 import { Role } from '../models/role.enum';
-
+import { NewVendor } from '../models/newVendor.model';
+import { vendorResponse } from '../models/vendorResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private user$ = new BehaviorSubject<User>(null);
+  private vendor$ = new BehaviorSubject<Vendor>(null);
 
   private httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -37,6 +40,15 @@ export class AuthService {
       switchMap((user: User) => {
         const isUserAuthenticated = user !== null;
         return of(isUserAuthenticated);
+      })
+    );
+  }
+
+  get isVendorLoggedIn(): Observable<boolean> {
+    return this.vendor$.asObservable().pipe(
+      switchMap((vendor: Vendor) => {
+        const isVendorAuthenticated = vendor !== null;
+        return of(isVendorAuthenticated);
       })
     );
   }
@@ -143,7 +155,9 @@ export class AuthService {
 
   getUserImageName(): Observable<{ imageName: string }> {
     return this.http
-      .get<{ imageName: string }>(`${environment.baseApiUrl}/user/images/image-name`)
+      .get<{ imageName: string }>(
+        `${environment.baseApiUrl}/user/images/image-name`
+      )
       .pipe(take(1));
   }
 
@@ -184,7 +198,9 @@ export class AuthService {
       .pipe(take(1));
   }
 
-  getUserLastSharedLogin(id: number): Observable<{ lastSharedLogin: Date | null }> {
+  getUserLastSharedLogin(
+    id: number
+  ): Observable<{ lastSharedLogin: Date | null }> {
     return this.http
       .get<{ lastSharedLogin: Date }>(
         `${environment.baseApiUrl}/user/last-shared-login/${id}`
@@ -263,10 +279,93 @@ export class AuthService {
       })
     );
   }
+  isVendorTokenInStorage(): Observable<boolean> {
+    return of(localStorage.getItem('token') as string).pipe(
+      map((data: string) => {
+        if (!data) return null;
+
+        const decodedToken: vendorResponse = jwt_decode(data);
+        const jwtExpirationInMsSinceUnixEpoch = decodedToken.exp * 1000;
+        const isExpired =
+          new Date() > new Date(jwtExpirationInMsSinceUnixEpoch);
+
+        if (isExpired) return null;
+        if (decodedToken.vendor) {
+          this.vendor$.next(decodedToken.vendor);
+        }
+        return true;
+      })
+    );
+  }
 
   logout(): void {
     this.user$.next(null);
     localStorage.removeItem('token');
     this.router.navigateByUrl('/landing');
+  }
+
+  logoutVendor(): void {
+    this.user$.next(null);
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/landing');
+  }
+
+  registerVendor(newVendor: NewVendor): Observable<User> {
+    return this.http
+      .post<User>(
+        `${environment.baseApiUrl}/auth/register/vendor`,
+        newVendor,
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
+
+  loginVendor(email: string, password: string): Observable<{ token: string }> {
+    return this.http
+      .post<{ token: string }>(
+        `${environment.baseApiUrl}/auth/login/vendor`,
+        { email, password },
+        this.httpOptions
+      )
+      .pipe(
+        take(1),
+        tap((response: { token: string }) => {
+          localStorage.setItem('token', response.token);
+          const decodedToken: vendorResponse = jwt_decode(response.token);
+          this.vendor$.next(decodedToken.vendor);
+        })
+      );
+  }
+
+  generateCouponCode(userPackage: string): Observable<{ couponCode: string }> {
+    return this.http
+      .post<{ couponCode: string }>(
+        `${environment.baseApiUrl}/auth/coupon/generate`,
+        { userPackage },
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
+
+  checkCouponCode(
+    couponCode: string
+  ): Observable<{ userPackage: UserPackage }> {
+    return this.http
+      .post<{ userPackage: UserPackage }>(
+        `${environment.baseApiUrl}/auth/coupon/check`,
+        { couponCode },
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
+
+  updatePackage(userName: string, userPackage: string) {
+    return this.http
+      .put(
+        `${environment.baseApiUrl}/user/package/${userName}`,
+        { userPackage },
+        this.httpOptions
+      )
+      .pipe(take(1));
   }
 }

@@ -64,7 +64,14 @@
         >
           Confirm Withdrawal
         </button>
-        <p (click)="onSignOut()">Log out</p>
+        <button
+          *ngIf="role === 'admin'"
+          routerLinkActive="active"
+          (click)="onSignOut()"
+          mat-flat-button
+        >
+          Log out
+        </button>
       </div>
     </mat-sidenav>
     <mat-sidenav-content>

@@ -199,4 +199,13 @@ export class UserService {
       }),
     );
   }
+
+  updatePackage(
+    userName: string,
+    userPackage: UserPackage,
+  ): Observable<UpdateResult> {
+    return from(
+      this.userRepository.update({ userName }, { userPackage: userPackage }),
+    );
+  }
 }

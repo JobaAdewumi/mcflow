@@ -7,9 +7,9 @@ import { MaterialModule } from '../material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthPageComponent } from './auth-page.component';
 import { NgHelmetModule } from 'ng-helmet';
-
+import { VendorPageComponent } from './components/vendor-page/vendor-page.component';
 @NgModule({
-  declarations: [AuthPageComponent],
+  declarations: [AuthPageComponent, VendorPageComponent],
   imports: [
     NgHelmetModule.forRoot({
       baseTitle: '| Mcflow',

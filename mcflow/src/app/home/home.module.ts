@@ -25,6 +25,7 @@ import { SponsoredPostsMainComponent } from './components/sponsored-posts-main/s
 import { SponsoredPostsCreatePostComponent } from './components/sponsored-posts-create-post/sponsored-posts-create-post.component';
 import { NgHelmetModule } from 'ng-helmet';
 import { ConfirmWithdrawalComponent } from './components/confirm-withdrawal/confirm-withdrawal.component';
+import { VendorHomeComponent } from './components/vendor-home/vendor-home.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ConfirmWithdrawalComponent } from './components/confirm-withdrawal/conf
     SponsoredPostsMainComponent,
     SponsoredPostsCreatePostComponent,
     ConfirmWithdrawalComponent,
+    VendorHomeComponent,
   ],
   imports: [
     NgHelmetModule.forRoot({

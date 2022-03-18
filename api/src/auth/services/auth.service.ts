@@ -16,6 +16,8 @@ import { Wallet } from '../models/wallet.interface';
 import { UserPackage } from './../models/package.enum';
 import { UpdatedUser } from '../models/updated-user.class';
 import { User } from '../models/user.class';
+import { Vendor } from '../models/vendor.class';
+import { VendorEntity } from '../models/vendor.entity';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +26,8 @@ export class AuthService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(WalletEntity)
     private readonly walletRepository: Repository<WalletEntity>,
+    @InjectRepository(VendorEntity)
+    private readonly vendorRepository: Repository<VendorEntity>,
     private jwtService: JwtService,
     private walletService: WalletService,
   ) {}
@@ -45,6 +49,11 @@ export class AuthService {
   doesUserExistWallet(userName: string): Observable<boolean> {
     return from(this.walletRepository.findOne({ userName })).pipe(
       switchMap((wallet: Wallet) => of(!!wallet)),
+    );
+  }
+  doesVendorExist(email: string): Observable<boolean> {
+    return from(this.vendorRepository.findOne({ email })).pipe(
+      switchMap((vendor: Vendor) => of(!!vendor)),
     );
   }
 
@@ -77,10 +86,6 @@ export class AuthService {
         );
       }),
     );
-  }
-
-  testFunc(): string {
-    return 'IM working';
   }
 
   registerAccount(user: User): Observable<User> {
@@ -122,6 +127,42 @@ export class AuthService {
               map((user: User) => {
                 delete user.password;
                 return user;
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  }
+
+  registerVendorAccount(vendor: Vendor): Observable<Vendor> {
+    const { firstName, lastName, userName, email, phoneNumber, password } =
+      vendor;
+
+    return this.doesVendorExist(email).pipe(
+      tap((doesUserExist: boolean) => {
+        if (doesUserExist)
+          throw new HttpException(
+            'A vendor has already been created with this email address',
+            HttpStatus.BAD_REQUEST,
+          );
+      }),
+      switchMap(() => {
+        return this.hashPassword(password).pipe(
+          switchMap((hashedPassword: string) => {
+            return from(
+              this.vendorRepository.save({
+                firstName,
+                lastName,
+                userName,
+                email,
+                phoneNumber,
+                password: hashedPassword,
+              }),
+            ).pipe(
+              map((vendor: Vendor) => {
+                delete vendor.password;
+                return vendor;
               }),
             );
           }),
@@ -172,6 +213,41 @@ export class AuthService {
       }),
     );
   }
+  validateVendor(email: string, password: string): Observable<Vendor> {
+    return from(
+      this.vendorRepository.findOne(
+        { email },
+        {
+          select: [
+            'id',
+            'firstName',
+            'lastName',
+            'userName',
+            'email',
+            'phoneNumber',
+            'password',
+          ],
+        },
+      ),
+    ).pipe(
+      switchMap((vendor: Vendor) => {
+        if (!vendor) {
+          throw new HttpException(
+            { status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' },
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        return from(bcrypt.compare(password, vendor.password)).pipe(
+          map((isValidPassword) => {
+            if (isValidPassword) {
+              delete vendor.password;
+              return vendor;
+            }
+          }),
+        );
+      }),
+    );
+  }
 
   loginDate(userId: number): Observable<UpdateResult> {
     return from(
@@ -195,6 +271,16 @@ export class AuthService {
       switchMap((user: User) => {
         if (user) {
           return from(this.jwtService.signAsync({ user }));
+        }
+      }),
+    );
+  }
+
+  loginVendor(email: string, password: string): Observable<string> {
+    return this.validateVendor(email, password).pipe(
+      switchMap((vendor: Vendor) => {
+        if (vendor) {
+          return from(this.jwtService.signAsync({ vendor }));
         }
       }),
     );
@@ -227,4 +313,79 @@ export class AuthService {
       }),
     );
   }
+
+  generateCouponCode(userPackage: string): Observable<string> {
+    console.log(
+      '🚀 ~ file: auth.service.ts ~ line 319 ~ AuthService ~ generateCouponCode ~ userPackage',
+      userPackage,
+    );
+    return from(bcrypt.hash(userPackage, 12));
+  }
+
+  async checkCouponCode(couponCode: string): Promise<string> {
+    console.log(
+      '🚀 ~ file: auth.service.ts ~ line 326 ~ AuthService ~ checkCouponCode ~ couponCode',
+      couponCode,
+    );
+    const bronzee = 'bronzemcf';
+    const silverr = 'silvermcf';
+    const goldd = 'goldmcf';
+    const pioneerr = 'pioneermcf';
+    try {
+      const bronze = await bcrypt.compare(bronzee, couponCode);
+
+      if (bronze) {
+        return 'bronze';
+      }
+      const silver = await bcrypt.compare(silverr, couponCode);
+      if (silver) {
+        return 'silver';
+      }
+      const gold = await bcrypt.compare(goldd, couponCode);
+      if (gold) {
+        return 'gold';
+      }
+      const pioneer = await bcrypt.compare(pioneerr, couponCode);
+
+      if (pioneer) {
+        return 'pioneer';
+      }
+      throw new Error('Wrong coupon code');
+    } catch (err) {
+      console.log(`${err}`);
+      throw new Error(err);
+    }
+  }
+
+  // checkCouponCode(couponCode: string): string {
+  //   const bronzee = 'bronzemcf';
+  //   const silverr = 'silvermcf';
+  //   const goldd = 'goldmcf';
+  //   const pioneerr = 'pioneermcf';
+  //   defer
+  //   try {
+  //     const bronze = from(bcrypt.compare(bronzee, couponCode));
+
+  //     if (bronze) {
+  //       return 'bronze';
+  //     }
+  //     const silver = from(bcrypt.compare(silverr, couponCode));
+  //     if (silver) {
+  //       return 'silver';
+  //     }
+  //     const gold = from(bcrypt.compare(goldd, couponCode));
+  //     if (gold) {
+  //       return 'gold';
+  //     }
+  //     const pioneer = from(bcrypt.compare(pioneerr, couponCode));
+
+  //     if (pioneer) {
+  //       return 'pioneer';
+  //     }
+  //     throw new Error('Wrong coupon code');
+  //   } catch (err) {
+  //     console.log(`${err}`);
+  //     throw new Error(err);
+  //   }
+  // }
 }
