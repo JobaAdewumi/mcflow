@@ -90,13 +90,10 @@ export class AuthController {
       '🚀 ~ file: auth.controller.ts ~ line 85 ~ AuthController ~ checkCouponCode ~ couponCode',
       couponCode,
     );
-    return this.authService.checkCouponCode(couponCode).then(
-      (userPackage: string) => {
+    return this.authService
+      .checkCouponCode(couponCode)
+      .then((userPackage: string) => {
         return { userPackage };
-      },
-      // switchMap((userPackage: string) => {
-      //   return of({ userPackage });
-      // }),
-    );
+      });
   }
 }
