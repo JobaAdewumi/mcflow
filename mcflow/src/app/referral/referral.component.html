@@ -129,7 +129,7 @@
         </mat-form-field>
       </p>
 
-      <p>
+      <!-- <p>
         <mat-form-field appearance="outline" class="mat-form form-input">
           <mat-label>Package</mat-label>
           <select
@@ -151,7 +151,7 @@
             >Please enter your package.</mat-hint
           >
         </mat-form-field>
-      </p>
+      </p> -->
 
       <p>
         <mat-form-field appearance="outline" class="mat-form form-input">
@@ -172,6 +172,16 @@
           >
         </mat-form-field>
       </p>
+
+        <p>
+          <mat-form-field appearance="fill" class="mat-form form-input">
+            <mat-label>Coupon Code</mat-label>
+            <input placeholder="Input your coupon code" matNativeControl required="true" name="couponCode"
+              #couponCodeInput="ngModel" ngModel type="text" />
+            <mat-hint color="warn" *ngIf="!couponCodeInput.valid && couponCodeInput.touched">Please enter your coupon code.
+            </mat-hint>
+          </mat-form-field>
+        </p>
 
       <p>
         <mat-form-field appearance="outline" class="mat-form form-input">

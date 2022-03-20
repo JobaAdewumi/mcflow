@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, retry, switchMap, tap } from 'rxjs/operators';
 import { NewUser } from '../auth/models/newUser.model';
 import { NewWallet } from '../auth/models/newWallet.model';
 import { UserPackage } from '../auth/models/package.enum';
@@ -19,11 +19,10 @@ import { ReferralService } from './services/referral.service';
 export class ReferralComponent implements OnInit {
   @ViewChild('form') form: NgForm;
 
-
   mcfPoints: number;
   referralBalance: number;
   userName: string;
-  userPackage: string;
+  userPackage: UserPackage;
   referred: number;
 
   urlUsername: string;
@@ -70,7 +69,7 @@ export class ReferralComponent implements OnInit {
       email,
       password,
       phoneNumber,
-      userPackage,
+      couponCode,
     } = this.form.value;
     if (
       !firstName ||
@@ -79,9 +78,11 @@ export class ReferralComponent implements OnInit {
       !email ||
       !password ||
       !phoneNumber ||
-      !userPackage
+      !couponCode
     )
       return null;
+
+    let userPackage = this.userPackage;
 
     const newUser: NewUser = {
       firstName,
@@ -94,34 +95,42 @@ export class ReferralComponent implements OnInit {
     };
 
     return this.authService
-      .register(newUser)
+      .checkCouponCode(couponCode)
       .pipe(
         catchError((err) => {
-          this.errorHandlerService.openSnackBar(
-            'Check the values you input in the form'
-          );
+          this.errorHandlerService.openSnackBar('The coupon code is not valid');
           console.log('error:', err);
           return throwError(err);
-        })
+        }),
+        tap(({ userPackage }) => {
+          this.userPackage = userPackage;
+        }),
+        retry(1)
       )
       .subscribe(() => {
-        this.registerWallet();
-        // this.referralService.referralP(
-        //   this.urlUsername,
-        //   this.userPackage,
-        //   this.referred,
-        //   this.referralBalance
-        // );
-        // console.log(
-        //   'component',
-        //   this.urlUsername,
-        //   this.userPackage,
-        //   this.referred,
-        //   this.referralBalance
-        // );
-        this.referralService.referral();
-        this.errorHandlerService.openSuccessSnackBar('Registered successfully');
-        this.router.navigateByUrl('/auth');
+        return this.authService
+          .register(newUser)
+          .pipe(
+            catchError((err) => {
+              this.errorHandlerService.openSnackBar(
+                'Check the values you input in the form'
+              );
+              console.log('error:', err);
+              return throwError(err);
+            })
+          )
+
+          .subscribe(() => {
+            this.registerWallet();
+            this.referralService.referral();
+            this.authService
+              .updatePackage(userName, this.userPackage)
+              .subscribe();
+            this.errorHandlerService.openSuccessSnackBar(
+              'Registered successfully'
+            );
+            this.router.navigateByUrl('/auth');
+          });
       });
   }
 
