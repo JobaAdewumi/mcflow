@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 
-
 import { ErrorHandlerService } from '../../../core/services/error-handler.service';
 
 import { User } from '../../../auth/models/user.model';
@@ -86,16 +85,38 @@ export class PayoutMainComponent implements OnInit {
       return null;
     console.log('hello', `${this.userPackage}`);
     console.log('points', `${this.mcfPoints}`);
-    console.log('referral', `${this.referralBalance}`);
+    console.log('referral', `${this.referralBalance}`, referralOrMCFPoints);
     console.log('userName', `${this.userName}`);
-    if (this.userPackage == 'bronze' && this.mcfPoints < 10000) {
-      alert(`${this.userPackage}`);
-    } else if (this.userPackage == 'silver' && this.mcfPoints < 25000) {
-      alert(`${this.userPackage}`);
-    } else if (this.userPackage == 'gold' && this.mcfPoints < 48000) {
-      alert(`${this.userPackage}`);
-    } else if (this.userPackage == 'pioneer' && this.mcfPoints < 110000) {
-      alert(`${this.userPackage}`);
+    if (referralOrMCFPoints == 'referral') {
+      if (this.referralBalance < 3000) {
+        this.errorHandlerService.openSnackBar(
+          'Referral balance is not up to the minimum'
+        );
+        return null;
+      }
+    }
+    if (referralOrMCFPoints == 'mcfpoints') {
+      if (this.userPackage == 'bronze' && this.mcfPoints < 10000) {
+        this.errorHandlerService.openSnackBar(
+          'Mcf Points is not up to the minimum for withdrawal'
+        );
+        return null;
+      } else if (this.userPackage == 'silver' && this.mcfPoints < 25000) {
+        this.errorHandlerService.openSnackBar(
+          'Mcf Points is not up to the minimum for withdrawal'
+        );
+        return null;
+      } else if (this.userPackage == 'gold' && this.mcfPoints < 48000) {
+        this.errorHandlerService.openSnackBar(
+          'Mcf Points is not up to the minimum for withdrawal'
+        );
+        return null;
+      } else if (this.userPackage == 'pioneer' && this.mcfPoints < 110000) {
+        this.errorHandlerService.openSnackBar(
+          'Mcf Points is not up to the minimum for withdrawal'
+        );
+        return null;
+      }
     }
     // TODO: Add the other packages and continue from here
     const newWithdrawal: NewWithdrawal = {
@@ -107,25 +128,31 @@ export class PayoutMainComponent implements OnInit {
       bankName,
     };
 
-    return this.homeService.sendWithdrawal(newWithdrawal).pipe(
-          catchError((err) => {
-            this.errorHandlerService.openSnackBar('An error occurred please try again later');
-            console.log('error:', err);
-            return throwError(err);
-          })
-        )
-        .subscribe(
-          // res =>
-          //   this.errorHandlerService.openSuccessSnackBar(`Login res successfully: ${res}`),
-          // err =>
-          //   this.errorHandlerService.handleError(
-          //     `wrong email or password: ${err}`,
+    return this.homeService
+      .sendWithdrawal(newWithdrawal)
+      .pipe(
+        catchError((err) => {
+          this.errorHandlerService.openSnackBar(
+            'An error occurred please try again later'
+          );
+          console.log('error:', err);
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        // res =>
+        //   this.errorHandlerService.openSuccessSnackBar(`Login res successfully: ${res}`),
+        // err =>
+        //   this.errorHandlerService.handleError(
+        //     `wrong email or password: ${err}`,
 
-          //   ),
+        //   ),
 
-          () => {
-            this.errorHandlerService.openSuccessSnackBar('Form sent successfully');
-          }
-        );
+        () => {
+          this.errorHandlerService.openSuccessSnackBar(
+            'Form sent successfully'
+          );
+        }
+      );
   }
 }
