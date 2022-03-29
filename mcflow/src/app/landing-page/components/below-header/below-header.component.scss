@@ -1,54 +1,134 @@
+@import "~src/mixins";
 .container {
+  color: white;
+  padding: 250px 0;
+  text-align: center;
   background-image: url(../../../../assets/images/below-header.jpg);
-  background-repeat: no-repeat;
   background-position: center;
-  background-color: aliceblue;
+  background-color: rgb(124, 216, 151);
   background-size: cover;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  .inside-container {
-    padding: 200px 200px;
-    text-align: center;
+  background-repeat: no-repeat;
+  @include respond(tab-land) {
+    padding: 220px 0;
+  }
+  @include respond(tab-port) {
+    padding: 160px 0;
+  }
+  @include respond(phone) {
+    padding: 140px 0;
+  }
+  @include respond(med-phone) {
+    padding: 120px 0;
+  }
+  &__inside {
+    &__big {
+      font-size: 110px;
+      padding: 20px 0;
+      font-family: "Times New Roman", Times, serif;
+      @include respond(laptop) {
+        font-size: 90px;
+      }
+      @include respond(tab-land) {
+        font-size: 90px;
+      }
+      @include respond(tab-port) {
+        font-size: 70px;
+      }
+      @include respond(phone) {
+        font-size: 45px;
+      }
+      @include respond(med-phone) {
+        font-size: 40px;
+        padding: 10px 0;
+      }
+      @include respond(small-phone) {
+        font-size: 34px;
+        padding: 5px 0;
+      }
+    }
 
-    p {
-      color: white;
+    &__semi {
+      font-size: 60px;
+      padding-top: 27px;
+      font-family: "Courier New", Courier, monospace;
+      @include respond(tab-land) {
+        font-size: 40px;
+      }
+      @include respond(tab-port) {
+        font-size: 40px;
+        padding-top: 10px;
+      }
+      @include respond(phone) {
+        font-size: 37px;
+        padding-top: 0px;
+      }
+      @include respond(med-phone) {
+        font-size: 22px;
+        padding-top: 0px;
+      }
+      @include respond(small-phone) {
+        font-size: 19px;
+        padding-top: 0px;
+      }
     }
-    .text-big {
-      font-size: 48px;
-      padding: 10px 0;
+
+    &__small {
+      font-size: 30px;
+      padding: 20px 0;
+      font-family: cursive;
+      @include respond(phone) {
+        font-size: 17px;
+        padding: 10px 0;
+      }
+      @include respond(med-phone) {
+        font-size: 15px;
+        padding: 10px 0;
+      }
+      @include respond(small-phone) {
+        font-size: 13px;
+        padding: 5px 0;
+      }
     }
-    .text-small {
-      font-size: 17px;
-    }
-    .login-link-container {
-      background-color: green;
-      width: 20%;
-      height: 35px;
-      align-content: center;
-      display: inline-block;
-      border-radius: 15px;
-      a {
+
+    &__login {
+      text-align: -webkit-center;
+      text-decoration: none;
+      &__link {
         display: flex;
-        justify-content: space-between;
+        width: 15%;
+        background-color: rgb(109, 167, 109);
+        border-radius: 500px;
         text-decoration: none;
-        p {
-          font-size: 12.5px;
-          margin: 0;
-          text-align: center;
-          padding-top: 8px;
-          padding-left: 15px;
+        line-height: 2.5;
+        color: white;
+        @include respond(laptop) {
+          width: 19%;
         }
-        span {
-          padding-top: 7px;
-          padding-right: 4px;
-          margin-right: 7px;
-          background-color: rgb(0, 80, 0);
-          border-radius: 9999px;
-          justify-content: center;
-          mat-icon {
-            text-align: center;
-            padding-left: 3px;
+        @include respond(tab-port) {
+          width: 25%;
+        }
+        @include respond(phone) {
+          width: 38%;
+        }
+        &__text {
+          margin-left: 12px;
+          margin-right: 0;
+          margin-bottom: 0;
+          @include respond(phone) {
+            font-size: 12px;
+          }
+          @include respond(med-phone) {
+            font-size: 10px;
+          }
+          @include respond(small-phone) {
+            font-size: 9px;
+          }
+        }
+
+        &__icon {
+          width: 20%;
+          margin-right: 14px;
+          &__item {
           }
         }
       }

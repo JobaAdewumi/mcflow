@@ -1,14 +1,19 @@
 <div class="container">
-  <div class="inside-container">
+  <div class="container__inside">
     <!-- TODO: Tint div image -->
-    <p class="text-big">Welcome to MCFlow</p>
-    <p class="text-big">A task earning platform</p>
-    <p class="text-small">Your backup cash any day any time</p>
-    <div class="login-link-container">
-      <a [routerLink]="['/', 'landing', 'faq']">
-        <p>GET STARTED NOW</p>
-        <span>
-          <mat-icon style="color: white; font-size: 20px">open_in_new</mat-icon>
+    <h1 class="container__inside__big">Welcome to MCFlow</h1>
+    <h2 class="container__inside__semi">A task earning platform</h2>
+    <p class="container__inside__small">Your backup cash any day any time</p>
+    <div class="container__inside__login">
+      <a
+        class="container__inside__login__link"
+        [routerLink]="['/', 'auth']"
+      >
+        <p class="container__inside__login__link__text">GET STARTED NOW</p>
+        <span class="container__inside__login__link__icon">
+          <i class="container__inside__login__link__icon__item fas fa-list"
+            ></i
+          >
         </span>
       </a>
     </div>
