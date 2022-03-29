@@ -1,108 +1,231 @@
-.overview-container {
+@import "~src/mixins";
+.container {
   padding: 48px 24px;
-  left: 0;
-  right: 0;
-  width: 1150px;
-  .toprow-cards-container {
+
+  mat-card {
+    height: 300px;
+    width: 560px;
+    @include respond(laptop) {
+      width: 520px;
+    }
+    @include respond(tab-port) {
+      width: 475px;
+    }
+    @media only screen and (max-width: 682px) {
+      width: 455px;
+    }
+    @media only screen and (max-width: 580px) {
+      width: 455px;
+    }
+    @media only screen and (max-width: 520px) {
+      width: 400px;
+      height: 290px;
+    }
+    @media only screen and (max-width: 495px) {
+      height: 260px;
+    }
+    @media only screen and (max-width: 465px) {
+      width: 360px;
+      height: 250px;
+    }
+    @include respond(phone) {
+      width: 313px;
+      height: 261px;
+    }
+    @include respond(med-phone) {
+      width: 275px;
+      height: 282px;
+    }
+    @include respond(small-phone) {
+      width: 263px;
+      height: 293px;
+    }
+  }
+  mat-card-title {
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 20px;
+    @media only screen and (max-width: 495px) {
+      font-size: 19px;
+    }
+    @include respond(phone) {
+      font-size: 18px;
+    }
+  }
+  mat-card-content {
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 20px;
+    color: grey;
+    line-height: 1.3;
+    @media only screen and (max-width: 495px) {
+      font-size: 17px;
+    }
+    @include respond(phone) {
+      font-size: 16px;
+    }
+  }
+
+  mat-icon {
+    padding-top: 25px;
+    padding-bottom: 45px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  &__cards {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
     padding-bottom: 30px;
-  }
-  .bottom-card-container {
-    display: flex;
+    align-content: center;
     justify-content: center;
-    padding-top: 30px;
-  }
-  .adjust {
-    display: flex;
-    justify-content: space-between;
-    padding: 125px 105px 0 105px;
-    .amount-of-users {
+    &__card {
+      width: 48%;
+      margin: 20px 0;
+      padding-left: 50px;
       display: flex;
       justify-content: center;
-      padding-top: 50px;
-      .amount-of-users-align {
-        display: block;
-        text-align: right;
-        #seven-five {
-          color: green;
-          font-size: 58px;
-        }
-        #users {
-          padding-top: 10px;
-          font-size: 15px;
-          font-weight: 600;
-        }
+      @media only screen and (max-width: 1260px) {
+        padding-left: 13px;
+        width: 50%;
       }
-    }
-    .years-of-experience {
-      display: flex;
-      justify-content: center;
-      padding-top: 75px;
-      .years-of-exp-align {
-        display: block;
-        text-align: center;
-        #big-five {
-          font-family: Poppins, sans-serif;
-          font-size: 300px;
-          padding-top: 10px;
-          color: rgba(43, 190, 30, 0.61);
-        }
-        #five-subtitle {
-          padding-top: 70px;
-          margin-top: 70px;
-          font-weight: 600;
-          font-family: Poppins, sans-serif;
-          font-size: 21px;
-        }
+      @media only screen and (max-width: 1120px) {
+        padding-left: 13px;
+        width: 51%;
       }
-    }
-    .amount-paid-out {
-      display: flex;
-      justify-content: center;
-      padding-top: 50px;
-      .amount-paid-out-align {
-        display: block;
-        text-align: left;
-        #money-naira {
-          color: green;
-          font-size: 58px;
+      @include respond(tab-land) {
+        width: 65%;
+      }
+      @include respond(tab-port) {
+        width: 75%;
+      }
+      @media only screen and (max-width: 640px) {
+        width: 80%;
+      }
+      @media only screen and (max-width: 580px) {
+        width: 90%;
+      }
+      @media only screen and (max-width: 470px) {
+        width: 95%;
+      }
+      @include respond(small-phone) {
+        width: 106%;
+      }
+      img {
+        width: 80px;
+        height: 80px;
+        padding-bottom: 10px;
+        @media only screen and (max-width: 520px) {
+          width: 70px;
+          height: 70px;
         }
-
-        #money-subtitle {
-          padding-top: 15px;
-          font-size: 15px;
-          font-weight: 600;
+        @media only screen and (max-width: 495px) {
+          width: 60px;
+          height: 60px;
+        }
+        @include respond(phone) {
+          width: 50px;
+          height: 56px;
         }
       }
     }
   }
-}
 
-mat-card {
-  height: 300px;
-  width: 560px;
-}
-mat-card-title {
-  padding-bottom: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  font-size: 20px;
-}
-mat-card-content {
-  padding-left: 25px;
-  padding-right: 25px;
-  font-size: 20px;
-  color: grey;
-  line-height: 1.3;
-}
+  &__below {
+    text-align: center;
+    &__users {
+      display: block;
+      padding: 15px 0;
+      &__number {
+        font-size: 113px;
+        margin-bottom: 54px;
+        margin-top: 25px;
+        @include respond(tab-port) {
+          font-size: 112px;
+        }
+      }
+      &__header {
+        font-size: 36px;
+        margin-bottom: 33px;
+        @include respond(tab-port) {
+          font-size: 33px;
+        }
+      }
+      &__text {
+        font-size: 21px;
+        font-family: cursive;
+        @include respond(tab-port) {
+          font-size: 20px;
+        }
+      }
+    }
 
-mat-icon {
-  padding-top: 25px;
-  padding-bottom: 45px;
-  padding-left: 25px;
-  padding-right: 25px;
+    &__years {
+      display: block;
+      &__five {
+        margin-top: 95px;
+        font-size: 189px;
+        font-family: cursive;
+        @include respond(tab-port) {
+          font-size: 183px;
+        }
+      }
+      &__text {
+        margin-top: 104px;
+        font-size: 39px;
+        font-family: cursive;
+        margin-bottom: 30px;
+        @include respond(tab-port) {
+          font-size: 36px;
+        }
+        @media only screen and (max-width: 470px) {
+          font-size: 32px;
+        }
+        @include respond(med-phone) {
+          font-size: 28px;
+        }
+        @include respond(small-phone) {
+          font-size: 23px;
+        }
+      }
+    }
+
+    &__paid {
+      display: block;
+      &__amount {
+        margin-top: 99px;
+        font-family: cursive;
+        font-size: 80px;
+        @include respond(tab-port) {
+          font-size: 78px;
+        }
+        @media only screen and (max-width: 310px) {
+          font-size: 69px;
+        }
+      }
+
+      &__header {
+        margin-top: 66px;
+        font-size: 35px;
+        font-family: math;
+        @include respond(tab-port) {
+          font-size: 34px;
+        }
+      }
+
+      &__text {
+        margin-top: 30px;
+        font-family: monospace;
+        font-size: 22px;
+        @include respond(tab-port) {
+          font-size: 20px;
+        }
+        @media only screen and (max-width: 470px) {
+          font-size: 18px;
+        }
+      }
+    }
+  }
 }
-
-// Media
-
