@@ -1,73 +1,51 @@
-.footer-container {
+.container {
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 250;
+  z-index: 5;
   background-color: #262b35;
   padding-top: 20px;
+  padding-top: 20px;
   width: 100%;
-  .top-layer-footer {
-    display: flex;
-    justify-content: space-around;
-    color: white;
-    font-weight: 100;
-    text-align: center;
-    .apply {
-      display: flex;
-      .middle-block {
-        padding-right: 230px;
-      }
-    }
-
-    a {
-      color: grey;
-      display: block;
-      padding: 6px 0;
-      text-decoration: none;
-    }
-  }
-  .bottom-layer-footer {
-    display: flex;
-    justify-content: space-around;
-    .mcf-logo img {
-      max-width: 100px;
-      max-height: 100px;
-    }
-    .align {
-      padding-top: 18px;
-      color: grey;
-      a {
-        padding: 0 10px;
-      }
-    }
-  }
-  .footer-middle-divider {
-    background-color: grey;
-    color: grey;
-  }
-}
-
-mat-icon {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-p {
-  color: gray;
-}
-
-a {
-  color: grey;
-  padding: 6px 0;
-  text-decoration: none;
-}
-
-.links {
   a {
     color: grey;
     display: block;
     padding: 6px 0;
     text-decoration: none;
   }
+  &__top {
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px;
+    @media only screen and (max-width: 900px) {
+      flex-wrap: wrap;
+    }
+  }
+  &__divider {
+    margin: 10px 0;
+  }
+  &__bottom {
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 5px;
+      @media only screen and (max-width: 900px) {
+        flex-wrap: wrap;
+        text-align: center;
+      }
+      &__logo {
+        img {
+          max-width: 120px;
+          max-height: 120px;
+        }
+      }
+      &__align {
+        padding-top: 18px;
+        font-size: 18px;
+      }
+    }
+  }
 }
-
