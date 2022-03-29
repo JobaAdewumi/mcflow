@@ -1,5 +1,5 @@
-.below-header-container {
-  .header-container {
+.container {
+  &__header {
     background-image: url(../../../../assets/images/faq.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -7,14 +7,34 @@
     background-size: cover;
     padding: 220px 220px;
     text-align: center;
-
-    p {
-      color: white;
+    @media only screen and (max-width: 578px) {
+      padding: 190px 190px;
     }
-
-    .text-big {
+    @media only screen and (max-width: 516px) {
+      padding: 150px 150px;
+    }
+    @media only screen and (max-width: 432px) {
+      padding: 120px 120px;
+    }
+    @media only screen and (max-width: 432px) {
+      padding: 100px 100px;
+    }
+    @media only screen and (max-width: 284px) {
+      padding: 80px 80px;
+    }
+    &__text {
       font-size: 48px;
       padding: 10px 0;
+      color: white;
+      @media only screen and (max-width: 432px) {
+        font-size: 37px;
+      }
+      @media only screen and (max-width: 346px) {
+        font-size: 29px;
+      }
+      @media only screen and (max-width: 238px) {
+        font-size: 23px;
+      }
     }
   }
 }
