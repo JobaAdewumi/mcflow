@@ -1,114 +1,176 @@
-.packages-container {
+@import "~src/mixins";
+.container {
   padding-top: 20px;
   padding-bottom: 40px;
-  .header-container {
+  &__header {
     text-align: center;
-    h4 {
+    &__head {
       color: green;
     }
-    h3 {
+    &__text {
       font-size: 20px;
       font-weight: 500;
     }
-    div {
+    &__sub {
       background-color: green;
-      margin-left: 550px;
-      margin-right: 550px;
+
       margin-bottom: 40px;
       height: 35px;
       text-decoration: none;
       color: white;
-      p {
-        padding-top: 8px;
-        font-size: 14px;
-      }
+      padding-top: 8px;
+      font-size: 14px;
     }
   }
 
-  .packages-cards-container {
+  &__packages {
     display: flex;
     justify-content: space-around;
-    .package-container {
-      mat-card {
-        .white-header {
+    @media only screen and (max-width: 887px) {
+      flex-direction: column;
+    }
+    mat-card {
+      height: 400px;
+      width: 200px;
+      text-align: center;
+      @media only screen and (max-width: 887px) {
+        margin-bottom: 35px;
+      }
+      //   margin-left: 81px;
+      //   @media only screen and (max-width: 1120px) {
+      //     margin-left: 49px;
+      //   }
+      //   @media only screen and (max-width: 1043px) {
+      //     margin-left: 34px;
+      //   }
+      //   @media only screen and (max-width: 978px) {
+      //     margin-left: 21px;
+      //   }
+      //   @media only screen and (max-width: 920px) {
+      //     margin-left: 14px;
+      //   }
+      //   @media only screen and (max-width: 889px) {
+      //     margin-left: 9px;
+      //   }
+    }
+    &__package {
+      display: flex;
+      justify-content: center;
+      &__white-header {
+        color: black;
+        background-color: rgb(238, 232, 232);
+        padding-left: 19px;
+        padding-right: 19px;
+        padding-top: 14px;
+        padding-bottom: 1px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      &__black-header {
+        color: white;
+        background-color: black;
+        padding-left: 19px;
+        padding-right: 19px;
+        padding-top: 14px;
+        padding-bottom: 1px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      &__bronze {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        &__mat-bronze {
+          padding-top: 11px;
+
+          padding-right: 67px;
+          &__img {
+            width: 65px;
+            height: 65px;
+          }
+        }
+      }
+      &__silver {
+        padding-top: 13px;
+        padding-bottom: 18px;
+        &__mat-silver {
+          padding-top: 9px;
+          //   padding-bottom: 25px;
+          //   padding-left: 25px;
+          padding-right: 91px;
+          &__img {
+            width: 90px;
+            height: 60px;
+          }
+        }
+      }
+      &__gold {
+        padding-top: 10px;
+        padding-bottom: 17px;
+        &__mat-gold {
+          padding-top: 9px;
+          //   padding-bottom: 25px;
+          //   padding-left: 25px;
+          padding-right: 104px;
+          &__img {
+            width: 100px;
+            height: 60px;
+          }
+        }
+      }
+      &__pioneer {
+        padding-top: 3px;
+        padding-bottom: 17px;
+
+        &__mat-pioneer {
+          padding-top: 17px;
+          //   padding-bottom: 25px;
+          //   padding-left: 25px;
+          padding-right: 112px;
+          &__img {
+            width: 110px;
+            height: 60px;
+          }
+        }
+      }
+      &__two-money {
+        font-size: 23px;
+        font-weight: 700;
+        padding-bottom: 10px;
+      }
+      &__mcf {
+        color: grey;
+      }
+      &__divider {
+        hr {
+          background-color: grey;
+          height: 0.01px;
+          width: 100%;
+          border-color: grey;
+        }
+      }
+      &__one-money {
+        color: grey;
+      }
+      &__minimum {
+        padding-bottom: 15px;
+        color: grey;
+      }
+      &__white-button {
+        button {
+          background-color: white;
           color: black;
-          background-color: rgb(238, 232, 232);
-          padding-left: 19px;
-          padding-right: 19px;
-          padding-top: 14px;
-          padding-bottom: 1px;
-          font-size: 12px;
-          font-weight: 500;
         }
-        .black-header {
-          color: white;
+      }
+      &__black-button {
+        button {
           background-color: black;
-          padding-left: 19px;
-          padding-right: 19px;
-          padding-top: 14px;
-          padding-bottom: 1px;
-          font-size: 12px;
-          font-weight: 500;
-        }
-        .two-thousand {
-          font-size: 23px;
-          font-weight: 700;
-          padding-bottom: 10px;
+          color: white;
         }
       }
     }
   }
-}
-
-mat-card {
-  height: 400px;
-  width: 170px;
-  text-align: center;
-}
-
-.mcf,
-.one-thousand,
-.minimum {
-  color: grey;
-}
-
-.minimum {
-  padding-bottom: 15px;
 }
 
 strong {
   color: black;
-}
-
-.white-button {
-  border: 2px solid black;
-  border-radius: 5px;
-  margin-left: 18px;
-  margin-right: 18px;
-  height: 30px;
-  a {
-    text-decoration: none;
-    color: black;
-    p {
-      padding-top: 4px;
-      font-size: 14px;
-    }
-  }
-}
-
-.black-button {
-  border: 2px solid black;
-  border-radius: 5px;
-  margin-left: 18px;
-  margin-right: 18px;
-  height: 30px;
-  background-color: black;
-  a {
-    text-decoration: none;
-    color: white;
-    p {
-      padding-top: 4px;
-      font-size: 14px;
-    }
-  }
 }
