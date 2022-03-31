@@ -27,7 +27,7 @@
   <mat-sidenav-container>
     <mat-sidenav #snav mode="over" position="end">
       <div class="sidenav-header">
-        <h1>MCFLOW</h1>
+        <h1 class="logo">MCFLOW</h1>
       </div>
       <hr style="margin: 10px 0" />
       <div class="nav-items">
@@ -65,7 +65,6 @@
           Confirm Withdrawal
         </button>
         <button
-          *ngIf="role === 'admin'"
           routerLinkActive="active"
           (click)="onSignOut()"
           mat-flat-button
