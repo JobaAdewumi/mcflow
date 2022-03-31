@@ -1,15 +1,52 @@
-
-@media (max-width: 768px) {
-  app-header {
-    display: none;
+.container {
+  top: 0;
+  right: 0;
+  left: 0;
+  mat-toolbar {
+    display: flex;
+    background-color: transparent;
+    height: 74px;
+    // background-image: url(../../assets/images/landing-header.jpg);
+    // background-position: center;
+    // background-color: rgb(124, 216, 151);
+    // background-size: cover;
+    // background-repeat: no-repeat;
   }
-  .router {
-    display: none;
-  }
-}
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    &__item {
+      list-style: none;
+      align-items: center;
+      display: contents;
+      &__logo {
+        background: url(../../assets/images/logo-small.png);
+        display: block;
+        background-position: center;
+        width: 120px;
+        height: 57px;
+        background-repeat: no-repeat;
 
-@media (min-width: 768px) {
-  .sidenav-container {
-    display: none;
+        // @include respond();
+      }
+      &__button {
+        width: 10%;
+      }
+    }
+  }
+
+  &__nav {
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  button {
+    margin: 10px 0;
+    font-size: 20px;
+
+    &:hover {
+      background-color: green;
+      color: white;
+    }
   }
 }

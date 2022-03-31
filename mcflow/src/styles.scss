@@ -8,8 +8,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// @import "sass/mixins";
-
+@import "./mixins";
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -21,7 +20,7 @@ $mcflow-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$mcflow-theme: mat.define-light-theme(
+$mcflow-theme: mat.define-dark-theme(
   (
     color: (
       primary: $mcflow-primary,
@@ -30,6 +29,9 @@ $mcflow-theme: mat.define-light-theme(
     ),
   )
 );
+
+$main: #0e1e25;
+$sub: #020b0d;
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -41,12 +43,12 @@ $mcflow-theme: mat.define-light-theme(
 html,
 body {
   height: 100%;
-  width: 100%;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-y: scroll;
+  background-color: #0e1e25;
 }
 
 *,
@@ -55,7 +57,13 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  width: 100%;
+  // #0e1e25
   // border: 1px solid red;
+}
+
+span {
+  width: auto;
 }
 
 *::selection {
@@ -102,55 +110,55 @@ a.active {
   transform: translate(-50%, -50%);
 }
 
-@mixin respond($breakpoint) {
-  @if $breakpoint==small-phone {
-    @media only screen and (max-width: 300px) {
-      @content;
-    }
+// @mixin respond($breakpoint) {
+//   @if $breakpoint==small-phone {
+//     @media only screen and (max-width: 300px) {
+//       @content;
+//     }
 
-    //? 600px
-  }
+//     //? 600px
+//   }
 
-  @if $breakpoint==med-phone {
-    @media only screen and (max-width: 450px) {
-      @content;
-    }
+//   @if $breakpoint==med-phone {
+//     @media only screen and (max-width: 450px) {
+//       @content;
+//     }
 
-    //? 600px
-  }
+//     //? 600px
+//   }
 
-  @if $breakpoint==phone {
-    @media only screen and (max-width: 600px) {
-      @content;
-    }
+//   @if $breakpoint==phone {
+//     @media only screen and (max-width: 600px) {
+//       @content;
+//     }
 
-    //? 600px
-  }
+//     //? 600px
+//   }
 
-  @if $breakpoint==tab-port {
-    @media only screen and (max-width: 900px) {
-      @content;
-    }
+//   @if $breakpoint==tab-port {
+//     @media only screen and (max-width: 900px) {
+//       @content;
+//     }
 
-    //? 900px
-  }
+//     //? 900px
+//   }
 
-  @if $breakpoint==tab-land {
-    @media only screen and (max-width: 1200px) {
-      @content;
-    }
+//   @if $breakpoint==tab-land {
+//     @media only screen and (max-width: 1200px) {
+//       @content;
+//     }
 
-    //? 1200px
-  }
+//     //? 1200px
+//   }
 
-  @if $breakpoint==big-desktop {
-    @media only screen and (min-width: 1800px) {
-      @content;
-    }
+//   @if $breakpoint==big-desktop {
+//     @media only screen and (min-width: 1800px) {
+//       @content;
+//     }
 
-    //? 1800px
-  }
-}
+//     //? 1800px
+//   }
+// }
 
 .is-active {
   background-color: green;

@@ -1,34 +1,81 @@
-<app-header></app-header>
-<div class="sidenav-container">
-<mat-toolbar>
-    <div class="name-container">
-      <!-- TODO: Header should be dynamic -->
-      <!-- <h1 class="sidenav-name">{{ currentRoute }}</h1> -->
-    </div>
-    <div class="button-container">
-      <button (click)="snav.toggle()">
-        hey
-        <i class="fas fa-list"></i>
-      </button>
-    </div>
+<!-- <app-header></app-header> -->
+<div class="container">
+  <mat-toolbar>
+    <ul class="container__header">
+      <li class="container__header__item">
+        <a
+          [routerLink]="['/', 'landing']"
+          class="container__header__item__logo"
+        ></a>
+      </li>
+      <li class="container__header__item">
+        <button
+          mat-raised-button
+          class="container__header__item__button"
+          (click)="snav.toggle()"
+        >
+          hey
+          <i class="fas fa-list"></i>
+        </button>
+      </li>
+    </ul>
   </mat-toolbar>
 
   <mat-sidenav-container>
     <mat-sidenav #snav mode="over" position="end">
-      <div class="sidenav-header">
-        <h1>MCFLOW</h1>
+      <div class="container__nav">
+        <h1 container__nav__logo style="font-family: 'Times New Roman', Times, serif;
+      font-size: 35px;">MCFLOW</h1>
       </div>
-      <hr>
-      <a [routerLink]="['/', 'landing']">Home</a>
-      <a [routerLink]="['/', 'landing', 'faq']">Faq's</a>
-      <a [routerLink]="['/', 'landing', 'contacts']">Contact us</a>
-      <a [routerLink]="['/', 'auth']">Login</a>
+      <hr class="container__divider" />
+      <div class="container__items">
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'landing']"
+        >
+          Home
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'landing', 'faq']"
+        >
+          Faq's
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'landing', 'contacts']"
+        >
+          Contact us
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'landing', 'privacy-policy']"
+        >
+          Privacy Policy
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'landing', 'terms-and-conditions']"
+        >
+          Terms of use
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
+          [routerLink]="['/', 'auth']"
+        >
+          Login
+        </button>
+      </div>
     </mat-sidenav>
     <mat-sidenav-content>
-
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<router-outlet class="router"></router-outlet>
 <app-footer></app-footer>

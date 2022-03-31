@@ -26,14 +26,14 @@
               <p>
                 {{ post.body }}
               </p>
-              <a #referral [href]="post.link">Will set display to none</a>
+              <a #referral [href]="post.link" style="display: none">Will set display to none</a>
             </mat-card-content>
             <mat-card-actions align="end">
               <button
                 *ngIf="post.isActive"
                 class="share-button"
                 mat-button
-                (click)="[shareMcf()]"
+                (click)="[shareMcf(), referral.click()]"
               >
                 SHARE
               </button>

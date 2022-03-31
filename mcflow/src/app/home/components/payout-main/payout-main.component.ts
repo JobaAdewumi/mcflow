@@ -88,7 +88,7 @@ export class PayoutMainComponent implements OnInit {
     console.log('referral', `${this.referralBalance}`, referralOrMCFPoints);
     console.log('userName', `${this.userName}`);
     if (referralOrMCFPoints == 'referral') {
-      if (this.referralBalance < 3000) {
+      if (this.referralBalance < 2000) {
         this.errorHandlerService.openSnackBar(
           'Referral balance is not up to the minimum'
         );
