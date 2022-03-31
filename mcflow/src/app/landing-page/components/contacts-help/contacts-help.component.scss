@@ -1,76 +1,52 @@
-.help-container {
-  background-image: url(../../../../assets/images/african-american-call-operator-in-headset-call-center-business-or-picture.jpg);
-  background-repeat: no-repeat;
-  background-position: top;
-  background-color: aliceblue;
-  background-size: 100vw 600px;
-  padding: 80px 200px;
-  .mat-card-container {
-    padding-top: 200px;
-    mat-card {
-      .mat-header {
-        padding-top: 20px;
-        padding-bottom: 30px;
-        text-align: center;
-        p {
-          color: grey;
-        }
-        h3 {
-          font-weight: 600;
-          font-size: 30px;
-        }
-      }
-      .form-container {
-        display: flex;
-        justify-content: space-around;
-      }
+@import "~src/mixins";
+mat-card-title {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 50%;
+  margin: auto;
+  @include respond(tab-port) {
+    max-width: 80%;
+  }
+  @include respond(phone) {
+    max-width: 97%;
+  }
+
+  mat-card {
+    box-shadow: none;
+    border: 1px solid #e1e1e1;
+    padding: 24px;
+    margin-top: 20px;
+    text-align: center;
+
+    mat-form-field {
+      width: 100%;
     }
   }
 }
-
-.form-input {
-  width: 300px;
+.button {
+  margin-top: 16px;
+  height: 48px;
+  width: 100%;
+  color: white;
+  background-color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.form-textarea {
-  width: 450px;
-}
-
-.checkbox-link {
-  color: grey;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: space-around;
-  .terms {
-    width: 500px;
-    padding-right: 80px;
-  }
-  .button {
-    button {
-      height: 40px;
-      background-color: green;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-    p {
-      color: white;
-      font-size: 12px;
-      padding: 4px 5px 5px 5px;
-    }
-  }
+textarea {
+  resize: none;
 }
 
 .text-below {
   text-align: center;
-  padding-top: 20px;
+  margin: 20px 0;
   a {
     color: green;
+    text-decoration: none;
   }
-}
-
-.text-area {
-  resize: none;
 }

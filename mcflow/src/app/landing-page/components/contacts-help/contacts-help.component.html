@@ -1,14 +1,9 @@
-<div class="help-container">
-  <div class="mat-card-container">
+<div class="container">
+  <div class="container__card">
     <mat-card>
-      <div class="mat-header">
-        <p>Fill out the form and we'll be in touch soon!</p>
-        <h3>How can we help you?</h3>
-      </div>
-      <!-- TODO:  Add functionality for submittion of form when you've created the api endpoint -->
+      <mat-card-title>Fill out the form and we'll be in touch soon!</mat-card-title>
+      <mat-card>
       <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="form-container">
-          <div class="form-content">
             <p>
               <mat-form-field appearance="outline" class="mat-form form-input">
                 <mat-label>Your name</mat-label>
@@ -51,13 +46,11 @@
                   required="true"
                   type="text"
                   minlength="11"
-                  maxlength="11"
+
                 />
                 <mat-hint>Phone number</mat-hint>
               </mat-form-field>
             </p>
-          </div>
-          <div class="form-textarea">
             <p>
               <mat-form-field
                 appearance="outline"
@@ -78,26 +71,23 @@
                 <mat-hint>Type your message</mat-hint>
               </mat-form-field>
             </p>
-          </div>
-        </div>
         <div class="form-actions">
-          <div class="terms">
+          <span class="terms">
             <mat-checkbox
               class="checkbox"
               color="primary"
-              style="padding-bottom: 10px"
+              #check
             ></mat-checkbox>
-            <p style="max-width: inherit" class="checkbox-link">
+            <span class="checkbox-link">
               I accept the terms & conditions and i understand that my data will
               be held securely in accordance with the
-              <a href="" class="checkbox-link">privacy policy</a>
-            </p>
-          </div>
-          <div class="button">
-            <button mat-raised-button [disabled]="!form.valid" type="submit"><p>SEND MESSAGE</p></button>
-          </div>
+              <a [routerLink]="['/', 'landing', ]"class="checkbox-link">privacy policy</a>
+            </span>
+          </span>
+            <button class="button" mat-raised-button [disabled]="!form.valid" type="submit">SEND MESSAGE</button>
         </div>
       </form>
+      </mat-card>
     </mat-card>
   </div>
   <!-- TODO: Add functionality for this link -->
