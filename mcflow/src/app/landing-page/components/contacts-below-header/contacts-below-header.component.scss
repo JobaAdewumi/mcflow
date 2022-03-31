@@ -1,40 +1,40 @@
-.below-header-container {
-  padding: 80px 0;
-  background-image: url(../../../../assets/images/below-contacts.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: aliceblue;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  .header-container {
+.container {
+  &__header {
+    background-image: url(../../../../assets/images/below-contacts.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: aliceblue;
+    background-size: cover;
+    padding: 220px 220px;
     text-align: center;
-    margin: 0 135px;
-    width: 680px;
-
-    p {
+    @media only screen and (max-width: 578px) {
+      padding: 190px 190px;
+    }
+    @media only screen and (max-width: 516px) {
+      padding: 150px 150px;
+    }
+    @media only screen and (max-width: 432px) {
+      padding: 120px 120px;
+    }
+    @media only screen and (max-width: 432px) {
+      padding: 100px 100px;
+    }
+    @media only screen and (max-width: 284px) {
+      padding: 80px 80px;
+    }
+    &__text {
+      font-size: 48px;
+      padding: 10px 0;
       color: white;
-    }
-    .header-text {
-      margin-bottom: 50px;
-      .text-big {
-        font-size: 48px;
-        padding: 10px 0;
-        color: white;
+      line-height: 1.2;
+      @media only screen and (max-width: 432px) {
+        font-size: 37px;
       }
-    }
-
-    .searchbar-container {
-      height: 40px;
-      width: 100%;
-      input {
-        padding: 13px 145px 12px 25px;
-        // height: 100%;
-        border: 1px solid white;
-        border-radius: 6px;
+      @media only screen and (max-width: 346px) {
+        font-size: 29px;
       }
-      button {
-        height: 100%;
+      @media only screen and (max-width: 238px) {
+        font-size: 23px;
       }
     }
   }
