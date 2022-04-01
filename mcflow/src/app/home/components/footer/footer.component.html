@@ -1,42 +1,29 @@
-<div class="footer-container">
-  <div class="top-layer-footer">
-    <div class="flex">
-      <a [routerLink]="['/', 'landing']">Home</a>
-      <a [routerLink]="['/', 'landing', 'contacts']">Contact us</a>
-    </div>
-    <div class="apply">
-      <div class="middle-block">
-        <a [routerLink]="['/', 'landing', 'faq']">FAQ's</a>
-        <!-- TODO: Check out terms of use -->
-        <a [routerLink]="['/', 'landing', 'terms-and-conditions']"
-          >Terms of use</a
-        >
-      </div>
-      <div>
-        <a [routerLink]="['/', 'landing', 'privacy-policy']">Privacy Policy</a>
-      </div>
-    </div>
+<div class="container">
+  <div class="container__top">
+    <a [routerLink]="['/', 'landing']">Home</a>
+    <a [routerLink]="['/', 'landing', 'contacts']">Contact us</a>
+    <a [routerLink]="['/', 'landing', 'faq']">FAQ's</a>
+    <a [routerLink]="['/', 'landing', 'terms-and-conditions']">Terms of use</a>
+    <a [routerLink]="['/', 'landing', 'privacy-policy']">Privacy Policy</a>
   </div>
-  <div class="footer-middle-divider">
-    <hr
-      style="
-        background-color: grey;
-        height: 0.6px;
-        width: 100%;
-        border-color: grey;
-      "
-    />
+  <div class="container__divider">
+    <hr />
   </div>
-  <div class="bottom-container">
-    <div class="bottom-layer-footer">
-      <a href="">
-        <div class="mcf-logo">
+  <div class="container__bottom">
+    <div class="container__bottom__footer">
+      <a style="margin-bottom: 12px" [routerLink]="['/', 'landing']">
+        <div class="container__bottom__footer__logo">
           <img src="../../../../assets/images/MCF_LOGO_white-11.png" alt="" />
         </div>
       </a>
-      <p class="align">©COPYRIGHT 2022 - MCFLOW ALL RIGHTS RESERVED</p>
-      <div class="align">
-        <a href=""><i class="fa fa-instagram"></i> </a>
+      <p class="container__bottom__footer__align">
+        ©COPYRIGHT 2022 - MCFLOW ALL RIGHTS RESERVED
+      </p>
+      <!-- TODO: Add instagram link and email link -->
+      <div class="container__bottom__footer__align">
+        <a href="https://www.instagram.com/p/CbgArUaMJWx/?utm_medium=copy_link"
+          ><i class="fa fa-instagram"></i>
+        </a>
         <a href=""><i class="fas fa-envelope-open-text"></i> </a>
       </div>
     </div>

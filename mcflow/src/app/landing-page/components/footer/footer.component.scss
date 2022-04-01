@@ -22,6 +22,7 @@
     margin-bottom: 20px;
     @media only screen and (max-width: 900px) {
       flex-wrap: wrap;
+      flex-direction: column;
     }
   }
   &__divider {
@@ -45,6 +46,7 @@
       &__align {
         padding-top: 18px;
         font-size: 18px;
+        width: 100%;
       }
     }
   }

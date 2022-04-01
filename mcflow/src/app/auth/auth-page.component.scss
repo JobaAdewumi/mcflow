@@ -5,11 +5,11 @@
 
   img {
     width: 200px;
+    @media only screen and (max-width: 320px) {
+      width: 170;
+    }
   }
-
 }
-
-
 
 form {
   max-width: 400px;
@@ -41,7 +41,7 @@ form {
       height: 48px;
       width: 100%;
       color: white;
-      background-color:green;
+      background-color: green;
       border: 1px solid green;
       border-radius: 5px;
       cursor: pointer;
@@ -53,6 +53,9 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 320px) {
+    font-size: 12px;
+  }
 
   p {
     font-weight: 500;
@@ -60,10 +63,10 @@ form {
     margin-left: 8px;
     margin-top: 15px;
     color: green;
+    width: auto;
 
     &:hover {
       text-decoration: underline;
     }
   }
 }
-

@@ -1,7 +1,11 @@
-.name-container {
-  .logo-container {
+.container {
+  display: flex;
+  justify-content: center;
+  &__logo {
     list-style: none;
-    .link-logo {
+    display: flex;
+    justify-content: center;
+    &__link {
       background: url(../../../../assets/images/logo-small.png);
       display: block;
       background-position: center;
@@ -15,4 +19,5 @@ mat-toolbar {
   display: flex;
   justify-content: center;
   background-color: rgb(211, 226, 211);
+  text-align: center;
 }

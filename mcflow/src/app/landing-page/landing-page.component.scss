@@ -15,6 +15,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     &__item {
       list-style: none;
       align-items: center;
@@ -47,6 +48,12 @@
     &:hover {
       background-color: green;
       color: white;
+    }
+  }
+
+  &__items {
+    &__item {
+      width: 100%;
     }
   }
 }
