@@ -85,13 +85,13 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
 
   openDialog() {
     this.dialog.open(DashboardVendorsModalComponent, {
-      width: '50%',
+      width: '100%',
     });
   }
 
   openEditProfile() {
     this.dialog.open(DashboardEditProfileModalComponent, {
-      width: '50%',
+      width: '100%',
     });
   }
 
@@ -124,7 +124,9 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
         //   ),
 
         () => {
-          this.errorHandlerService.openSuccessSnackBar('Profile picture updated successfully');
+          this.errorHandlerService.openSuccessSnackBar(
+            'Profile picture updated successfully'
+          );
         }
       );
 

@@ -26,7 +26,9 @@
               <p>
                 {{ post.body }}
               </p>
-              <a #referral [href]="post.link" style="display: none">Will set display to none</a>
+              <a #referral [href]="post.link" style="display: none"
+                >Will set display to none</a
+              >
             </mat-card-content>
             <mat-card-actions align="end">
               <button
@@ -69,7 +71,7 @@
   </ng-container>
   <ng-container *ngIf="allLoadedPosts.length <= 0">
     <div class="no-posts">
-      <h1 style="font-size: 20px; color: darkgreen">
+      <h1 style="font-size: 20px; color: darkgreen; text-align: center">
         THERE ARE NO POSTS TO RETRIEVE!
       </h1>
     </div>

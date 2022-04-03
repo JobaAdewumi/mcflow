@@ -1,6 +1,10 @@
 .all-posts-container {
   margin-left: 15%;
   margin-right: 15%;
+  @media only screen and (max-width: 540px) {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
   .empty_posts {
     margin: auto auto;
     padding: 200px 0;
@@ -59,9 +63,20 @@
 
 img {
   height: 500px;
+  @media only screen and (max-width: 600px) {
+    height: 400px;
+  }
+  @media only screen and (max-width: 375px) {
+    height: 370px;
+  }
 }
 
 .no-posts {
   padding: 300px 0;
   // margin: 0 auto;
 }
+// mat-card {
+//   @media only screen and (max-width: 768px) {
+//     width: 75%;
+//   }
+// }

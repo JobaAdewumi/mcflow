@@ -1,9 +1,9 @@
 import {
-    ArgumentsHost,
-    Catch,
-    ExceptionFilter,
-    HttpException,
-    HttpStatus,
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import * as fs from 'fs';
@@ -32,10 +32,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status = HttpStatus.INTERNAL_SERVER_ERROR;
       errorMessage = 'Critical internal server error occured!';
     }
-      const errorResponse = this.getErrorResponse(status, errorMessage, request);
-      const errorLog: string = this.getErrorLog(errorResponse, request, exception);
-      this.writeErrorLogToFile(errorLog);
-      response.status(status).json(errorResponse);
+    const errorResponse = this.getErrorResponse(status, errorMessage, request);
+    const errorLog: string = this.getErrorLog(
+      errorResponse,
+      request,
+      exception,
+    );
+    this.writeErrorLogToFile(errorLog);
+    response.status(status).json(errorResponse);
   }
 
   private getErrorResponse = (

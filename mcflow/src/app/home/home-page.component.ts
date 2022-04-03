@@ -29,10 +29,7 @@ export class HomePageComponent implements OnInit {
 
   currentRoute: 'Sponsored Posts' | 'Dashboard' | 'Cashout' = 'Sponsored Posts';
 
-  constructor(
-    private authService: AuthService,
-    public dialog: MatDialog,
-  ) {}
+  constructor(private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.authService.userRole.pipe(take(1)).subscribe((role: string) => {
@@ -119,13 +116,13 @@ export class HomePageComponent implements OnInit {
 
   openCreatePost() {
     this.dialog.open(SponsoredPostsCreatePostComponent, {
-      width: '50%',
+      width: '100%',
     });
   }
 
   openConfirmWithdrawal() {
     this.dialog.open(ConfirmWithdrawalComponent, {
-      width: '50%',
+      width: '100%',
     });
   }
 
@@ -144,6 +141,4 @@ export class HomePageComponent implements OnInit {
   onSignOut() {
     this.authService.logout();
   }
-
-
 }

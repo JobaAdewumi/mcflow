@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'landing',
     pathMatch: 'full',
   },
   {
@@ -29,7 +29,8 @@ const routes: Routes = [
     path: 'vendor',
     loadChildren: () =>
       import('./vendor/vendor.module').then((m) => m.VendorModule),
-    canLoad: [VendorGuard],
+    canLoad: [AuthGuard],
+    // canLoad: [VendorGuard],
   },
   {
     path: 'referral/:userName',

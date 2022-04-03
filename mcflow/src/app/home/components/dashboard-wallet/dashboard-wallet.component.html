@@ -1,4 +1,4 @@
-<div class="wallet-container">
+<!-- <div class="wallet-container">
   <div class="wallet-content">
     <div class="header">
       <h1>Wallet</h1>
@@ -16,9 +16,9 @@
                 padding-top: 10px;
               "
             >
-              <h1>Transactions</h1>
-              <!-- <p>+₦{{ balance }}.00</p> -->
-            </div>
+              <h1>Transactions</h1> -->
+<!-- <p>+₦{{ balance }}.00</p> -->
+<!-- </div>
             <hr
               style="
                 background-color: green;
@@ -111,9 +111,9 @@
               </ul>
             </div>
           </div>
-        </mat-tab>
+        </mat-tab> -->
 
-        <!-- <mat-tab label="Withdrawals">
+<!-- <mat-tab label="Withdrawals">
           <div class="trans-content">
             <div
               class="trans heading"
@@ -207,7 +207,7 @@
           </div>
         </mat-tab> -->
 
-        <mat-tab label="Referrals">
+<!-- <mat-tab label="Referrals">
           <div class="trans-content">
             <div
               class="trans heading"
@@ -252,4 +252,61 @@
       </mat-tab-group>
     </div>
   </div>
+</div> -->
+
+<div class="container">
+  <mat-card>
+    <div class="trans-content">
+      <div
+        class="trans heading"
+        style="
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+          padding-top: 10px;
+        "
+      >
+        <h1>Referrals</h1>
+      </div>
+      <hr
+        style="
+          background-color: green;
+          height: 0.6px;
+          width: 100%;
+          border-color: green;
+          margin-bottom: 10px;
+        "
+      />
+      <div class="trans-list">
+        <h3>Your referral link is:</h3>
+        <div class="referral-link">
+          <input
+            placeholder="referral link"
+            type="text"
+            [value]="referralLink"
+            #referralText
+            readonly
+          />
+        </div>
+        <button
+          mat-raised-button
+          [ngxClipboard]="referralText"
+          (click)="copyLink()"
+          class="copy-button"
+        >
+          Copy
+        </button>
+        <div class="table">
+          <div style="text-align: center">
+            <div class="table-header">Referred Individuals</div>
+            <p>{{ referred }}</p>
+          </div>
+          <div style="text-align: center">
+            <div class="table-header">Total Earnings</div>
+            <p>₦{{ referralBalance }}.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
 </div>

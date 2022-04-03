@@ -4,6 +4,12 @@
   justify-content: center;
   .mat-card-container {
     width: 50%;
+    @media only screen and (max-width: 900px) {
+      width: 85%;
+    }
+    @media only screen and (max-width: 540px) {
+      width: 100%;
+    }
     .title-container {
       display: flex;
       justify-content: center;
