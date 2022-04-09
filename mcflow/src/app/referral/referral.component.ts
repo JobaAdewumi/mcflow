@@ -51,7 +51,6 @@ export class ReferralComponent implements OnInit {
             'The user associated with the referral link does not exist'
           );
           this.router.navigateByUrl('/auth');
-          console.log('error:', err);
           return throwError(err);
         })
       )
@@ -61,7 +60,6 @@ export class ReferralComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('working');
     const {
       firstName,
       lastName,
@@ -99,7 +97,6 @@ export class ReferralComponent implements OnInit {
       .pipe(
         catchError((err) => {
           this.errorHandlerService.openSnackBar('The coupon code is not valid');
-          console.log('error:', err);
           return throwError(err);
         }),
         tap(({ userPackage }) => {
@@ -115,7 +112,6 @@ export class ReferralComponent implements OnInit {
               this.errorHandlerService.openSnackBar(
                 'Check the values you input in the form'
               );
-              console.log('error:', err);
               return throwError(err);
             })
           )
@@ -151,17 +147,7 @@ export class ReferralComponent implements OnInit {
   }
 
   private getUsernameFromUrl(): string {
-    console.log('hello', this.route.parent.snapshot.url[1].path);
     this.urlUsername = this.route.parent.snapshot.url[1].path;
     return this.route.parent.snapshot.url[1].path;
   }
-  // private getUsernameFromUrl(): Observable<string> {
-  //   console.log('start');
-  //   return this.route.url.pipe(
-  //     map((urlSegment: UrlSegment[]) => {
-  //       console.log('hello', urlSegment, urlSegment[0].path, urlSegment[0].parameters, urlSegment[1].path, urlSegment[1].parameters);
-  //       return urlSegment[0].path;
-  //     })
-  //   );
-  // }
 }

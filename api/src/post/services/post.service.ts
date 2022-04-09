@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, map, Observable } from 'rxjs';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { User } from '../../auth/models/user.class';
 import { SponsoredPostEntity } from '../models/post.entity';
 import { SponsoredPost } from '../models/post.interface';
 
@@ -12,7 +13,11 @@ export class PostService {
     private readonly sponsoredPostRepository: Repository<SponsoredPostEntity>,
   ) {}
 
-  createPost(sponsoredPost: SponsoredPost): Observable<SponsoredPost> {
+  createPost(
+    user: User,
+    sponsoredPost: SponsoredPost,
+  ): Observable<SponsoredPost> {
+    sponsoredPost.author = user;
     return from(this.sponsoredPostRepository.save(sponsoredPost));
   }
 

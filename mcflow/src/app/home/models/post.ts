@@ -1,3 +1,5 @@
+import { User } from '../../auth/models/user.model';
+
 export interface SponsoredPost {
   id: number;
   postImagePath?: string;
@@ -5,4 +7,5 @@ export interface SponsoredPost {
   link: string;
   createdAt: Date;
   isActive: boolean;
+  author: User;
 }

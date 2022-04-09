@@ -43,7 +43,6 @@ export class ContactsHelpComponent implements OnInit {
           this.errorHandlerService.openSnackBar(
             'An error occurred please try again later.'
           );
-          console.log('error:', err);
           return throwError(err);
         })
       )
@@ -57,7 +56,9 @@ export class ContactsHelpComponent implements OnInit {
         //   ),
 
         () => {
-          this.errorHandlerService.openSuccessSnackBar('Form sent successfully');
+          this.errorHandlerService.openSuccessSnackBar(
+            'Form sent successfully'
+          );
         }
       );
   }

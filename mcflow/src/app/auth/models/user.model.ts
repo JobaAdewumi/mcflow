@@ -1,6 +1,7 @@
 import { Wallet } from './wallet.model';
 import { UserPackage } from './package.enum';
 import { Role } from './role.enum';
+import { SponsoredPost } from '../../home/models/post';
 
 export interface User {
   id: number;
@@ -17,4 +18,5 @@ export interface User {
   role: Role;
   referralLink: string;
   wallet?: Wallet;
+  sponsoredPosts?: SponsoredPost[];
 }

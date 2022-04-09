@@ -19,8 +19,11 @@
         <button mat-stroked-button (click)="openEditProfile()">
           Edit Profile
         </button>
-        <mat-card-content (click)="onSignOut()" style="cursor: pointer"
-          >Not -{{ userName }}- ? Sign out</mat-card-content
+        <mat-card-content
+          (click)="onSignOut()"
+          style="cursor: pointer; margin-top: 10px"
+          >Not <strong>{{ userName }}</strong
+          >? <strong style="color: #a5eba5">Sign out</strong></mat-card-content
         >
         <button mat-stroked-button (click)="openDialog()">
           List of vendors

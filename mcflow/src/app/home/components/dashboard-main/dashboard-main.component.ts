@@ -110,7 +110,6 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
       .pipe(
         catchError((err) => {
           this.errorHandlerService.openSnackBar('Check your email or password');
-          console.log('error:', err);
           return throwError(err);
         })
       )

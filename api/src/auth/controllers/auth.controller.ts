@@ -73,10 +73,6 @@ export class AuthController {
   generateCouponCode(
     @Body() { userPackage },
   ): Observable<{ couponCode: string }> {
-    console.log(
-      '🚀 ~ file: auth.controller.ts ~ line 75 ~ AuthController ~ generateCouponCode ~ userPackage',
-      userPackage,
-    );
     return this.authService.generateCouponCode(userPackage).pipe(
       switchMap((couponCode: string) => {
         return of({ couponCode });
@@ -86,10 +82,6 @@ export class AuthController {
 
   @Post('coupon/check')
   checkCouponCode(@Body() { couponCode }): Promise<{ userPackage: string }> {
-    console.log(
-      '🚀 ~ file: auth.controller.ts ~ line 85 ~ AuthController ~ checkCouponCode ~ couponCode',
-      couponCode,
-    );
     return this.authService
       .checkCouponCode(couponCode)
       .then((userPackage: string) => {

@@ -18,7 +18,10 @@ export class DashboardEditProfileModalComponent implements OnInit {
 
   updatingUserId: number;
 
-  constructor(private authService: AuthService, private errorHandlerService: ErrorHandlerService) { }
+  constructor(
+    private authService: AuthService,
+    private errorHandlerService: ErrorHandlerService
+  ) {}
 
   ngOnInit(): void {
     this.authService.userId.pipe(take(1)).subscribe((userId: number) => {
@@ -27,44 +30,26 @@ export class DashboardEditProfileModalComponent implements OnInit {
     });
   }
 
-
-
-
   onSubmit() {
     const { email, password } = this.form.value;
     if (!email || !password) return null;
     const updatedUser: UpdatedUser = {
       email,
       password,
-    }
-    console.log(`${this.updatingUserId}`);
-    console.log(`${email}`);
-    console.log(`${password}`);
-    console.log(`${updatedUser}`);
+    };
 
-    return this.authService.updateUser(this.updatingUserId, updatedUser).pipe(
-          catchError((err) => {
-            this.errorHandlerService.openSnackBar('Email has been used already');
-            console.log('error:', err);
-            return throwError(err);
-          })
-        )
-        .subscribe(
-          // res =>
-          //   this.errorHandlerService.openSuccessSnackBar(`Login res successfully: ${res}`),
-          // err =>
-          //   this.errorHandlerService.handleError(
-          //     `wrong email or password: ${err}`,
-
-          //   ),
-
-          () => {
-            this.errorHandlerService.openSuccessSnackBar('Your profile has been successfully updated');
-          }
-        );;
-
-
+    return this.authService
+      .updateUser(this.updatingUserId, updatedUser)
+      .pipe(
+        catchError((err) => {
+          this.errorHandlerService.openSnackBar('Email has been used already');
+          return throwError(err);
+        })
+      )
+      .subscribe(() => {
+        this.errorHandlerService.openSuccessSnackBar(
+          'Your profile has been successfully updated'
+        );
+      });
   }
-
-
 }

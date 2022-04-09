@@ -52,13 +52,11 @@ export class UserService {
         mcfPoints = mcfPoints + 500;
       } else if (userPackage === 'pioneer') {
         mcfPoints = mcfPoints + 1300;
-        console.log('there');
       }
       return from(
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }
@@ -73,7 +71,6 @@ export class UserService {
       let mcfPoints = points;
 
       if (userPackage === 'bronze') {
-        console.log('heere');
         mcfPoints = mcfPoints + 200;
       } else if (userPackage === 'silver') {
         mcfPoints = mcfPoints + 500;
@@ -86,7 +83,6 @@ export class UserService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }
@@ -140,7 +136,6 @@ export class UserService {
       }
       return null;
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }
@@ -182,7 +177,6 @@ export class UserService {
   }
 
   updateUserImageById(id: number, imagePath: string): Observable<UpdateResult> {
-    // console.log('return', imagePath);
     const user: User = new UserEntity();
     user.id = id;
     user.imagePath = imagePath;
@@ -190,11 +184,9 @@ export class UserService {
   }
 
   findImageNameByUserId(id: number): Observable<string> {
-    // console.log('image-name-service', id);
     return from(this.userRepository.findOne({ id })).pipe(
       map((user: User) => {
         delete user.password;
-        // console.log('image-name--return-service', user.imagePath);
         return user.imagePath;
       }),
     );

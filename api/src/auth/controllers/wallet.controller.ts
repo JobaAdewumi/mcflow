@@ -11,7 +11,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { WalletService } from '../services/wallet.service';
-import { MailService } from './../../mails/services/mail/mail.service';
+import { MailService } from './../../mails/services/mail.service';
 
 import { Wallet } from '../models/wallet.interface';
 import { NewWithdrawal } from '../models/new-withdrawal.interface';

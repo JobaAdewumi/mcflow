@@ -75,27 +75,23 @@ export class WalletService {
   }
 
   mcfDeduction(userName: string, points: number) {
-    
     try {
       let mcfPoints = points;
       return from(
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }
 
   referralDeduction(userName: string, referralB: number) {
-   
     try {
       let ref = referralB;
       return from(
         this.walletRepository.update({ userName }, { referralBalance: ref }),
       );
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }

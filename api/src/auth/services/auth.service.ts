@@ -315,18 +315,10 @@ export class AuthService {
   }
 
   generateCouponCode(userPackage: string): Observable<string> {
-    console.log(
-      '🚀 ~ file: auth.service.ts ~ line 319 ~ AuthService ~ generateCouponCode ~ userPackage',
-      userPackage,
-    );
     return from(bcrypt.hash(userPackage, 12));
   }
 
   async checkCouponCode(couponCode: string): Promise<string> {
-    console.log(
-      '🚀 ~ file: auth.service.ts ~ line 326 ~ AuthService ~ checkCouponCode ~ couponCode',
-      couponCode,
-    );
     const bronzee = 'bronzemcf';
     const silverr = 'silvermcf';
     const goldd = 'goldmcf';
@@ -352,40 +344,7 @@ export class AuthService {
       }
       throw new Error('Wrong coupon code');
     } catch (err) {
-      console.log(`${err}`);
       throw new Error(err);
     }
   }
-
-  // checkCouponCode(couponCode: string): string {
-  //   const bronzee = 'bronzemcf';
-  //   const silverr = 'silvermcf';
-  //   const goldd = 'goldmcf';
-  //   const pioneerr = 'pioneermcf';
-  //   defer
-  //   try {
-  //     const bronze = from(bcrypt.compare(bronzee, couponCode));
-
-  //     if (bronze) {
-  //       return 'bronze';
-  //     }
-  //     const silver = from(bcrypt.compare(silverr, couponCode));
-  //     if (silver) {
-  //       return 'silver';
-  //     }
-  //     const gold = from(bcrypt.compare(goldd, couponCode));
-  //     if (gold) {
-  //       return 'gold';
-  //     }
-  //     const pioneer = from(bcrypt.compare(pioneerr, couponCode));
-
-  //     if (pioneer) {
-  //       return 'pioneer';
-  //     }
-  //     throw new Error('Wrong coupon code');
-  //   } catch (err) {
-  //     console.log(`${err}`);
-  //     throw new Error(err);
-  //   }
-  // }
 }

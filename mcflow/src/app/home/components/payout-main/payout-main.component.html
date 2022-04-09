@@ -1,10 +1,21 @@
 <div class="payout-container">
-  <mat-card  class="mat-card-container">
+  <mat-card class="mat-card-container">
     <div class="title-container">
       <img src="../../../../assets/images/logo-small-black.png" alt="" />
     </div>
     <form #form="ngForm" (ngSubmit)="onSubmit()">
-      <mat-card >
+      <mat-card>
+        <p>
+          <mat-form-field appearance="outline" class="mat-form form-input">
+            <mat-label>Username</mat-label>
+            <input
+              matNativeControl
+              [value]="userName"
+              placeholder="Enter your username"
+              readonly
+            />
+          </mat-form-field>
+        </p>
         <p>
           <mat-form-field appearance="outline" class="mat-form form-input">
             <mat-label>Referral or MCF points</mat-label>
@@ -44,6 +55,7 @@
               #withdrawalAmountInput="ngModel"
               ngModel
               type="number"
+              minlength="4"
             />
             <mat-hint
               color="warn"
@@ -86,6 +98,8 @@
               #accountNumberInput="ngModel"
               ngModel
               type="number"
+              minlength="10"
+              maxlength="10"
             />
             <mat-hint
               color="warn"
@@ -114,7 +128,9 @@
           </mat-form-field>
         </p>
 
-        <button mat-raised-button [disabled]="!form.valid" type="submit">Proceed</button>
+        <button mat-raised-button [disabled]="!form.valid" type="submit">
+          Proceed
+        </button>
       </mat-card>
     </form>
   </mat-card>

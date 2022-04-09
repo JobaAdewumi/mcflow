@@ -17,7 +17,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { saveImageToStorage, savePostImageToStorage } from '../../auth/helpers/image-storage';
+import { savePostImageToStorage } from '../../auth/helpers/image-storage';
 import { SponsoredPost } from '../models/post.interface';
 import { join } from 'path';
 import { PostService } from '../services/post.service';
@@ -32,8 +32,11 @@ export class PostController {
   // @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
   @Post('create')
-  createPost(@Body() sponsoredPost: SponsoredPost): Observable<SponsoredPost> {
-    return this.postService.createPost(sponsoredPost);
+  createPost(
+    @Body() sponsoredPost: SponsoredPost,
+    @Request() req,
+  ): Observable<SponsoredPost> {
+    return this.postService.createPost(req.user, sponsoredPost);
   }
   // @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
@@ -46,7 +49,6 @@ export class PostController {
     return this.postService.findPosts(take, skip);
   }
 
-  // @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
   @Put(':id')
   update(
@@ -56,7 +58,6 @@ export class PostController {
     return this.postService.updatePost(id, sponsoredPost);
   }
 
-  // @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
   @Delete(':id')
   delete(@Param('id') id: number): Observable<DeleteResult> {
@@ -69,31 +70,6 @@ export class PostController {
     return this.postService.changePostStatus(id);
   }
 
-  // @UseGuards(JwtGuard, RolesGuard)
-  // @Post('upload-image')
-  // @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
-  // uploadImage(
-  //   @UploadedFile() file: Express.Multer.File,
-  //   @Body() postId: number,
-  // ): Observable<{ modifiedFileName: string } | { error: string }> {
-  //   console.log('saving', file.filename);
-  //   const fileName = file?.filename;
-
-  //   if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
-
-  //   const imagesFolderPath = join(process.cwd(), 'post_images');
-  //   console.log('before return controller', imagesFolderPath);
-  //   const fullImagePath = join(imagesFolderPath + '/' + file.filename);
-
-  //   console.log('before return controller', fileName);
-  //   // const userId = req.user.id;
-
-  //   return this.postService.updatePostImageById(postId, fileName).pipe(
-  //     map(() => ({
-  //       modifiedFileName: file.filename,
-  //     })),
-  //   );
-  // }
   @UseGuards(JwtGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
@@ -105,6 +81,12 @@ export class PostController {
     console.log('req', req);
     const fileName = file?.filename;
 
+    const sponsoredPosts: [] = req.user.sponsoredPosts;
+    console.log('posts', JSON.stringify(sponsoredPosts));
+    const postsString: any = JSON.stringify(sponsoredPosts);
+    const posts = JSON.parse(postsString);
+    console.log('poststs', posts);
+
     if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
 
     const imagesFolderPath = join(process.cwd(), 'post_images');
@@ -112,7 +94,11 @@ export class PostController {
     const fullImagePath = join(imagesFolderPath + '/' + file.filename);
 
     console.log('before return controller', fileName);
-    const postId = req.postId;
+    const postId = posts[posts.length - 1].id;
+    console.log(
+      '🚀 ~ file: post.controller.ts ~ line 116 ~ PostController ~ postId',
+      postId,
+    );
 
     return this.postService.updatePostImageById(postId, fileName).pipe(
       map(() => ({
@@ -120,6 +106,38 @@ export class PostController {
       })),
     );
   }
+  // @UseGuards(JwtGuard)
+  // @Post('upload')
+  // @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
+  // uploadImage(
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Request() req,
+  // ): Observable<{ modifiedFileName: string } | { error: string }> {
+  //   console.log('saving', file.filename);
+  //   console.log('req', req);
+  //   const fileName = file?.filename;
+
+  //   const sponsoredPosts: [] = req.sponsoredPosts;
+
+  //   if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
+
+  //   const imagesFolderPath = join(process.cwd(), 'post_images');
+  //   console.log('before return controller', imagesFolderPath);
+  //   const fullImagePath = join(imagesFolderPath + '/' + file.filename);
+
+  //   console.log('before return controller', fileName);
+  //   const postId = req.sponsoredPosts[sponsoredPosts.length - 1].postId;
+  //   console.log(
+  //     '🚀 ~ file: post.controller.ts ~ line 116 ~ PostController ~ postId',
+  //     postId,
+  //   );
+
+  //   return this.postService.updatePostImageById(postId, fileName).pipe(
+  //     map(() => ({
+  //       modifiedFileName: file.filename,
+  //     })),
+  //   );
+  // }
 
   @UseGuards(JwtGuard)
   @Get('image')

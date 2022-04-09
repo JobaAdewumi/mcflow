@@ -175,7 +175,6 @@ export class AuthService {
   uploadUserImage(
     formData: FormData
   ): Observable<{ modifiedFileName: string }> {
-    console.log(formData);
     return this.http
       .post<{ modifiedFileName: string }>(
         `${environment.baseApiUrl}/user/upload`,

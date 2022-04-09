@@ -172,42 +172,34 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(() => {
-        this.errorHandlerService.openSuccessSnackBar('Post status change successful');
+        this.errorHandlerService.openSuccessSnackBar(
+          'Post status change successful'
+        );
       });
   }
 
-  onFileSelect(event: Event, postId: number): void {
+  onFileSelect(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
     if (!file) return;
 
     const formData = new FormData();
     formData.append('file', file);
     this.postService
-      .uploadPostImage(formData, postId)
+      .uploadPostImage(formData)
       .pipe(
         catchError((err) => {
-          this.errorHandlerService.openSnackBar('Check your email or password');
+          this.errorHandlerService.openSnackBar('Error uploading post picture');
           console.log('error:', err);
           return throwError(err);
         })
       )
-      .subscribe(
-        // res =>
-        //   this.errorHandlerService.openSuccessSnackBar(`Login res successfully: ${res}`),
-        // err =>
-        //   this.errorHandlerService.handleError(
-        //     `wrong email or password: ${err}`,
+      .subscribe(() => {
+        this.errorHandlerService.openSuccessSnackBar(
+          'Post picture updated successfully'
+        );
+      });
 
-        //   ),
-
-        () => {
-          this.errorHandlerService.openSuccessSnackBar(
-            'Profile picture updated successfully'
-          );
-        }
-      );
-
-    this.form.reset();
+    // this.form.reset();
   }
 
   // startCountdown(seconds: number) {
@@ -238,13 +230,12 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
       console.log('compo');
       return null;
     }
-    return this.homeService
-      .shareCheckMcf(
-        this.userName,
-        this.userPackage,
-        this.lastSharedLogin,
-        this.points
-      );
+    return this.homeService.shareCheckMcf(
+      this.userName,
+      this.userPackage,
+      this.lastSharedLogin,
+      this.points
+    );
   }
 
   ngOnDestroy(): void {

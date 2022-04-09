@@ -9,10 +9,10 @@ const routes: Routes = [
     path: '',
     component: AuthPageComponent,
   },
-  // {
-  //   path: 'vendor',
-  //   component: VendorPageComponent,
-  // },
+  {
+    path: 'vendor',
+    component: VendorPageComponent,
+  },
 ];
 
 @NgModule({

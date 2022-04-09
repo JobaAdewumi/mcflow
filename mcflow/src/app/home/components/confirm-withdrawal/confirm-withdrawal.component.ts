@@ -66,7 +66,6 @@ export class ConfirmWithdrawalComponent implements OnInit {
                   this.errorHandlerService.openSnackBar(
                     'mcf could not be created'
                   );
-                  console.log('error:', err);
                   return throwError(err);
                 })
               )
@@ -88,7 +87,6 @@ export class ConfirmWithdrawalComponent implements OnInit {
                   this.errorHandlerService.openSnackBar(
                     'ref could not be created'
                   );
-                  console.log('error:', err);
                   return throwError(err);
                 })
               )

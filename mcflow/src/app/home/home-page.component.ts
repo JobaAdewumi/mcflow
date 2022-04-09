@@ -34,85 +34,9 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.authService.userRole.pipe(take(1)).subscribe((role: string) => {
       this.role = role;
-      console.log(role);
       this.user$.next(role as any);
     });
-
-    // this.authService.userName.pipe(take(1)).subscribe((userName: string) => {
-    //   this.userName = userName;
-    //   this.user$.next(userName as any);
-    // });
-
-    // this.authService.userId.pipe(take(1)).subscribe((userId: number) => {
-    //   this.userId = userId;
-    //   this.user$.next(userId as any);
-    // });
-
-    // this.authService
-    //   .getUserLastLogin(this.userId)
-    //   .pipe(
-    //     take(1),
-    //     tap(({ lastLogin }) => {
-    //       this.lastLogin = lastLogin;
-    //     })
-    //   )
-    //   .subscribe();
-
-    // this.homeService
-    //   .getUserWallet(this.userName)
-    //   .pipe(
-    //     take(1),
-    //     tap((wallet: Wallet) => {
-    //       this.points = wallet.mcfPoints;
-    //       // this.referralBalance = wallet.referralBalance;
-    //       // this.balance = wallet.balance;
-    //     })
-    //   )
-    //   .subscribe();
-
-    // this.authService.userPackage
-    //   .pipe(take(1))
-    //   .subscribe((userPackage: string) => {
-    //     this.userPackage = userPackage;
-    //     this.user$.next(userPackage as any);
-    //   });
-
-    // this.authService.lastLogin.pipe(take(1)).subscribe((lastLogin: Date) => {
-    //   this.lastLogin = lastLogin;
-    //   this.user$.next(lastLogin as any);
-    // });
   }
-
-  // getPoints() {
-  //   this.authService.userName.pipe(take(1)).subscribe((userName: string) => {
-  //     this.userName = userName;
-  //     this.user$.next(userName as any);
-  //   });
-
-  //   this.authService
-  //     .getUserLastLogin(this.userId)
-  //     .pipe(
-  //       take(1),
-  //       tap(({ lastLogin }) => {
-  //         this.lastLogin = lastLogin;
-  //       })
-  //     )
-  //     .subscribe();
-
-  //   this.homeService
-  //     .getUserWallet(this.userName)
-  //     .pipe(
-  //       take(1),
-  //       tap((wallet: Wallet) => {
-  //         console.log(this.userName);
-  //         this.points = wallet.mcfPoints;
-  //         // this.referralBalance = wallet.referralBalance;
-  //         // this.balance = wallet.balance;
-  //         console.log(this.points);
-  //       })
-  //     )
-  //     .subscribe();
-  // }
 
   openCreatePost() {
     this.dialog.open(SponsoredPostsCreatePostComponent, {

@@ -35,7 +35,6 @@ export class SponsoredPostsCreatePostComponent implements OnInit {
       .pipe(
         catchError((err) => {
           this.errorHandlerService.openSnackBar('post could not be created');
-          console.log('error:', err);
           return throwError(err);
         })
       )

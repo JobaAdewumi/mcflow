@@ -1,5 +1,5 @@
-import { SponsoredPostEntity } from './../../post/models/post.entity';
 import { UserPackage } from './package.enum';
+import { SponsoredPostEntity } from './../../post/models/post.entity';
 import {
   Column,
   Entity,
@@ -57,7 +57,7 @@ export class UserEntity {
 
   @OneToMany(
     () => SponsoredPostEntity,
-    (sponsoredPostEntity) => sponsoredPostEntity.author
+    (sponsoredPostEntity) => sponsoredPostEntity.author,
   )
   sponsoredPosts: SponsoredPostEntity[];
 }

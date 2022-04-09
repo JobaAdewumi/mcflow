@@ -72,7 +72,6 @@ export class HomeService {
       .pipe(
         take(1),
         tap(({ lastLogin }) => {
-          console.log('last-login', lastLogin);
           this.lastLogin = lastLogin;
         })
       )
@@ -83,7 +82,6 @@ export class HomeService {
       .pipe(
         take(1),
         tap(({ lastSharedLogin }) => {
-          console.log('last-login', lastSharedLogin);
           this.lastSharedLogin = lastSharedLogin;
         })
       )
@@ -93,10 +91,8 @@ export class HomeService {
       .pipe(
         take(1),
         tap((wallet: Wallet) => {
-          console.log(this.userName);
           this.points = wallet.mcfPoints;
           this.referralB = wallet.referralBalance;
-          console.log(this.points);
         })
       )
       .subscribe();
@@ -105,7 +101,6 @@ export class HomeService {
   }
 
   loginMcf() {
-    console.log('going', this.lastLogin);
     return this.serLoginMcf(
       this.userName,
       this.userPackage,
@@ -119,17 +114,13 @@ export class HomeService {
     const currentTime = new Date();
     const day = rawTime.getDate();
     const day2 = currentTime.getDate();
-    console.log(day, day2);
 
     if (!this.lastLogin || this.lastLogin == null) {
       this.addLoginDate(this.userId).subscribe();
-      console.log('first');
       return null;
     } else if (day >= day2) {
-      console.log('second');
       return null;
     } else if (day < day2) {
-      console.log('third');
       this.loginMcf();
       this.addLoginDate(this.userId).subscribe();
     }
@@ -149,13 +140,10 @@ export class HomeService {
 
     if (!this.lastSharedLogin || this.lastSharedLogin == null) {
       this.addSharedDate(this.userId).subscribe();
-      console.log('first');
       return null;
     } else if (day >= day2) {
-      console.log('second');
       return null;
     } else if (day < day2) {
-      console.log('third');
       this.shareMcf(userName, userPackage, lastSharedLogin, points).subscribe();
       this.addSharedDate(this.userId).subscribe();
     }
@@ -166,7 +154,6 @@ export class HomeService {
     let counter = seconds;
 
     const interval = setInterval(() => {
-      console.log(counter);
       counter--;
 
       if (counter < 0) {
@@ -209,7 +196,6 @@ export class HomeService {
     lastLogin: Date,
     points: number
   ) {
-    console.log(`${userName}`, `${userPackage}`, `${lastLogin}`, `${points}`);
     return this.http.put(
       `${environment.baseApiUrl}/user/login/mcf`,
       { userName, userPackage, lastLogin, points },
@@ -223,12 +209,6 @@ export class HomeService {
     lastSharedLogin: Date,
     points: number
   ) {
-    console.log(
-      `${userName}`,
-      `${userPackage}`,
-      `${lastSharedLogin}`,
-      `${points}`
-    );
     return this.http.put(
       `${environment.baseApiUrl}/user/share/mcf`,
       { userName, userPackage, lastSharedLogin, points },
@@ -237,14 +217,12 @@ export class HomeService {
   }
 
   addLoginDate(userId: number) {
-    console.log('login date func', userId);
     return this.http.put(`${environment.baseApiUrl}/auth/login/date`, {
       userId,
     });
   }
 
   addSharedDate(userId: number) {
-    console.log('shared date func ser', userId);
     return this.http.put(`${environment.baseApiUrl}/auth/shared/date`, {
       userId,
     });

@@ -83,10 +83,6 @@ export class PayoutMainComponent implements OnInit {
       !bankName
     )
       return null;
-    console.log('hello', `${this.userPackage}`);
-    console.log('points', `${this.mcfPoints}`);
-    console.log('referral', `${this.referralBalance}`, referralOrMCFPoints);
-    console.log('userName', `${this.userName}`);
     if (referralOrMCFPoints == 'referral') {
       if (this.referralBalance < 2000) {
         this.errorHandlerService.openSnackBar(
@@ -121,6 +117,7 @@ export class PayoutMainComponent implements OnInit {
     // TODO: Add the other packages and continue from here
     const newWithdrawal: NewWithdrawal = {
       email: this.email,
+      userName: this.userName,
       referralOrMCFPoints,
       withdrawalAmount,
       accountName,
@@ -135,7 +132,6 @@ export class PayoutMainComponent implements OnInit {
           this.errorHandlerService.openSnackBar(
             'An error occurred please try again later'
           );
-          console.log('error:', err);
           return throwError(err);
         })
       )

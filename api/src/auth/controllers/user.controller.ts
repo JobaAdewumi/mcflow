@@ -23,7 +23,7 @@ import { WalletService } from '../services/wallet.service';
 import { UpdatedUser } from '../models/updated-user.class';
 import { User } from '../models/user.class';
 import { ContactUs } from '../models/contact-us.interface';
-import { MailService } from '../../mails/services/mail/mail.service';
+import { MailService } from '../../mails/services/mail.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { saveImageToStorage } from '../helpers/image-storage';
 import { JwtGuard } from '../guards/jwt.guard';

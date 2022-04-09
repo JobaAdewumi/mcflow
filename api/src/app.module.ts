@@ -8,6 +8,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { MailsModule } from './mails/mails.module';
 import { PostModule } from './post/post.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -22,6 +24,9 @@ import { PostModule } from './post/post.module';
       autoLoadEntities: true,
       synchronize: true, // TODO: remove when entering production
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'front/dist/mcflow'),
+    }),
     AuthModule,
     MailsModule,
     PostModule,
@@ -35,4 +40,4 @@ import { PostModule } from './post/post.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

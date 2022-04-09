@@ -38,7 +38,6 @@ export class VendorHomeComponent implements OnInit {
           this.errorHandlerService.openSnackBar(
             'Coupon Code could not be generated'
           );
-          console.log('error:', err);
           return throwError(err);
         })
       )

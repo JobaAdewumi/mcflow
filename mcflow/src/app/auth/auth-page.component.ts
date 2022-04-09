@@ -50,7 +50,6 @@ export class AuthPageComponent implements OnInit {
             this.errorHandlerService.openSnackBar(
               'Check your email or password'
             );
-            console.log('error:', err);
             return throwError(err);
           })
         )
@@ -92,7 +91,6 @@ export class AuthPageComponent implements OnInit {
             this.errorHandlerService.openSnackBar(
               'The coupon code is not valid'
             );
-            console.log('error:', err);
             return throwError(err);
           }),
           tap(({ userPackage }) => {
@@ -108,16 +106,11 @@ export class AuthPageComponent implements OnInit {
                 this.errorHandlerService.openSnackBar(
                   'Check the values you input in the form'
                 );
-                console.log('error:', err);
                 return throwError(err);
               })
             )
             .subscribe(() => {
               this.registerWallet();
-              console.log(
-                '🚀 ~ file: auth-page.component.ts ~ line 118 ~ AuthPageComponent ~ .subscribe ~ this.userPackage',
-                this.userPackage
-              );
               this.authService
                 .updatePackage(userName, this.userPackage)
                 .subscribe();
