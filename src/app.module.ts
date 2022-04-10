@@ -22,7 +22,8 @@ import { join } from 'path';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       autoLoadEntities: true,
-      synchronize: true, // TODO: remove when entering production
+      synchronize: false, // TODO: remove when entering production
+      url: process.env.DATABASE_URL,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'front/dist/mcflow'),
