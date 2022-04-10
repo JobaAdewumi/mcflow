@@ -24,6 +24,9 @@ import { join } from 'path';
       autoLoadEntities: true,
       synchronize: false, // TODO: remove when entering production
       url: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'front/dist/mcflow'),
