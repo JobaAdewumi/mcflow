@@ -79,6 +79,15 @@ export class PostService {
       .pipe(
         tap(({ modifiedFileName }) => {
           let post = this.post$.value;
+          console.log(
+            '🚀 ~ file: post.service.ts ~ line 82 ~ PostService ~ tap ~ post',
+            this.post$
+          );
+          console.log(
+            '🚀 ~ file: post.service.ts ~ line 82 ~ PostService ~ tap ~ post',
+            post
+          );
+
           post.postImagePath = modifiedFileName;
           this.post$.next(post);
         })

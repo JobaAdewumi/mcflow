@@ -180,6 +180,7 @@ export class SponsoredPostsMainComponent implements OnInit, OnDestroy {
 
   onFileSelect(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
+    console.log('file', file);
     if (!file) return;
 
     const formData = new FormData();

@@ -183,6 +183,10 @@ export class AuthService {
       .pipe(
         tap(({ modifiedFileName }) => {
           let user = this.user$.value;
+          console.log(
+            '🚀 ~ file: auth.service.ts ~ line 186 ~ AuthService ~ tap ~ user',
+            this.user$
+          );
           user.imagePath = modifiedFileName;
           this.user$.next(user);
         })
