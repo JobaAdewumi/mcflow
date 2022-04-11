@@ -9,6 +9,7 @@
     @include respond(phone) {
       flex-direction: column;
     }
+    margin-bottom: 20px;
     &__content {
       h3 {
         font-size: 17px;
@@ -17,8 +18,16 @@
       p {
         padding-bottom: 25px;
       }
+      a {
+        padding-bottom: 25px;
+        color: green;
+        text-decoration: none;
+      }
       &__icon {
         padding-bottom: 22px;
+        i {
+          font-size: 33px;
+        }
       }
     }
   }
