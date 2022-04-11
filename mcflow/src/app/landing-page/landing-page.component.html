@@ -70,6 +70,13 @@
         <button
           class="container__items__item"
           mat-flat-button
+          (click)="openDialog()"
+        >
+          Coupon Vendors
+        </button>
+        <button
+          class="container__items__item"
+          mat-flat-button
           [routerLink]="['/', 'auth']"
         >
           Login

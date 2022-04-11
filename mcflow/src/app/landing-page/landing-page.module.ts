@@ -27,6 +27,7 @@ import { ListTermsComponent } from './components/list-terms/list-terms.component
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FormsModule } from '@angular/forms';
 import { NgHelmetModule } from 'ng-helmet';
+import { DashboardVendorsModalComponent } from './components/dashboard-vendors-modal/dashboard-vendors-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NgHelmetModule } from 'ng-helmet';
     BelowTermsComponent,
     ListTermsComponent,
     SidenavComponent,
+    DashboardVendorsModalComponent,
   ],
   imports: [
     NgHelmetModule.forRoot({
