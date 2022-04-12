@@ -22,4 +22,7 @@ export class VendorEntity {
 
   @Column({ select: false })
   password: string;
+
+  @Column({ default: false })
+  isActive: boolean;
 }

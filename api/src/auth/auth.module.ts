@@ -12,6 +12,7 @@ import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { AuthController } from './controllers/auth.controller';
 import { VendorEntity } from './models/vendor.entity';
+import { CouponCodeEntity } from './models/coupon.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,12 @@ import { VendorEntity } from './models/vendor.entity';
         signOptions: { expiresIn: '3600s' },
       }),
     }),
-    TypeOrmModule.forFeature([UserEntity, WalletEntity, VendorEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      WalletEntity,
+      VendorEntity,
+      CouponCodeEntity,
+    ]),
   ],
   controllers: [AuthController, WalletController, UserController],
   providers: [AuthService, JwtStrategy, JwtGuard, WalletService, UserService],

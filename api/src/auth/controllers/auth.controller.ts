@@ -80,12 +80,21 @@ export class AuthController {
     );
   }
 
+  // @Post('coupon/check')
+  // checkCouponCode(@Body() { couponCode }): Promise<{ userPackage: string }> {
+  //   return this.authService
+  //     .checkCouponCode(couponCode)
+  //     .then((userPackage: string) => {
+  //       return { userPackage };
+  //     });
+  // }
+
   @Post('coupon/check')
-  checkCouponCode(@Body() { couponCode }): Promise<{ userPackage: string }> {
-    return this.authService
-      .checkCouponCode(couponCode)
-      .then((userPackage: string) => {
+  checkCouponCode(@Body() { couponCode }): Observable<{ userPackage: string }> {
+    return this.authService.checkDatabaseForCouponCode(couponCode).pipe(
+      map((userPackage: string) => {
         return { userPackage };
-      });
+      }),
+    );
   }
 }

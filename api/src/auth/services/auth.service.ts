@@ -18,6 +18,8 @@ import { UpdatedUser } from '../models/updated-user.class';
 import { User } from '../models/user.class';
 import { Vendor } from '../models/vendor.class';
 import { VendorEntity } from '../models/vendor.entity';
+import { CouponCodeEntity } from '../models/coupon.entity';
+import { CouponCode } from '../models/coupon.interface';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +30,8 @@ export class AuthService {
     private readonly walletRepository: Repository<WalletEntity>,
     @InjectRepository(VendorEntity)
     private readonly vendorRepository: Repository<VendorEntity>,
+    @InjectRepository(CouponCodeEntity)
+    private readonly couponCodeRepository: Repository<CouponCodeEntity>,
     private jwtService: JwtService,
     private walletService: WalletService,
   ) {}
@@ -318,28 +322,80 @@ export class AuthService {
     return from(bcrypt.hash(userPackage, 12));
   }
 
+  checkDatabaseForCouponCode(couponCode: string) {
+    console.log(
+      '🚀 ~ file: auth.service.ts ~ line 326 ~ AuthService ~ checkDatabaseForCouponCode ~ couponCode',
+      couponCode,
+    );
+    return from(this.couponCodeRepository.findOne({ couponCode }))
+      .pipe(
+        switchMap((couponCode: CouponCode) => {
+          console.log(
+            '🚀 ~ file: auth.service.ts ~ line 332 ~ AuthService ~ checkDatabaseForCouponCode ~ couponCode',
+            couponCode,
+          );
+          return of(!!couponCode);
+        }),
+      )
+      .pipe(
+        tap((doesCouponCodeExist) => {
+          console.log(
+            '🚀 ~ file: auth.service.ts ~ line 340 ~ AuthService ~ tap ~ doesCouponCodeExist',
+            doesCouponCodeExist,
+          );
+          if (doesCouponCodeExist) {
+            throw new HttpException(
+              'This Coupon Code already exists',
+              HttpStatus.BAD_REQUEST,
+            );
+          }
+          return this.checkCouponCode(couponCode);
+        }),
+        switchMap(() => this.checkCouponCode(couponCode)),
+      );
+  }
+
   async checkCouponCode(couponCode: string): Promise<string> {
     const bronzee = 'bronzemcf';
     const silverr = 'silvermcf';
     const goldd = 'goldmcf';
     const pioneerr = 'pioneermcf';
+
+    // await this.checkDatabaseForCouponCode(couponCode).pipe(
+    //   tap((doesCouponCodeExist: boolean) => {
+    //     console.log(
+    //       '🚀 ~ file: auth.service.ts ~ line 340 ~ AuthService ~ tap ~ doesCouponCodeExist',
+    //       doesCouponCodeExist,
+    //     );
+    //     if (!doesCouponCodeExist) {
+    //       throw new HttpException(
+    //         'This Coupon Code already exists',
+    //         HttpStatus.BAD_REQUEST,
+    //       );
+    //     }
+    //   }),
+    // );
     try {
       const bronze = await bcrypt.compare(bronzee, couponCode);
 
       if (bronze) {
+        this.couponCodeRepository.save({ couponCode: couponCode });
         return 'bronze';
       }
       const silver = await bcrypt.compare(silverr, couponCode);
       if (silver) {
+        this.couponCodeRepository.save({ couponCode: couponCode });
         return 'silver';
       }
       const gold = await bcrypt.compare(goldd, couponCode);
       if (gold) {
+        this.couponCodeRepository.save({ couponCode: couponCode });
         return 'gold';
       }
       const pioneer = await bcrypt.compare(pioneerr, couponCode);
 
       if (pioneer) {
+        this.couponCodeRepository.save({ couponCode: couponCode });
         return 'pioneer';
       }
       throw new Error('Wrong coupon code');
