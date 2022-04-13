@@ -27,6 +27,10 @@ export class AuthService {
   private user$ = new BehaviorSubject<User>(null);
   private vendor$ = new BehaviorSubject<Vendor>(null);
 
+  venUserName: string;
+  venPhoneNumber: string;
+  venEmail: string;
+
   private httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -324,6 +328,7 @@ export class AuthService {
   }
 
   loginVendor(email: string, password: string): Observable<{ token: string }> {
+    this.getVendorWithEmail(email).subscribe();
     return this.http
       .post<{ token: string }>(
         `${environment.baseApiUrl}/auth/login/vendor`,
@@ -340,11 +345,16 @@ export class AuthService {
       );
   }
 
-  generateCouponCode(userPackage: string): Observable<{ couponCode: string }> {
+  generateCouponCode(
+    email: string,
+    userName: string,
+    phoneNumber: string,
+    userPackage: string
+  ): Observable<{ couponCode: string }> {
     return this.http
       .post<{ couponCode: string }>(
         `${environment.baseApiUrl}/auth/coupon/generate`,
-        { userPackage },
+        { email, userName, phoneNumber, userPackage },
         this.httpOptions
       )
       .pipe(take(1));
@@ -398,6 +408,29 @@ export class AuthService {
         `${environment.baseApiUrl}/auth/vendor/${userName}`,
         this.httpOptions
       )
-      .pipe(take(1));
+      .pipe(
+        take(1),
+        tap((vendor: Vendor) => {
+          (this.venUserName = vendor.userName),
+            (this.venPhoneNumber = vendor.phoneNumber),
+            (this.venEmail = vendor.email);
+        })
+      );
+  }
+
+  getVendorWithEmail(email: string): Observable<Vendor> {
+    return this.http
+      .get(
+        `${environment.baseApiUrl}/auth/vendor/email/${email}`,
+        this.httpOptions
+      )
+      .pipe(
+        take(1),
+        tap((vendor: Vendor) => {
+          (this.venUserName = vendor.userName),
+            (this.venPhoneNumber = vendor.phoneNumber),
+            (this.venEmail = vendor.email);
+        })
+      );
   }
 }

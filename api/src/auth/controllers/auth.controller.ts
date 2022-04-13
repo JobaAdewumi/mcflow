@@ -73,13 +73,15 @@ export class AuthController {
 
   @Post('coupon/generate')
   generateCouponCode(
-    @Body() { userPackage },
+    @Body() { email, userName, phoneNumber, userPackage },
   ): Observable<{ couponCode: string }> {
-    return this.authService.generateCouponCode(userPackage).pipe(
-      switchMap((couponCode: string) => {
-        return of({ couponCode });
-      }),
-    );
+    return this.authService
+      .generateCouponCode(email, userName, phoneNumber, userPackage)
+      .pipe(
+        switchMap((couponCode: string) => {
+          return of({ couponCode });
+        }),
+      );
   }
 
   // @Post('coupon/check')
@@ -145,5 +147,14 @@ export class AuthController {
   @Get('vendor/:userName')
   findVendor(@Param('userName') userName: string): Observable<Vendor> {
     return this.authService.getVendor(userName);
+  }
+
+  @Get('vendor/email/:email')
+  findVendorWithEmail(@Param('email') email: string): Observable<Vendor> {
+    console.log(
+      '🚀 ~ file: auth.controller.ts ~ line 154 ~ AuthController ~ findVendorWithEmail ~ email',
+      email,
+    );
+    return this.authService.getVendorWithEmail(email);
   }
 }

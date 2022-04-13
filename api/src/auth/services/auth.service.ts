@@ -333,7 +333,18 @@ export class AuthService {
     );
   }
 
-  generateCouponCode(userPackage: string): Observable<string> {
+  generateCouponCode(
+    email: string,
+    userName: string,
+    phoneNumber: string,
+    userPackage: string,
+  ): Observable<string> {
+    this.mailService.couponCodeGeneration(
+      email,
+      userName,
+      phoneNumber,
+      userPackage,
+    );
     return from(bcrypt.hash(userPackage, 12));
   }
 
@@ -439,6 +450,51 @@ export class AuthService {
       ),
     ).pipe(
       map((vendor: Vendor) => {
+        if (!vendor) {
+          throw new HttpException(
+            { status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' },
+            HttpStatus.NOT_FOUND,
+          );
+        } else {
+          delete vendor.password;
+          return vendor;
+        }
+      }),
+    );
+  }
+
+  getVendorWithEmail(email: string): Observable<Vendor> {
+    console.log(
+      '🚀 ~ file: auth.service.ts ~ line 467 ~ AuthService ~ getVendorWithEmail ~ email',
+      email,
+    );
+    if (!email) {
+      throw new HttpException(
+        "email of the user wasn't passed",
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return from(
+      this.vendorRepository.findOne(
+        { email },
+        {
+          select: [
+            'id',
+            'firstName',
+            'lastName',
+            'email',
+            'phoneNumber',
+            'userName',
+            'isActive',
+          ],
+        },
+      ),
+    ).pipe(
+      map((vendor: Vendor) => {
+        console.log(
+          '🚀 ~ file: auth.service.ts ~ line 494 ~ AuthService ~ map ~ vendor',
+          vendor,
+        );
         if (!vendor) {
           throw new HttpException(
             { status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' },
