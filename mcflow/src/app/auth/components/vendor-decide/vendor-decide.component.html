@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Accept or decline a coupon vendor</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h2>Vendor Details</h2>
+    <ul>
+      <li>Name: {{ firstName }} {{ lastName }}</li>
+      <li>Username: {{ userName }}</li>
+      <li>Phone number: {{ phoneNumber }}</li>
+    </ul>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button class="accept-button" mat-button (click)="accept()">ACCEPT</button>
+    <button class="decline-button" mat-raised-button (click)="decline()">
+      DECLINE
+    </button>
+  </mat-card-actions>
+</mat-card>

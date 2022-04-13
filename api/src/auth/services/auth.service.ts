@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
-import { Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { from, map, Observable, of, switchMap, tap } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 
@@ -20,6 +20,7 @@ import { Vendor } from '../models/vendor.class';
 import { VendorEntity } from '../models/vendor.entity';
 import { CouponCodeEntity } from '../models/coupon.entity';
 import { CouponCode } from '../models/coupon.interface';
+import { MailService } from '../../mails/services/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +35,7 @@ export class AuthService {
     private readonly couponCodeRepository: Repository<CouponCodeEntity>,
     private jwtService: JwtService,
     private walletService: WalletService,
+    private mailService: MailService,
   ) {}
 
   mcfPoints: number = this.walletService.mcfPoints;
@@ -166,6 +168,7 @@ export class AuthService {
             ).pipe(
               map((vendor: Vendor) => {
                 delete vendor.password;
+                this.mailService.sendConfirmVendorRegistration(vendor);
                 return vendor;
               }),
             );
@@ -230,6 +233,7 @@ export class AuthService {
             'email',
             'phoneNumber',
             'password',
+            'isActive',
           ],
         },
       ),
@@ -239,6 +243,17 @@ export class AuthService {
           throw new HttpException(
             { status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' },
             HttpStatus.NOT_FOUND,
+          );
+        }
+        if (vendor.isActive === false || 0) {
+          console.log(
+            '🚀 ~ file: auth.service.ts ~ line 249 ~ AuthService ~ switchMap ~ vendor.isActive',
+            vendor.isActive,
+          );
+
+          throw new HttpException(
+            { status: HttpStatus.NOT_FOUND, error: 'Account not activated' },
+            HttpStatus.FORBIDDEN,
           );
         }
         return from(bcrypt.compare(password, vendor.password)).pipe(
@@ -361,20 +376,6 @@ export class AuthService {
     const goldd = 'goldmcf';
     const pioneerr = 'pioneermcf';
 
-    // await this.checkDatabaseForCouponCode(couponCode).pipe(
-    //   tap((doesCouponCodeExist: boolean) => {
-    //     console.log(
-    //       '🚀 ~ file: auth.service.ts ~ line 340 ~ AuthService ~ tap ~ doesCouponCodeExist',
-    //       doesCouponCodeExist,
-    //     );
-    //     if (!doesCouponCodeExist) {
-    //       throw new HttpException(
-    //         'This Coupon Code already exists',
-    //         HttpStatus.BAD_REQUEST,
-    //       );
-    //     }
-    //   }),
-    // );
     try {
       const bronze = await bcrypt.compare(bronzee, couponCode);
 
@@ -402,5 +403,52 @@ export class AuthService {
     } catch (err) {
       throw new Error(err);
     }
+  }
+
+  acceptVendor(vendor: Vendor): Observable<UpdateResult> {
+    this.mailService.sendAcceptVendorRegistration(vendor);
+    return from(this.vendorRepository.update(vendor.id, { isActive: true }));
+  }
+
+  declineVendor(vendor: Vendor): Observable<DeleteResult> {
+    this.mailService.sendDeclineVendorRegistration(vendor);
+    return from(this.vendorRepository.delete(vendor.id));
+  }
+
+  getVendor(userName: string): Observable<Vendor> {
+    if (!userName) {
+      throw new HttpException(
+        "Username of the user wasn't passed",
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return from(
+      this.vendorRepository.findOne(
+        { userName },
+        {
+          select: [
+            'id',
+            'firstName',
+            'lastName',
+            'email',
+            'phoneNumber',
+            'userName',
+            'isActive',
+          ],
+        },
+      ),
+    ).pipe(
+      map((vendor: Vendor) => {
+        if (!vendor) {
+          throw new HttpException(
+            { status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' },
+            HttpStatus.NOT_FOUND,
+          );
+        } else {
+          delete vendor.password;
+          return vendor;
+        }
+      }),
+    );
   }
 }

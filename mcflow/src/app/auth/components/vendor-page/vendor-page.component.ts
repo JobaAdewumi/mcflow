@@ -75,9 +75,7 @@ export class VendorPageComponent implements OnInit {
           })
         )
         .subscribe(() => {
-          this.errorHandlerService.openSuccessSnackBar(
-            'Registered successfully'
-          );
+          this.errorHandlerService.openSuccessSnackBar('Check your email');
           this.toggleText();
         });
     }

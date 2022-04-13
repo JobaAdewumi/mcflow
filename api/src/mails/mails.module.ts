@@ -8,21 +8,17 @@ import { ConfigService } from '@nestjs/config';
 @Global()
 @Module({
   imports: [
+    // TODO: Change the email sender from gmail to domain name
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
-        // transport: config.get("MAIL_TRANSPORT"),
-        // or
         transport: {
           host: config.get('MAIL_HOST'),
           secure: false,
           requireTLS: true,
           port: 587,
-
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASSWORD'),
-            // user: 'mcflowwebsite@gmail.com',
-            // pass: 'oluwajoba',
           },
         },
         defaults: {

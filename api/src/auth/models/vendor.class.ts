@@ -13,4 +13,5 @@ export class Vendor {
   phoneNumber?: string;
   @IsString()
   password?: string;
+  isActive?: boolean;
 }

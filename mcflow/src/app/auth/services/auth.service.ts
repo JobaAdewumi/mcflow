@@ -371,4 +371,33 @@ export class AuthService {
       )
       .pipe(take(1));
   }
+
+  acceptVendor(vendor: Vendor) {
+    return this.http
+      .post(
+        `${environment.baseApiUrl}/auth/vendor/accept`,
+        vendor,
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
+
+  declineVendor(vendor: Vendor) {
+    return this.http
+      .post(
+        `${environment.baseApiUrl}/auth/vendor/decline`,
+        vendor,
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
+
+  getVendor(userName: string): Observable<Vendor> {
+    return this.http
+      .get(
+        `${environment.baseApiUrl}/auth/vendor/${userName}`,
+        this.httpOptions
+      )
+      .pipe(take(1));
+  }
 }
