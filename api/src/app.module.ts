@@ -13,6 +13,7 @@ import { join } from 'path';
 
 @Module({
   imports: [
+    // TODO: change database user to root
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
