@@ -124,7 +124,7 @@ export class AuthService {
                 email,
                 phoneNumber,
                 userPackage,
-                referralLink: `http://localhost:4200/referral/${userName}`,
+                referralLink: `https://mcflow.xyz/referral/${userName}`,
                 password: hashedPassword,
                 lastLogin: null,
                 lastSharedLogin: null,

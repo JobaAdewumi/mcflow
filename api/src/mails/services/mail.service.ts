@@ -25,7 +25,6 @@ export class MailService {
       .sendMail({
         to: newWithdrawal.email,
 
-        // TODO: Need to make html template dynamic
         subject: 'Request for withdrawal',
         template: join(this.dirname + './confirmation'),
 
@@ -56,7 +55,7 @@ export class MailService {
 
     await this.mailerService
       .sendMail({
-        to: 'jobaadewumi.c@gmail.com',
+        to: 'contact@mcflow.xyz',
 
         subject: 'Request for withdrawal',
 
@@ -71,7 +70,6 @@ export class MailService {
           userName: newWithdrawal.userName,
         },
       })
-      .then((success) => {})
       .catch((err) => {
         throw new Error(err);
       });
@@ -86,7 +84,7 @@ export class MailService {
     }
     await this.mailerService
       .sendMail({
-        to: contactUs.email,
+        to: 'contact@mcflow.xyz',
 
         subject: 'Requested to contact MCflow',
         template: join(this.dirname + './contactus'),
@@ -98,7 +96,6 @@ export class MailService {
           email: contactUs.email,
         },
       })
-      .then((success) => {})
       .catch((err) => {
         throw new Error(err);
       });
@@ -113,14 +110,32 @@ export class MailService {
     }
     await this.mailerService
       .sendMail({
-        to: 'mcflow.xyz@gmail.com',
-        // TODO: Change email "to" address
-        // TODO: Need to make html template dynamic
+        to: 'contact@mcflow.xyz',
         subject: 'Someone requested to be a vendor',
-        html: `<h1>Someone registered to be a coupon vendor, here are the details</h1> <ul><li>Name: ${vendor.firstName} ${vendor.lastName}</li><li>Username: ${vendor.userName}</li><li>Email: ${vendor.email}</li><li>Phone Number: ${vendor.phoneNumber}</li></ul> <p>Go to this page at <a href="http://localhost:4200/auth/vendor/confirm/${vendor.userName}">Click the link to go the confirm vendor page to accept a vendor or decline</a></p>`,
-        // TODO: Change the url here
+        html: `<h1>Someone registered to be a coupon vendor, here are the details</h1> <ul><li>Name: ${vendor.firstName} ${vendor.lastName}</li><li>Username: ${vendor.userName}</li><li>Email: ${vendor.email}</li><li>Phone Number: ${vendor.phoneNumber}</li></ul> <p>Go to this page at <a href="https://mcflow.xyz/auth/vendor/confirm/${vendor.userName}">Click the link to go the confirm vendor page to accept a vendor or decline</a></p>`,
       })
-      .then((success) => {})
+      .then((success) => {
+        this.sendConfirmVendorRegistrationToVendor(vendor);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  }
+  async sendConfirmVendorRegistrationToVendor(vendor: Vendor) {
+    if (!vendor) {
+      throw new HttpException(
+        "Withdrawal criteria wasn't passed",
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    await this.mailerService
+      .sendMail({
+        to: vendor.email,
+        subject: 'You requested to be a vendor',
+        html: `<h1>You registered to be a coupon vendor</h1> <p>And  your username is ${vendor.userName}</p>
+        <p>Please be patient as we verify your request and you will receive another email, please check your spam folder</p> `,
+      })
+
       .catch((err) => {
         throw new Error(err);
       });
@@ -136,13 +151,10 @@ export class MailService {
     await this.mailerService
       .sendMail({
         to: `${vendor.email}`,
-        // TODO: Change email "to" address
-        // TODO: Need to make html template dynamic
+
         subject: 'You requested to be a vendor',
-        html: `<p>Good day ${vendor.firstName}, your request to be a vendor has been accepted you can go to the login page <a href="http://localhost:4200/auth/vendor">here</a> to start generating coupon codes now</p>`,
-        // TODO: Change the url here
+        html: `<p>Good day ${vendor.firstName}, your request to be a vendor has been accepted you can go to the login page <a href="https://mcflow.xyz/auth/vendor">here</a> to start generating coupon codes now</p>`,
       })
-      .then((success) => {})
       .catch((err) => {
         throw new Error(err);
       });
@@ -157,18 +169,10 @@ export class MailService {
     await this.mailerService
       .sendMail({
         to: `${vendor.email}`,
-        // TODO: Change email "to" address
-        // TODO: Need to make html template dynamic
         subject: 'You requested to be a vendor',
         html: `<p>Good day ${vendor.firstName}, your request to be a vendor has been declined at this moment i'm sorry to inform you, the information you provided will be deleted in respect to our privacy policy.`,
-        // TODO: Change the url here
       })
-      .then((success) => {
-        console.log(
-          '🚀 ~ file: mail.service.ts ~ line 167 ~ MailService ~ .then ~ success',
-          success,
-        );
-      })
+
       .catch((err) => {
         throw new Error(err);
       });
@@ -188,19 +192,12 @@ export class MailService {
     }
     await this.mailerService
       .sendMail({
-        to: `jobaadewumi.c@gmail.com`,
-        // TODO: Change email "to" address
-        // TODO: Need to make html template dynamic
+        to: `contact@mcflow.xyz`,
+
         subject: 'Coupon Code was generated',
         html: `<h1>Coupon code generation</h1> <p>The vendor with the email ${email} Username ${userName} and phone number ${phoneNumber} generated a coupon code for the package ${packageName}</p>`,
-        // TODO: Change the url here
       })
-      .then((success) => {
-        console.log(
-          '🚀 ~ file: mail.service.ts ~ line 194 ~ MailService ~ .then ~ success',
-          success,
-        );
-      })
+
       .catch((err) => {
         throw new Error(err);
       });

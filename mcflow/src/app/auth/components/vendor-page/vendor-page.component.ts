@@ -75,7 +75,9 @@ export class VendorPageComponent implements OnInit {
           })
         )
         .subscribe(() => {
-          this.errorHandlerService.openSuccessSnackBar('Check your email');
+          this.errorHandlerService.openSuccessSnackBar(
+            'Check your email or the spam folder'
+          );
           this.toggleText();
         });
     }
