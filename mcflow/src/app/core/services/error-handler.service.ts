@@ -34,7 +34,6 @@ export class ErrorHandlerService {
 
   handleError<T>(operation = 'operation', result?: T) {
     return (error: HttpErrorResponse): Observable<T> => {
-      console.warn(`${operation} failed: ${error.message}`); //TODO: Remove in production
       return of(result as T).pipe(tap(() => this.openSnackBar(error.name)));
     };
   }

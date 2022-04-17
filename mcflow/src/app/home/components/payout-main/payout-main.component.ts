@@ -114,7 +114,6 @@ export class PayoutMainComponent implements OnInit {
         return null;
       }
     }
-    // TODO: Add the other packages and continue from here
     const newWithdrawal: NewWithdrawal = {
       email: this.email,
       userName: this.userName,

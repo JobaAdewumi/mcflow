@@ -8,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 @Global()
 @Module({
   imports: [
-    // TODO: Change the email sender from gmail to domain name
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
         transport: {
