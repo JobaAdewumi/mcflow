@@ -40,11 +40,11 @@ export class PostService {
   }
 
   getDefaultFullImagePath(): string {
-    return `http://localhost:3000/api/post/image/blank-post-picture.jpg`;
+    return `${environment.baseApiUrl}/post/image/blank-post-picture.jpg`;
   }
 
   getFullImagePath(imageName: string): string {
-    return `http://localhost:3000/api/post/image/` + imageName;
+    return `${environment.baseApiUrl}/post/image/` + imageName;
   }
 
   getPostImage() {

@@ -146,11 +146,11 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getDefaultFullImagePath(): string {
-    return 'http://localhost:3000/api/user/image/blank-profile-picture.png';
+    return `${environment.baseApiUrl}/user/image/blank-profile-picture.png`;
   }
 
   getFullImagePath(imageName: string): string {
-    return 'http://localhost:3000/api/user/image/' + imageName;
+    return `${environment.baseApiUrl}/user/image/` + imageName;
   }
 
   getUserImage() {
