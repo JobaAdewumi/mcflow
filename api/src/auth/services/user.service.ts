@@ -57,7 +57,10 @@ export class UserService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
     }
   }
 
@@ -83,7 +86,10 @@ export class UserService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
     }
   }
 
@@ -136,7 +142,10 @@ export class UserService {
       }
       return null;
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
     }
   }
 

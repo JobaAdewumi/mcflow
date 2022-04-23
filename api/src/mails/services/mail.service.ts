@@ -41,7 +41,10 @@ export class MailService {
         this.sendWithdrawalRequestToMCflow(newWithdrawal);
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 
@@ -71,7 +74,10 @@ export class MailService {
         },
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 
@@ -97,7 +103,10 @@ export class MailService {
         },
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 
@@ -112,13 +121,16 @@ export class MailService {
       .sendMail({
         to: 'contact@mcflow.xyz',
         subject: 'Someone requested to be a vendor',
-        html: `<h1>Someone registered to be a coupon vendor, here are the details</h1> <ul><li>Name: ${vendor.firstName} ${vendor.lastName}</li><li>Username: ${vendor.userName}</li><li>Email: ${vendor.email}</li><li>Phone Number: ${vendor.phoneNumber}</li></ul> <p>Go to this page at <a href="https://mcflow.xyz/auth/vendor/confirm/${vendor.userName}">Click the link to go the confirm vendor page to accept a vendor or decline</a></p>`,
+        html: `<h1>Someone registered to be a coupon vendor, here are the details</h1> <ul><li>Name: ${vendor.firstName} ${vendor.lastName}</li><li>Username: ${vendor.userName}</li><li>Email: ${vendor.email}</li><li>Phone Number: ${vendor.phoneNumber}</li></ul> <p>Go to this page at <a href="${process.env.CURRENT_URL}/auth/vendor/confirm/${vendor.userName}">Click the link to go the confirm vendor page to accept a vendor or decline</a></p>`,
       })
       .then((success) => {
         this.sendConfirmVendorRegistrationToVendor(vendor);
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
   async sendConfirmVendorRegistrationToVendor(vendor: Vendor) {
@@ -137,7 +149,10 @@ export class MailService {
       })
 
       .catch((err) => {
-        throw new Error(err);
+       throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 
@@ -153,10 +168,13 @@ export class MailService {
         to: `${vendor.email}`,
 
         subject: 'You requested to be a vendor',
-        html: `<p>Good day ${vendor.firstName}, your request to be a vendor has been accepted you can go to the login page <a href="https://mcflow.xyz/auth/vendor">here</a> to start generating coupon codes now</p>`,
+        html: `<p>Good day ${vendor.firstName}, your request to be a vendor has been accepted you can go to the login page <a href="${process.env.CURRENT_URL}/auth/vendor">here</a> to start generating coupon codes now</p>`,
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
   async sendDeclineVendorRegistration(vendor: Vendor) {
@@ -174,7 +192,10 @@ export class MailService {
       })
 
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 
@@ -199,7 +220,10 @@ export class MailService {
       })
 
       .catch((err) => {
-        throw new Error(err);
+        throw new HttpException(
+            'An Error sending email',
+            HttpStatus.BAD_REQUEST,
+          );
       });
   }
 }

@@ -81,7 +81,7 @@ export class WalletService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      throw new Error(err);
+      (err);
     }
   }
 
@@ -92,7 +92,7 @@ export class WalletService {
         this.walletRepository.update({ userName }, { referralBalance: ref }),
       );
     } catch (err) {
-      throw new Error(err);
+      (err);
     }
   }
 }

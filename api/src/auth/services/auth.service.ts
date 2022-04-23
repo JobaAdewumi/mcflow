@@ -410,9 +410,15 @@ export class AuthService {
         this.couponCodeRepository.save({ couponCode: couponCode });
         return 'pioneer';
       }
-      throw new Error('Wrong coupon code');
+      throw new HttpException(
+            'Wrong coupon code',
+            HttpStatus.BAD_REQUEST,
+          );
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException(
+            'There was an error trying to check the coupon code',
+            HttpStatus.BAD_REQUEST,
+          );
     }
   }
 
