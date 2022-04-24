@@ -80,6 +80,10 @@ export class DashboardMainComponent implements OnInit, OnDestroy {
     this.userImagePathSubscription =
       this.authService.userFullImagePath.subscribe((fullImagePath: string) => {
         this.userFullImagePath = fullImagePath;
+        console.log(
+          '🚀 ~ file: dashboard-main.component.ts ~ line 83 ~ DashboardMainComponent ~ this.authService.userFullImagePath.subscribe ~ userFullImagePath',
+          this.userFullImagePath
+        );
       });
   }
 

@@ -5,6 +5,9 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from '../../auth/models/user.class';
 import { SponsoredPostEntity } from '../models/post.entity';
 import { SponsoredPost } from '../models/post.interface';
+import { S3 } from 'aws-sdk';
+import path = require('path');
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PostService {
@@ -55,15 +58,40 @@ export class PostService {
     return from(this.sponsoredPostRepository.update(id, { isActive: false }));
   }
 
-  updatePostImageById(
-    id: number,
-    postImagePath: string,
-  ): Observable<UpdateResult> {
-    console.log('return', postImagePath);
+  async uploadPublicFile(id: number, dataBuffer: Buffer, originalName: string) {
+    const s3 = new S3();
+    const fileExtension: string = path.extname(originalName);
+    console.log(
+      '🚀 ~ file: post.service.ts ~ line 64 ~ PostService ~ uploadPublicFile ~ fileExtension',
+      fileExtension,
+    );
+    const fileName: string = `post/` + uuidv4() + fileExtension;
+    console.log(
+      '🚀 ~ file: post.service.ts ~ line 66 ~ PostService ~ uploadPublicFile ~ fileName',
+      fileName,
+    );
+
+    const uploadResult = await s3
+      .upload({
+        ACL: 'public-read',
+        Bucket: process.env.S3_BUCKET,
+        Body: dataBuffer,
+        Key: fileName,
+      })
+      .promise();
     const sponsoredPost: SponsoredPost = new SponsoredPostEntity();
     sponsoredPost.id = id;
-    sponsoredPost.postImagePath = postImagePath;
+    sponsoredPost.postImagePath = uploadResult.Key;
+    console.log(
+      '🚀 ~ file: post.service.ts ~ line 79 ~ PostService ~ uploadPublicFile ~ sponsoredPost.postImagePath',
+      sponsoredPost.postImagePath,
+    );
+
     return from(this.sponsoredPostRepository.update(id, sponsoredPost));
+  }
+
+  updatePostImageById(id: number, fileBuffer: Buffer, originalName: string) {
+    return this.uploadPublicFile(id, fileBuffer, originalName);
   }
 
   findImageNameByPostId(id: number): Observable<string> {

@@ -40,11 +40,11 @@ export class PostService {
   }
 
   getDefaultFullImagePath(): string {
-    return `${environment.baseApiUrl}/post/image/blank-post-picture.jpg`;
+    return `https://mcflow.s3.amazonaws.com/blank-post-picture.jpg`;
   }
 
   getFullImagePath(imageName: string): string {
-    return `${environment.baseApiUrl}/post/image/` + imageName;
+    return `https://mcflow.s3.amazonaws.com/` + imageName;
   }
 
   getPostImage() {

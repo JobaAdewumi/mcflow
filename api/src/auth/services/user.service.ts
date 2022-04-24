@@ -14,6 +14,9 @@ import { User } from '../models/user.class';
 import { UserEntity } from '../models/user.entity';
 import { WalletEntity } from '../models/wallet.entity';
 import { Wallet } from '../models/wallet.interface';
+import { S3 } from 'aws-sdk';
+import path = require('path');
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -57,10 +60,7 @@ export class UserService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      throw new HttpException(
-            'An Error sending email',
-            HttpStatus.BAD_REQUEST,
-          );
+      throw new HttpException('An Error sending email', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -86,10 +86,7 @@ export class UserService {
         this.walletRepository.update({ userName }, { mcfPoints: mcfPoints }),
       );
     } catch (err) {
-      throw new HttpException(
-            'An Error sending email',
-            HttpStatus.BAD_REQUEST,
-          );
+      throw new HttpException('An Error sending email', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -142,10 +139,7 @@ export class UserService {
       }
       return null;
     } catch (err) {
-      throw new HttpException(
-            'An Error sending email',
-            HttpStatus.BAD_REQUEST,
-          );
+      throw new HttpException('An Error sending email', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -185,12 +179,58 @@ export class UserService {
     );
   }
 
-  updateUserImageById(id: number, imagePath: string): Observable<UpdateResult> {
+  async uploadPublicFile(id: number, dataBuffer: Buffer, originalName: string) {
+    const s3 = new S3();
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 184 ~ UserService ~ uploadPublicFile ~ s3',
+      s3,
+    );
+    const fileExtension: string = path.extname(originalName);
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 185 ~ UserService ~ uploadPublicFile ~ fileExtension',
+      fileExtension,
+    );
+    const fileName: string = `user/` + uuidv4() + fileExtension;
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 186 ~ UserService ~ uploadPublicFile ~ fileName',
+      fileName,
+    );
+    const uploadResult = await s3
+      .upload({
+        ACL: 'public-read',
+        Bucket: process.env.S3_BUCKET,
+        Body: dataBuffer,
+        Key: fileName,
+      })
+      .promise();
     const user: User = new UserEntity();
     user.id = id;
-    user.imagePath = imagePath;
+    user.imagePath = uploadResult.Key;
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 200 ~ UserService ~ uploadPublicFile ~ user.imagePath',
+      user.imagePath,
+    );
     return from(this.userRepository.update(id, user));
   }
+
+  updateUserImageById(id: number, fileBuffer: Buffer, originalName: string) {
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 201 ~ UserService ~ updateUserImageById ~ fileBuffer',
+      fileBuffer,
+    );
+    console.log(
+      '🚀 ~ file: user.service.ts ~ line 201 ~ UserService ~ updateUserImageById ~ id',
+      id,
+    );
+    return this.uploadPublicFile(id, fileBuffer, originalName);
+  }
+
+  // updateUserImageById(id: number, imagePath: string): Observable<UpdateResult> {
+  //   const user: User = new UserEntity();
+  //   user.id = id;
+  //   user.imagePath = imagePath;
+  //   return from(this.userRepository.update(id, user));
+  // }
 
   findImageNameByUserId(id: number): Observable<string> {
     return from(this.userRepository.findOne({ id })).pipe(

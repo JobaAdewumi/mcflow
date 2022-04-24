@@ -24,6 +24,7 @@ import { PostService } from '../services/post.service';
 import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../models/role.enum';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { S3 } from 'aws-sdk';
 
 @Controller('post')
 export class PostController {
@@ -72,40 +73,82 @@ export class PostController {
 
   @UseGuards(JwtGuard)
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
-  uploadImage(
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @Request() req,
-  ): Observable<{ modifiedFileName: string } | { error: string }> {
-    console.log('saving', file.filename);
-    console.log('req', req);
+  ): Promise<Observable<{ modifiedFileName: string } | { error: string }>> {
+    // console.log('saving', file.filename);
+    // console.log('req', req);
     const fileName = file?.filename;
 
     const sponsoredPosts: [] = req.user.sponsoredPosts;
-    console.log('posts', JSON.stringify(sponsoredPosts));
+    // console.log('posts', JSON.stringify(sponsoredPosts));
     const postsString: any = JSON.stringify(sponsoredPosts);
     const posts = JSON.parse(postsString);
-    console.log('poststs', posts);
+    // console.log('poststs', posts);
 
-    if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
+    // if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
 
     const imagesFolderPath = join(process.cwd(), 'post_images');
-    console.log('before return controller', imagesFolderPath);
+    // console.log('before return controller', imagesFolderPath);
     const fullImagePath = join(imagesFolderPath + '/' + file.filename);
 
-    console.log('before return controller', fileName);
+    // console.log('before return controller', fileName);
     const postId = posts[posts.length - 1].id;
     console.log(
       '🚀 ~ file: post.controller.ts ~ line 116 ~ PostController ~ postId',
       postId,
     );
 
-    return this.postService.updatePostImageById(postId, fileName).pipe(
+    return (
+      await this.postService.updatePostImageById(
+        postId,
+        file.buffer,
+        file.originalname,
+      )
+    ).pipe(
       map(() => ({
         modifiedFileName: file.filename,
       })),
     );
   }
+  // @UseGuards(JwtGuard)
+  // @Post('upload')
+  // @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
+  // uploadImage(
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Request() req,
+  // ): Observable<{ modifiedFileName: string } | { error: string }> {
+  //   console.log('saving', file.filename);
+  //   console.log('req', req);
+  //   const fileName = file?.filename;
+
+  //   const sponsoredPosts: [] = req.user.sponsoredPosts;
+  //   console.log('posts', JSON.stringify(sponsoredPosts));
+  //   const postsString: any = JSON.stringify(sponsoredPosts);
+  //   const posts = JSON.parse(postsString);
+  //   console.log('poststs', posts);
+
+  //   if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
+
+  //   const imagesFolderPath = join(process.cwd(), 'post_images');
+  //   console.log('before return controller', imagesFolderPath);
+  //   const fullImagePath = join(imagesFolderPath + '/' + file.filename);
+
+  //   console.log('before return controller', fileName);
+  //   const postId = posts[posts.length - 1].id;
+  //   console.log(
+  //     '🚀 ~ file: post.controller.ts ~ line 116 ~ PostController ~ postId',
+  //     postId,
+  //   );
+
+  //   return this.postService.updatePostImageById(postId, fileName).pipe(
+  //     map(() => ({
+  //       modifiedFileName: file.filename,
+  //     })),
+  //   );
+  // }
   // @UseGuards(JwtGuard)
   // @Post('upload')
   // @UseInterceptors(FileInterceptor('file', savePostImageToStorage))
@@ -143,9 +186,22 @@ export class PostController {
   @Get('image')
   findImage(@Body() postId: number, @Res() res): Observable<Object> {
     // const userId = req.user.id;
+    const s3 = new S3();
     return this.postService.findImageNameByPostId(postId).pipe(
       switchMap((imageName: string) => {
-        return of(res.sendFile(imageName, { root: './post_images' }));
+        const params = {
+          Bucket: process.env.S3_BUCKET,
+          Key: imageName,
+        };
+        return of(
+          res.sendFile(
+            s3.getObject(params, function (err, data) {
+              // res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+              res.write(data.Body, 'binary');
+              res.end(null, 'binary');
+            }),
+          ),
+        );
       }),
     );
   }
@@ -165,6 +221,17 @@ export class PostController {
   // @UseGuards(JwtGuard)
   @Get('image/:fileName')
   findImageByName(@Param('fileName') fileName: string, @Res() res) {
-    return res.sendFile(fileName, { root: './post_images' });
+    const s3 = new S3();
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Key: fileName,
+    };
+    return res.sendFile(
+      s3.getObject(params, function (err, data) {
+        // res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        // res.write(data.Body, 'binary');
+        res.end(null, 'binary');
+      }),
+    );
   }
 }

@@ -146,11 +146,11 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getDefaultFullImagePath(): string {
-    return `${environment.baseApiUrl}/user/image/blank-profile-picture.png`;
+    return `https://mcflow.s3.amazonaws.com/blank-profile-picture.png`;
   }
 
   getFullImagePath(imageName: string): string {
-    return `${environment.baseApiUrl}/user/image/` + imageName;
+    return `https://mcflow.s3.amazonaws.com/` + imageName;
   }
 
   getUserImage() {
